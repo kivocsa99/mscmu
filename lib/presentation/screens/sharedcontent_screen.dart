@@ -8,6 +8,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:motion_toast/motion_toast.dart';
+import 'package:path_provider/path_provider.dart';
 import '../../application/downloader/use_cases/download_file/download_file.input.dart';
 import '../../application/downloader/use_cases/download_file/download_file.use_case.dart';
 import '../../application/provider/content.repository.provider.dart';
@@ -55,9 +56,19 @@ class _SharedContentScreenState extends State<SharedContentScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final progress = useState(0);
+    final externalStorageDirPath = useState("");
+    final exists = useState(false);
     final content = useProvider(contentProvider(widget.id!));
     final scrollController = useScrollController();
+    List<String> extenstions = [
+      "m4a",
+      "flac",
+      "mp3",
+      "mp4",
+      "wav",
+      "wma",
+      "aac"
+    ];
     List<FolderModel>? folders;
     List<FileModel>? files;
     return Scaffold(
@@ -68,7 +79,7 @@ class _SharedContentScreenState extends State<SharedContentScreen> {
           scale: 10,
         ),
         centerTitle: true,
-        shape:const  RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(20.0),
             bottomRight: Radius.circular(20.0),
@@ -92,7 +103,7 @@ class _SharedContentScreenState extends State<SharedContentScreen> {
                                   const SizedBox(
                                     height: 10,
                                   ),
-                                 const Text(
+                                  const Text(
                                     "Folders",
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold),
@@ -102,7 +113,8 @@ class _SharedContentScreenState extends State<SharedContentScreen> {
                                   ),
                                   ListView.separated(
                                     shrinkWrap: true,
-                                    physics:const NeverScrollableScrollPhysics(),
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
                                     separatorBuilder: (context, index) =>
                                         const Divider(),
                                     itemBuilder: (context, index) {
@@ -116,7 +128,7 @@ class _SharedContentScreenState extends State<SharedContentScreen> {
                                                 SharedContentScreen(
                                                     id: folders![index].id));
                                           },
-                                          leading:const Icon(Icons.book),
+                                          leading: const Icon(Icons.book),
                                           title:
                                               Text("${folders![index].name}"),
                                         ),
@@ -132,8 +144,10 @@ class _SharedContentScreenState extends State<SharedContentScreen> {
                         files != null
                             ? Column(
                                 children: [
-                                  Text(progress.value.toString()),
-                                 const Text(
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  const Text(
                                     "Files",
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold),
@@ -143,23 +157,27 @@ class _SharedContentScreenState extends State<SharedContentScreen> {
                                   ),
                                   ListView.separated(
                                     separatorBuilder: (context, index) =>
-                                       const Divider(),
+                                        const Divider(),
                                     shrinkWrap: true,
-                                    physics:const NeverScrollableScrollPhysics(),
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
                                     itemBuilder: (context, index) {
                                       return Slidable(
-                                        actionPane:const SlidableDrawerActionPane(),
+                                        actionPane:
+                                            const SlidableDrawerActionPane(),
                                         actionExtentRatio: 0.25,
                                         child: Container(
                                           color: Colors.white,
                                           child: ListTile(
                                             title:
                                                 Text('${files![index].name}'),
-                                            
                                           ),
                                         ),
                                         actions: <Widget>[
-                                          files![index].name!.contains("mp4")
+                                          extenstions.any((element) =>
+                                                  files![index]
+                                                      .name!
+                                                      .endsWith(element))
                                               ? IconSlideAction(
                                                   caption: 'Play',
                                                   color: Colors.blue,
@@ -185,20 +203,34 @@ class _SharedContentScreenState extends State<SharedContentScreen> {
                                               if (status.isGranted) {
                                                 String file =
                                                     files![index].name!;
-                                                bool hey = await File(
-                                                        "/storage/emulated/0/Download/$file")
-                                                    .exists();
 
-                                                if (hey) {
+                                                if (Platform.isAndroid) {
+                                                  externalStorageDirPath.value =
+                                                      "/storage/emulated/0/Download/";
+                                                  exists.value = await File(
+                                                          "/storage/emulated/0/Download/$file")
+                                                      .exists();
+                                                } else {
+                                                  externalStorageDirPath.value =
+                                                      (await getApplicationDocumentsDirectory())
+                                                          .absolute
+                                                          .path;
+                                                  exists.value = await File(
+                                                          "${externalStorageDirPath.value}/$file")
+                                                      .exists();
+                                                }
+
+                                                if (exists.value) {
                                                   MotionToast.error(
                                                     title: "Download Error",
-                                                    titleStyle:const TextStyle(
+                                                    titleStyle: const TextStyle(
                                                         fontWeight:
                                                             FontWeight.bold),
                                                     description:
                                                         "You already have this file , Therefore it won't be downloaded",
                                                     descriptionStyle:
-                                                       const TextStyle(fontSize: 12),
+                                                        const TextStyle(
+                                                            fontSize: 12),
                                                     width: 300,
                                                   ).show(context);
                                                 } else {
@@ -213,20 +245,21 @@ class _SharedContentScreenState extends State<SharedContentScreen> {
                                                               url: files![index]
                                                                   .url,
                                                               directory:
-                                                                  "/storage/emulated/0/Download/"))
+                                                                  externalStorageDirPath
+                                                                      .value))
                                                       .then((result) =>
                                                           result.fold((l) {
                                                             MotionToast.error(
                                                               title:
                                                                   "Download Error",
-                                                              titleStyle:const TextStyle(
+                                                              titleStyle: const TextStyle(
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .bold),
                                                               description:
                                                                   "Sorry , Error While Downloading ",
                                                               descriptionStyle:
-                                                                 const TextStyle(
+                                                                  const TextStyle(
                                                                       fontSize:
                                                                           12),
                                                               width: 300,
@@ -242,7 +275,7 @@ class _SharedContentScreenState extends State<SharedContentScreen> {
                                                               description:
                                                                   "File has been downloaded , PLease check your notification",
                                                               descriptionStyle:
-                                                                 const TextStyle(
+                                                                  const TextStyle(
                                                                       fontSize:
                                                                           12),
                                                               width: 300,
@@ -250,13 +283,26 @@ class _SharedContentScreenState extends State<SharedContentScreen> {
                                                           }));
                                                 }
                                               } else {
+                                                 MotionToast.error(
+                                                              title:
+                                                                  "Permission Denied",
+                                                              titleStyle: const TextStyle(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
+                                                              description:
+                                                                  "Sorry , You have Denied Folder access permission ",
+                                                              descriptionStyle:
+                                                                  const TextStyle(
+                                                                      fontSize:
+                                                                          12),
+                                                              width: 300,
+                                                            ).show(context);
                                               }
                                             },
                                           ),
                                         ],
-                                        secondaryActions: <Widget>[
-
-                                        ],
+                                        secondaryActions: <Widget>[],
                                       );
                                     },
                                     itemCount: files!.length,
@@ -265,13 +311,13 @@ class _SharedContentScreenState extends State<SharedContentScreen> {
                                   )
                                 ],
                               )
-                            :const SizedBox.shrink(),
+                            : const SizedBox.shrink(),
                       ],
                     );
                   }),
               loading: () => ListView.separated(
                     shrinkWrap: true,
-                    physics:const NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     separatorBuilder: (context, index) => const Divider(),
                     itemBuilder: (context, index) {
                       return const ShimmerAffect(

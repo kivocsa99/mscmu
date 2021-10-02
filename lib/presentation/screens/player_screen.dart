@@ -77,13 +77,13 @@ class _PlayerScreenState extends State<PlayerScreen>
           scale: 10,
         ),
         centerTitle: true,
-        shape:const RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(20.0),
             bottomRight: Radius.circular(20.0),
           ),
         ),
-      ), 
+      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -190,7 +190,7 @@ class ControlButtons extends StatelessWidget {
                 title: "Adjust speed",
                 divisions: 10,
                 min: 0.5,
-                max: 1.5,
+                max: 2.0,
                 value: player.speed,
                 stream: player.speedStream,
                 onChanged: player.setSpeed,

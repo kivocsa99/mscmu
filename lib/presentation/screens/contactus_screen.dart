@@ -34,9 +34,22 @@ class ContactusScreen extends HookWidget {
             padding: const EdgeInsets.all(15.0),
             child: GestureDetector(
               onTap: () async {
-                await launch('https://www.facebook.com/medicine.surgery.mutah');
+                try {
+                  bool launched = await launch('fb://page/1446249115607763',
+                      forceSafariVC: false);
+
+                  if (!launched) {
+                    await launch(
+                        'https://www.facebook.com/medicine.surgery.mutah',
+                        forceSafariVC: false);
+                  }
+                } catch (e) {
+                  await launch(
+                      'https://www.facebook.com/medicine.surgery.mutah',
+                      forceSafariVC: false);
+                }
               },
-              child: ListTile(
+              child: const ListTile(
                 leading: Icon(Icons.facebook),
                 title: Text("medicine.surgery.mutah"),
               ),
