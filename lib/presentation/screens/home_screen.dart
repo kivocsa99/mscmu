@@ -2,6 +2,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:motion_toast/motion_toast.dart';
 
 import 'aboutus_screen.dart';
 import 'contactus_screen.dart';
@@ -17,28 +18,40 @@ class HomeScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
     useEffect(() {
+      FirebaseMessaging.instance.requestPermission(
+        sound: true,
+        badge: true,
+        alert: true,
+        provisional: false,
+      );
+
+
+
+      FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+        alert: true,
+        badge: true,
+        sound: true,
+      );
       FirebaseMessaging.onMessage.listen((RemoteMessage message) {
         print('heliiiiii');
 
         if (message.notification != null) {
-          showDialog(
-              context: context,
-              builder: (context) => AlertDialog(
-                    content: ListTile(
-                      title: Text(message.data.toString()),
-                      subtitle: Text(message.data.toString()),
-                    ),
-                    actions: <Widget>[
-                      IconButton(
-                        icon: Icon(Icons.h_mobiledata),
-                        onPressed: () => Navigator.of(context).pop(),
-                      ),
-                    ],
-                  ));
+            MotionToast.info(
+                title: "New Post",
+                titleStyle:
+                const TextStyle(
+                    fontWeight:
+                    FontWeight
+                        .bold),
+                description:
+                    message.data.toString())
+
+                .show(context);
           print(
               'Message also contained a notification: ${message.notification}');
         }
       });
+
     }, const []);
 
     final _showPage = useState(0);
