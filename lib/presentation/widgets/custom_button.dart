@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+
 import 'box_shadow.dart';
 
 class CustomButton extends StatelessWidget {
-  final String title;
-  final VoidCallback onTap;
+  final String? title;
+  final VoidCallback? onTap;
 
-  const CustomButton({Key? key, required this.title, required this.onTap})
-      : super(key: key);
+  const CustomButton({
+    Key? key,
+    @required this.title,
+    @required this.onTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +27,11 @@ class CustomButton extends StatelessWidget {
         ),
         alignment: Alignment.center,
         child: Text(
-          title,
-          style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600),
+          title!,
+          style: const TextStyle(
+            fontSize: 18.0,
+            fontWeight: FontWeight.w600,
+          ),
         ),
       ),
     );

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:introduction_screen/introduction_screen.dart';
-import 'package:mscmu/presentation/screens/welcome_screen.dart';
+import 'welcome_screen.dart';
 
 class OnBoardingScreen extends HookWidget {
   const OnBoardingScreen({Key? key}) : super(key: key);

@@ -1,9 +1,9 @@
 import 'package:audio_session/audio_session.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:just_audio/just_audio.dart';
-import '../widgets/commonplayerwidget.dart';
 import 'package:rxdart/rxdart.dart';
+
+import '../widgets/commonplayerwidget.dart';
 
 class PlayerScreen extends StatefulWidget {
   final String? url;
@@ -188,7 +188,7 @@ class ControlButtons extends StatelessWidget {
               showSliderDialog(
                 context: context,
                 title: "Adjust speed",
-                divisions: 10,
+                divisions: 15,
                 min: 0.5,
                 max: 2.0,
                 value: player.speed,

@@ -12,6 +12,7 @@ class PostsRepository implements IPostsRepository {
     return _firestore
         .collection(collection)
         .where("yearid", isEqualTo: yearid)
+        // .orderBy("time")
         .snapshots()
         .map(
           (event) => event.docs
@@ -36,7 +37,7 @@ class PostsRepository implements IPostsRepository {
       _firestore.collection(collection).doc().set({
         "title": title,
         "body": body,
-        "time": DateTime.now().toString(),
+        "time": Timestamp.fromDate(DateTime.now()),
         "adminavatar": adminavatar,
         "adminname": adminname,
         "image": image,

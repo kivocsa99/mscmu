@@ -7,15 +7,13 @@ part of 'quizstate.dart';
 // **************************************************************************
 
 _$_QuizState _$$_QuizStateFromJson(Map<String, dynamic> json) => _$_QuizState(
-      selectedAnswer: json['selectedAnswer'] as String? ?? '',
+      selectedAnswer: json['selectedAnswer'] as String?,
       correct: (json['correct'] as List<dynamic>?)
-              ?.map((e) => QuestionModel.fromJson(e as Map<String, dynamic>))
-              .toList() ??
-          [],
+          ?.map((e) => QuestionModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
       incorrect: (json['incorrect'] as List<dynamic>?)
-              ?.map((e) => QuestionModel.fromJson(e as Map<String, dynamic>))
-              .toList() ??
-          [],
+          ?.map((e) => QuestionModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
       status: _$enumDecodeNullable(_$QuizStatusEnumMap, json['status']),
     );
 

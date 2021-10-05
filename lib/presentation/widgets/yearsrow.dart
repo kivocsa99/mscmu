@@ -30,9 +30,9 @@ class YearsRow extends HookWidget {
                   child: ListView.builder(
                       controller: scrollcontoller,
                       scrollDirection: Axis.horizontal,
-                      itemCount: years.classes.length,
+                      itemCount: years.classes!.length,
                       itemBuilder: (context, index) {
-                        ClassModel classes = years.classes[index];
+                        ClassModel classes = years.classes![index];
                         return ClassWidget(classes, index);
                       }),
                 ),
@@ -71,7 +71,7 @@ class ClassWidget extends HookWidget {
       child: InkWell(
         onTap: () {
           if (_classModel.isclinical == false) {
-            context.read(prefChangeNotifierProvider).setYearId2(_classModel.id);
+            context.read(prefChangeNotifierProvider).setYearId2(_classModel.id!);
           } else {
             showDialog(
               context: context,
@@ -182,7 +182,7 @@ class ClassWidget extends HookWidget {
               height: 40,
             ),
             subtitle: Container(
-                alignment: Alignment.topCenter, child: Text(_classModel.name)),
+                alignment: Alignment.topCenter, child: Text(_classModel.name!)),
           ),
         ),
       ),

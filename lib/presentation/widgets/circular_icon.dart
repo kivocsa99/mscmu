@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'box_shadow.dart';
 
 class CircularIcon extends StatelessWidget {

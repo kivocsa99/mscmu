@@ -4,9 +4,9 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:motion_toast/motion_toast.dart';
-import 'package:mscmu/application/provider/sharedpref/pref_provider.dart';
-import 'package:mscmu/application/provider/years.repository.provider.dart';
-import 'package:mscmu/presentation/widgets/shimmer_affect.dart';
+import '../../application/provider/sharedpref/pref_provider.dart';
+import '../../application/provider/years.repository.provider.dart';
+import '../widgets/shimmer_affect.dart';
 import '../../domain/models/adminmodel.dart';
 import '../../navigate.dart';
 import 'home_screen.dart';
@@ -86,16 +86,16 @@ class SignUpSCreen extends HookWidget {
                       height: 250,
                       child: CupertinoPicker(
                         looping: true,
-                        children: years.classes
+                        children: years.classes!
                             .map((e) => Center(
-                                  child: Text(e.name),
+                                  child: Text(e.name!),
                                 ))
                             .toList(),
                         itemExtent: 46,
                         onSelectedItemChanged: (index) async {
-                          isclinical.value = years.classes[index].isclinical;
-                          yearId.value = years.classes[index].id;
-                          yearName.value = years.classes[index].name;
+                          isclinical.value = years.classes![index].isclinical!;
+                          yearId.value = years.classes![index].id!;
+                          yearName.value = years.classes![index].name!;
                           _user.value =
                               _user.value.copyWith(yearid: yearId.value);
                         },

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../application/provider/folders.repository.provider.dart';
 import '../../navigate.dart';
@@ -23,7 +24,7 @@ class MainFoldersScreen extends HookWidget {
           scale: 10,
         ),
         centerTitle: true,
-        shape:const RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(20.0),
             bottomRight: Radius.circular(20.0),
@@ -39,16 +40,16 @@ class MainFoldersScreen extends HookWidget {
               data: (data) => data.fold(
                     (l) => Text(l.toString()),
                     (r) => ListView.separated(
-                      separatorBuilder: (context, index) => Divider(),
+                      separatorBuilder: (context, index) =>const Divider(),
                       shrinkWrap: true,
-                      physics:const NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
                         return ListTile(
                           onTap: () {
                             changeScreen(
                                 context, SharedContentScreen(id: r[index].id));
                           },
-                          leading:const Icon(Icons.book),
+                          leading: const Icon(FontAwesomeIcons.folder),
                           title: Text("${r[index].name}"),
                         );
                       },
@@ -58,10 +59,10 @@ class MainFoldersScreen extends HookWidget {
                     ),
                   ),
               loading: () => ListView.separated(
-                    separatorBuilder: (context, index) =>const Divider(),
+                    separatorBuilder: (context, index) => const Divider(),
                     shrinkWrap: true,
-                    physics:const NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) =>const ShimmerAffect(
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) => const ShimmerAffect(
                       height: 50,
                       width: 100,
                     ),

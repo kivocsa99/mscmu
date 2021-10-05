@@ -8,9 +8,9 @@ part of 'classmodel.dart';
 
 _$_ClassModel _$$_ClassModelFromJson(Map<String, dynamic> json) =>
     _$_ClassModel(
-      id: json['id'] as int? ?? 0,
-      name: json['name'] as String? ?? '',
-      isclinical: json['isclinical'] as bool? ?? false,
+      id: json['id'] as int?,
+      name: json['name'] as String?,
+      isclinical: json['isclinical'] as bool?,
     );
 
 Map<String, dynamic> _$$_ClassModelToJson(_$_ClassModel instance) =>

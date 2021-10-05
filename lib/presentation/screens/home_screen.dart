@@ -1,9 +1,12 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:mscmu/presentation/screens/aboutus_screen.dart';
-import 'package:mscmu/presentation/screens/contactus_screen.dart';
-import 'package:mscmu/presentation/screens/importantlinks_screen.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import 'aboutus_screen.dart';
+import 'contactus_screen.dart';
 import 'gallery_screen.dart';
+import 'importantlinks_screen.dart';
 import 'libraryscreen.dart';
 import 'main_screen.dart';
 import 'quiz_list_screen.dart';
@@ -13,6 +16,31 @@ class HomeScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    useEffect(() {
+      FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+        print('heliiiiii');
+
+        if (message.notification != null) {
+          showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                    content: ListTile(
+                      title: Text(message.data.toString()),
+                      subtitle: Text(message.data.toString()),
+                    ),
+                    actions: <Widget>[
+                      IconButton(
+                        icon: Icon(Icons.h_mobiledata),
+                        onPressed: () => Navigator.of(context).pop(),
+                      ),
+                    ],
+                  ));
+          print(
+              'Message also contained a notification: ${message.notification}');
+        }
+      });
+    }, const []);
+
     final _showPage = useState(0);
     final _key = useState(GlobalKey<ScaffoldState>());
     return Scaffold(
@@ -85,12 +113,11 @@ class HomeScreen extends HookWidget {
         children: [
           const MainScreen(),
           LibraryScreen(),
-          const QuizList(),
+          const QuizListScreen(),
           const ImportantLinksScreen(),
           GalleryScreen(),
           const AboutusScreen(),
           const ContactusScreen(),
-          
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -116,7 +143,7 @@ class HomeScreen extends HookWidget {
                       _showPage.value = 1;
                     },
                     icon: const Icon(
-                      Icons.library_books,
+                      FontAwesomeIcons.folderOpen,
                       color: Colors.white,
                     )),
                 const Spacer(),
@@ -126,7 +153,7 @@ class HomeScreen extends HookWidget {
                       _showPage.value = 2;
                     },
                     icon: const Icon(
-                      Icons.quiz_rounded,
+                      FontAwesomeIcons.questionCircle,
                       color: Colors.white,
                     )),
                 const Spacer()

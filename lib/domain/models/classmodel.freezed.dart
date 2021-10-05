@@ -21,7 +21,7 @@ ClassModel _$ClassModelFromJson(Map<String, dynamic> json) {
 class _$ClassModelTearOff {
   const _$ClassModelTearOff();
 
-  _ClassModel call({int id = 0, String name = '', bool isclinical = false}) {
+  _ClassModel call({int? id, String? name, bool? isclinical}) {
     return _ClassModel(
       id: id,
       name: name,
@@ -39,9 +39,9 @@ const $ClassModel = _$ClassModelTearOff();
 
 /// @nodoc
 mixin _$ClassModel {
-  int get id => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
-  bool get isclinical => throw _privateConstructorUsedError;
+  int? get id => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
+  bool? get isclinical => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -54,7 +54,7 @@ abstract class $ClassModelCopyWith<$Res> {
   factory $ClassModelCopyWith(
           ClassModel value, $Res Function(ClassModel) then) =
       _$ClassModelCopyWithImpl<$Res>;
-  $Res call({int id, String name, bool isclinical});
+  $Res call({int? id, String? name, bool? isclinical});
 }
 
 /// @nodoc
@@ -75,15 +75,15 @@ class _$ClassModelCopyWithImpl<$Res> implements $ClassModelCopyWith<$Res> {
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       isclinical: isclinical == freezed
           ? _value.isclinical
           : isclinical // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as bool?,
     ));
   }
 }
@@ -94,7 +94,7 @@ abstract class _$ClassModelCopyWith<$Res> implements $ClassModelCopyWith<$Res> {
           _ClassModel value, $Res Function(_ClassModel) then) =
       __$ClassModelCopyWithImpl<$Res>;
   @override
-  $Res call({int id, String name, bool isclinical});
+  $Res call({int? id, String? name, bool? isclinical});
 }
 
 /// @nodoc
@@ -117,15 +117,15 @@ class __$ClassModelCopyWithImpl<$Res> extends _$ClassModelCopyWithImpl<$Res>
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       isclinical: isclinical == freezed
           ? _value.isclinical
           : isclinical // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as bool?,
     ));
   }
 }
@@ -133,21 +133,17 @@ class __$ClassModelCopyWithImpl<$Res> extends _$ClassModelCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_ClassModel extends _ClassModel {
-  const _$_ClassModel({this.id = 0, this.name = '', this.isclinical = false})
-      : super._();
+  const _$_ClassModel({this.id, this.name, this.isclinical}) : super._();
 
   factory _$_ClassModel.fromJson(Map<String, dynamic> json) =>
       _$$_ClassModelFromJson(json);
 
-  @JsonKey(defaultValue: 0)
   @override
-  final int id;
-  @JsonKey(defaultValue: '')
+  final int? id;
   @override
-  final String name;
-  @JsonKey(defaultValue: false)
+  final String? name;
   @override
-  final bool isclinical;
+  final bool? isclinical;
 
   @override
   String toString() {
@@ -186,7 +182,7 @@ class _$_ClassModel extends _ClassModel {
 }
 
 abstract class _ClassModel extends ClassModel {
-  const factory _ClassModel({int id, String name, bool isclinical}) =
+  const factory _ClassModel({int? id, String? name, bool? isclinical}) =
       _$_ClassModel;
   const _ClassModel._() : super._();
 
@@ -194,11 +190,11 @@ abstract class _ClassModel extends ClassModel {
       _$_ClassModel.fromJson;
 
   @override
-  int get id => throw _privateConstructorUsedError;
+  int? get id => throw _privateConstructorUsedError;
   @override
-  String get name => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
   @override
-  bool get isclinical => throw _privateConstructorUsedError;
+  bool? get isclinical => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$ClassModelCopyWith<_ClassModel> get copyWith =>

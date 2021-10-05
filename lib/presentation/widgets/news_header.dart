@@ -27,7 +27,7 @@ class NewsHeader extends HookWidget {
             data: (data) => Column(children: [
                   CarouselSlider(
                     carouselController: slideController.value,
-                    items: data.picture
+                    items: data.picture!
                         .map((item) => SizedBox(
                               child: Container(
                                 margin:const EdgeInsets.all(5.0),
@@ -60,7 +60,7 @@ class NewsHeader extends HookWidget {
                                                 vertical: 10.0,
                                                 horizontal: 20.0),
                                             child: Text(
-                                              data.title[_index.value],
+                                              data.title![_index.value],
                                               style:const TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 20.0,
@@ -85,7 +85,7 @@ class NewsHeader extends HookWidget {
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: data.picture.asMap().entries.map((entry) {
+                    children: data.picture!.asMap().entries.map((entry) {
                       return GestureDetector(
                         onTap: () =>
                             slideController.value.animateToPage(entry.key),

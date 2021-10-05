@@ -21,8 +21,7 @@ NewsModel _$NewsModelFromJson(Map<String, dynamic> json) {
 class _$NewsModelTearOff {
   const _$NewsModelTearOff();
 
-  _NewsModel call(
-      {List<String> title = const [], List<String> picture = const []}) {
+  _NewsModel call({List<String>? title, List<String>? picture}) {
     return _NewsModel(
       title: title,
       picture: picture,
@@ -39,8 +38,8 @@ const $NewsModel = _$NewsModelTearOff();
 
 /// @nodoc
 mixin _$NewsModel {
-  List<String> get title => throw _privateConstructorUsedError;
-  List<String> get picture => throw _privateConstructorUsedError;
+  List<String>? get title => throw _privateConstructorUsedError;
+  List<String>? get picture => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -52,7 +51,7 @@ mixin _$NewsModel {
 abstract class $NewsModelCopyWith<$Res> {
   factory $NewsModelCopyWith(NewsModel value, $Res Function(NewsModel) then) =
       _$NewsModelCopyWithImpl<$Res>;
-  $Res call({List<String> title, List<String> picture});
+  $Res call({List<String>? title, List<String>? picture});
 }
 
 /// @nodoc
@@ -72,11 +71,11 @@ class _$NewsModelCopyWithImpl<$Res> implements $NewsModelCopyWith<$Res> {
       title: title == freezed
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as List<String>?,
       picture: picture == freezed
           ? _value.picture
           : picture // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as List<String>?,
     ));
   }
 }
@@ -87,7 +86,7 @@ abstract class _$NewsModelCopyWith<$Res> implements $NewsModelCopyWith<$Res> {
           _NewsModel value, $Res Function(_NewsModel) then) =
       __$NewsModelCopyWithImpl<$Res>;
   @override
-  $Res call({List<String> title, List<String> picture});
+  $Res call({List<String>? title, List<String>? picture});
 }
 
 /// @nodoc
@@ -108,11 +107,11 @@ class __$NewsModelCopyWithImpl<$Res> extends _$NewsModelCopyWithImpl<$Res>
       title: title == freezed
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as List<String>?,
       picture: picture == freezed
           ? _value.picture
           : picture // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as List<String>?,
     ));
   }
 }
@@ -120,18 +119,15 @@ class __$NewsModelCopyWithImpl<$Res> extends _$NewsModelCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_NewsModel extends _NewsModel {
-  const _$_NewsModel({this.title = const [], this.picture = const []})
-      : super._();
+  const _$_NewsModel({this.title, this.picture}) : super._();
 
   factory _$_NewsModel.fromJson(Map<String, dynamic> json) =>
       _$$_NewsModelFromJson(json);
 
-  @JsonKey(defaultValue: const [])
   @override
-  final List<String> title;
-  @JsonKey(defaultValue: const [])
+  final List<String>? title;
   @override
-  final List<String> picture;
+  final List<String>? picture;
 
   @override
   String toString() {
@@ -166,7 +162,7 @@ class _$_NewsModel extends _NewsModel {
 }
 
 abstract class _NewsModel extends NewsModel {
-  const factory _NewsModel({List<String> title, List<String> picture}) =
+  const factory _NewsModel({List<String>? title, List<String>? picture}) =
       _$_NewsModel;
   const _NewsModel._() : super._();
 
@@ -174,9 +170,9 @@ abstract class _NewsModel extends NewsModel {
       _$_NewsModel.fromJson;
 
   @override
-  List<String> get title => throw _privateConstructorUsedError;
+  List<String>? get title => throw _privateConstructorUsedError;
   @override
-  List<String> get picture => throw _privateConstructorUsedError;
+  List<String>? get picture => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$NewsModelCopyWith<_NewsModel> get copyWith =>

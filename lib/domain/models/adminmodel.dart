@@ -5,14 +5,13 @@ part 'adminmodel.g.dart';
 @freezed
 abstract class AdminModel implements _$AdminModel {
   const factory AdminModel({
-    @Default('') String id,
-    @Default('') String name,
-    @Default('') String email,
-    @Default('') String avatar,
-    @Default(0) int yearid,
-    @Default(false) bool accepted,
-    @Default(false) bool fulladmin,
-
+    String? id,
+    String? name,
+    String? email,
+    String? avatar,
+    int? yearid,
+    bool? accepted,
+    bool? fulladmin,
   }) = _AdminModel;
   const AdminModel._();
   factory AdminModel.fromJson(Map<String, dynamic> json) =>

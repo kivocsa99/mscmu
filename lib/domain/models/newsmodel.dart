@@ -5,8 +5,8 @@ part 'newsmodel.g.dart';
 @freezed
 abstract class NewsModel implements _$NewsModel {
   const factory NewsModel({
-    @Default([]) List<String> title,
-    @Default([]) List<String> picture,
+     List<String>? title,
+     List<String>? picture,
   }) = _NewsModel;
   const NewsModel._();
   factory NewsModel.fromJson(Map<String, dynamic> json) =>

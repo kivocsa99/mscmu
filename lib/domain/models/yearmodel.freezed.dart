@@ -21,7 +21,7 @@ YearsModel _$YearsModelFromJson(Map<String, dynamic> json) {
 class _$YearsModelTearOff {
   const _$YearsModelTearOff();
 
-  _YearsModel call({List<ClassModel> classes = const []}) {
+  _YearsModel call({List<ClassModel>? classes}) {
     return _YearsModel(
       classes: classes,
     );
@@ -37,7 +37,7 @@ const $YearsModel = _$YearsModelTearOff();
 
 /// @nodoc
 mixin _$YearsModel {
-  List<ClassModel> get classes => throw _privateConstructorUsedError;
+  List<ClassModel>? get classes => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -50,7 +50,7 @@ abstract class $YearsModelCopyWith<$Res> {
   factory $YearsModelCopyWith(
           YearsModel value, $Res Function(YearsModel) then) =
       _$YearsModelCopyWithImpl<$Res>;
-  $Res call({List<ClassModel> classes});
+  $Res call({List<ClassModel>? classes});
 }
 
 /// @nodoc
@@ -69,7 +69,7 @@ class _$YearsModelCopyWithImpl<$Res> implements $YearsModelCopyWith<$Res> {
       classes: classes == freezed
           ? _value.classes
           : classes // ignore: cast_nullable_to_non_nullable
-              as List<ClassModel>,
+              as List<ClassModel>?,
     ));
   }
 }
@@ -80,7 +80,7 @@ abstract class _$YearsModelCopyWith<$Res> implements $YearsModelCopyWith<$Res> {
           _YearsModel value, $Res Function(_YearsModel) then) =
       __$YearsModelCopyWithImpl<$Res>;
   @override
-  $Res call({List<ClassModel> classes});
+  $Res call({List<ClassModel>? classes});
 }
 
 /// @nodoc
@@ -101,7 +101,7 @@ class __$YearsModelCopyWithImpl<$Res> extends _$YearsModelCopyWithImpl<$Res>
       classes: classes == freezed
           ? _value.classes
           : classes // ignore: cast_nullable_to_non_nullable
-              as List<ClassModel>,
+              as List<ClassModel>?,
     ));
   }
 }
@@ -109,14 +109,13 @@ class __$YearsModelCopyWithImpl<$Res> extends _$YearsModelCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_YearsModel extends _YearsModel {
-  const _$_YearsModel({this.classes = const []}) : super._();
+  const _$_YearsModel({this.classes}) : super._();
 
   factory _$_YearsModel.fromJson(Map<String, dynamic> json) =>
       _$$_YearsModelFromJson(json);
 
-  @JsonKey(defaultValue: const [])
   @override
-  final List<ClassModel> classes;
+  final List<ClassModel>? classes;
 
   @override
   String toString() {
@@ -147,14 +146,14 @@ class _$_YearsModel extends _YearsModel {
 }
 
 abstract class _YearsModel extends YearsModel {
-  const factory _YearsModel({List<ClassModel> classes}) = _$_YearsModel;
+  const factory _YearsModel({List<ClassModel>? classes}) = _$_YearsModel;
   const _YearsModel._() : super._();
 
   factory _YearsModel.fromJson(Map<String, dynamic> json) =
       _$_YearsModel.fromJson;
 
   @override
-  List<ClassModel> get classes => throw _privateConstructorUsedError;
+  List<ClassModel>? get classes => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$YearsModelCopyWith<_YearsModel> get copyWith =>

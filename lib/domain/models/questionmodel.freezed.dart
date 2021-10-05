@@ -22,9 +22,7 @@ class _$QuestionModelTearOff {
   const _$QuestionModelTearOff();
 
   _QuestionModel call(
-      {String question = '',
-      String correct = '',
-      List<String> answers = const []}) {
+      {String? question, String? correct, List<String>? answers}) {
     return _QuestionModel(
       question: question,
       correct: correct,
@@ -42,9 +40,9 @@ const $QuestionModel = _$QuestionModelTearOff();
 
 /// @nodoc
 mixin _$QuestionModel {
-  String get question => throw _privateConstructorUsedError;
-  String get correct => throw _privateConstructorUsedError;
-  List<String> get answers => throw _privateConstructorUsedError;
+  String? get question => throw _privateConstructorUsedError;
+  String? get correct => throw _privateConstructorUsedError;
+  List<String>? get answers => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -57,7 +55,7 @@ abstract class $QuestionModelCopyWith<$Res> {
   factory $QuestionModelCopyWith(
           QuestionModel value, $Res Function(QuestionModel) then) =
       _$QuestionModelCopyWithImpl<$Res>;
-  $Res call({String question, String correct, List<String> answers});
+  $Res call({String? question, String? correct, List<String>? answers});
 }
 
 /// @nodoc
@@ -79,15 +77,15 @@ class _$QuestionModelCopyWithImpl<$Res>
       question: question == freezed
           ? _value.question
           : question // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       correct: correct == freezed
           ? _value.correct
           : correct // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       answers: answers == freezed
           ? _value.answers
           : answers // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as List<String>?,
     ));
   }
 }
@@ -99,7 +97,7 @@ abstract class _$QuestionModelCopyWith<$Res>
           _QuestionModel value, $Res Function(_QuestionModel) then) =
       __$QuestionModelCopyWithImpl<$Res>;
   @override
-  $Res call({String question, String correct, List<String> answers});
+  $Res call({String? question, String? correct, List<String>? answers});
 }
 
 /// @nodoc
@@ -123,15 +121,15 @@ class __$QuestionModelCopyWithImpl<$Res>
       question: question == freezed
           ? _value.question
           : question // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       correct: correct == freezed
           ? _value.correct
           : correct // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       answers: answers == freezed
           ? _value.answers
           : answers // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as List<String>?,
     ));
   }
 }
@@ -139,22 +137,18 @@ class __$QuestionModelCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_QuestionModel extends _QuestionModel {
-  const _$_QuestionModel(
-      {this.question = '', this.correct = '', this.answers = const []})
+  const _$_QuestionModel({this.question, this.correct, this.answers})
       : super._();
 
   factory _$_QuestionModel.fromJson(Map<String, dynamic> json) =>
       _$$_QuestionModelFromJson(json);
 
-  @JsonKey(defaultValue: '')
   @override
-  final String question;
-  @JsonKey(defaultValue: '')
+  final String? question;
   @override
-  final String correct;
-  @JsonKey(defaultValue: const [])
+  final String? correct;
   @override
-  final List<String> answers;
+  final List<String>? answers;
 
   @override
   String toString() {
@@ -195,20 +189,20 @@ class _$_QuestionModel extends _QuestionModel {
 
 abstract class _QuestionModel extends QuestionModel {
   const factory _QuestionModel(
-      {String question,
-      String correct,
-      List<String> answers}) = _$_QuestionModel;
+      {String? question,
+      String? correct,
+      List<String>? answers}) = _$_QuestionModel;
   const _QuestionModel._() : super._();
 
   factory _QuestionModel.fromJson(Map<String, dynamic> json) =
       _$_QuestionModel.fromJson;
 
   @override
-  String get question => throw _privateConstructorUsedError;
+  String? get question => throw _privateConstructorUsedError;
   @override
-  String get correct => throw _privateConstructorUsedError;
+  String? get correct => throw _privateConstructorUsedError;
   @override
-  List<String> get answers => throw _privateConstructorUsedError;
+  List<String>? get answers => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$QuestionModelCopyWith<_QuestionModel> get copyWith =>

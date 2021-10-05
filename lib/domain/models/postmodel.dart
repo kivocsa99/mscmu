@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'postmodel.freezed.dart';
 part 'postmodel.g.dart';
@@ -10,10 +11,22 @@ abstract class PostModel implements _$PostModel {
     String? body,
     String? adminavatar,
     String? adminname,
-    String? time,
+    @TimestampConverter() time,
+
     String? image,
   }) = _PostModel;
   const PostModel._();
   factory PostModel.fromJson(Map<String, dynamic> json) =>
       _$PostModelFromJson(json);
+}
+class TimestampConverter implements JsonConverter<DateTime, Timestamp> {
+  const TimestampConverter();
+
+  @override
+  DateTime fromJson(Timestamp timestamp) {
+    return timestamp.toDate();
+  }
+
+  @override
+  Timestamp toJson(DateTime date) => Timestamp.fromDate(date);
 }

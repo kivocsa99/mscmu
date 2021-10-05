@@ -21,10 +21,10 @@ QuizModel _$QuizModelFromJson(Map<String, dynamic> json) {
 class _$QuizModelTearOff {
   const _$QuizModelTearOff();
 
-  _QuizModel call({String? name, int? yearId, List<QuestionModel>? questions}) {
+  _QuizModel call({String? name, int? yearid, List<QuestionModel>? questions}) {
     return _QuizModel(
       name: name,
-      yearId: yearId,
+      yearid: yearid,
       questions: questions,
     );
   }
@@ -40,7 +40,7 @@ const $QuizModel = _$QuizModelTearOff();
 /// @nodoc
 mixin _$QuizModel {
   String? get name => throw _privateConstructorUsedError;
-  int? get yearId => throw _privateConstructorUsedError;
+  int? get yearid => throw _privateConstructorUsedError;
   List<QuestionModel>? get questions => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -53,7 +53,7 @@ mixin _$QuizModel {
 abstract class $QuizModelCopyWith<$Res> {
   factory $QuizModelCopyWith(QuizModel value, $Res Function(QuizModel) then) =
       _$QuizModelCopyWithImpl<$Res>;
-  $Res call({String? name, int? yearId, List<QuestionModel>? questions});
+  $Res call({String? name, int? yearid, List<QuestionModel>? questions});
 }
 
 /// @nodoc
@@ -67,7 +67,7 @@ class _$QuizModelCopyWithImpl<$Res> implements $QuizModelCopyWith<$Res> {
   @override
   $Res call({
     Object? name = freezed,
-    Object? yearId = freezed,
+    Object? yearid = freezed,
     Object? questions = freezed,
   }) {
     return _then(_value.copyWith(
@@ -75,9 +75,9 @@ class _$QuizModelCopyWithImpl<$Res> implements $QuizModelCopyWith<$Res> {
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      yearId: yearId == freezed
-          ? _value.yearId
-          : yearId // ignore: cast_nullable_to_non_nullable
+      yearid: yearid == freezed
+          ? _value.yearid
+          : yearid // ignore: cast_nullable_to_non_nullable
               as int?,
       questions: questions == freezed
           ? _value.questions
@@ -93,7 +93,7 @@ abstract class _$QuizModelCopyWith<$Res> implements $QuizModelCopyWith<$Res> {
           _QuizModel value, $Res Function(_QuizModel) then) =
       __$QuizModelCopyWithImpl<$Res>;
   @override
-  $Res call({String? name, int? yearId, List<QuestionModel>? questions});
+  $Res call({String? name, int? yearid, List<QuestionModel>? questions});
 }
 
 /// @nodoc
@@ -108,7 +108,7 @@ class __$QuizModelCopyWithImpl<$Res> extends _$QuizModelCopyWithImpl<$Res>
   @override
   $Res call({
     Object? name = freezed,
-    Object? yearId = freezed,
+    Object? yearid = freezed,
     Object? questions = freezed,
   }) {
     return _then(_QuizModel(
@@ -116,9 +116,9 @@ class __$QuizModelCopyWithImpl<$Res> extends _$QuizModelCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      yearId: yearId == freezed
-          ? _value.yearId
-          : yearId // ignore: cast_nullable_to_non_nullable
+      yearid: yearid == freezed
+          ? _value.yearid
+          : yearid // ignore: cast_nullable_to_non_nullable
               as int?,
       questions: questions == freezed
           ? _value.questions
@@ -131,7 +131,7 @@ class __$QuizModelCopyWithImpl<$Res> extends _$QuizModelCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_QuizModel extends _QuizModel {
-  const _$_QuizModel({this.name, this.yearId, this.questions}) : super._();
+  const _$_QuizModel({this.name, this.yearid, this.questions}) : super._();
 
   factory _$_QuizModel.fromJson(Map<String, dynamic> json) =>
       _$$_QuizModelFromJson(json);
@@ -139,13 +139,13 @@ class _$_QuizModel extends _QuizModel {
   @override
   final String? name;
   @override
-  final int? yearId;
+  final int? yearid;
   @override
   final List<QuestionModel>? questions;
 
   @override
   String toString() {
-    return 'QuizModel(name: $name, yearId: $yearId, questions: $questions)';
+    return 'QuizModel(name: $name, yearid: $yearid, questions: $questions)';
   }
 
   @override
@@ -154,8 +154,8 @@ class _$_QuizModel extends _QuizModel {
         (other is _QuizModel &&
             (identical(other.name, name) ||
                 const DeepCollectionEquality().equals(other.name, name)) &&
-            (identical(other.yearId, yearId) ||
-                const DeepCollectionEquality().equals(other.yearId, yearId)) &&
+            (identical(other.yearid, yearid) ||
+                const DeepCollectionEquality().equals(other.yearid, yearid)) &&
             (identical(other.questions, questions) ||
                 const DeepCollectionEquality()
                     .equals(other.questions, questions)));
@@ -165,7 +165,7 @@ class _$_QuizModel extends _QuizModel {
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(name) ^
-      const DeepCollectionEquality().hash(yearId) ^
+      const DeepCollectionEquality().hash(yearid) ^
       const DeepCollectionEquality().hash(questions);
 
   @JsonKey(ignore: true)
@@ -182,7 +182,7 @@ class _$_QuizModel extends _QuizModel {
 abstract class _QuizModel extends QuizModel {
   const factory _QuizModel(
       {String? name,
-      int? yearId,
+      int? yearid,
       List<QuestionModel>? questions}) = _$_QuizModel;
   const _QuizModel._() : super._();
 
@@ -192,7 +192,7 @@ abstract class _QuizModel extends QuizModel {
   @override
   String? get name => throw _privateConstructorUsedError;
   @override
-  int? get yearId => throw _privateConstructorUsedError;
+  int? get yearid => throw _privateConstructorUsedError;
   @override
   List<QuestionModel>? get questions => throw _privateConstructorUsedError;
   @override

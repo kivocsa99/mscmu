@@ -8,12 +8,10 @@ part of 'questionmodel.dart';
 
 _$_QuestionModel _$$_QuestionModelFromJson(Map<String, dynamic> json) =>
     _$_QuestionModel(
-      question: json['question'] as String? ?? '',
-      correct: json['correct'] as String? ?? '',
-      answers: (json['answers'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList() ??
-          [],
+      question: json['question'] as String?,
+      correct: json['correct'] as String?,
+      answers:
+          (json['answers'] as List<dynamic>?)?.map((e) => e as String).toList(),
     );
 
 Map<String, dynamic> _$$_QuestionModelToJson(_$_QuestionModel instance) =>

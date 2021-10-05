@@ -6,9 +6,12 @@ import 'package:flutter/painting.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:motion_toast/motion_toast.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:share/share.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../application/downloader/use_cases/download_file/download_file.input.dart';
 import '../../application/downloader/use_cases/download_file/download_file.use_case.dart';
 import '../../application/provider/content.repository.provider.dart';
@@ -128,7 +131,8 @@ class _SharedContentScreenState extends State<SharedContentScreen> {
                                                 SharedContentScreen(
                                                     id: folders![index].id));
                                           },
-                                          leading: const Icon(Icons.book),
+                                          leading: const Icon(
+                                              FontAwesomeIcons.folderOpen),
                                           title:
                                               Text("${folders![index].name}"),
                                         ),
@@ -171,6 +175,34 @@ class _SharedContentScreenState extends State<SharedContentScreen> {
                                           child: ListTile(
                                             title:
                                                 Text('${files![index].name}'),
+                                            leading: files![index]
+                                                    .name!
+                                                    .endsWith("pdf")
+                                                ? const Icon(
+                                                    FontAwesomeIcons.filePdf)
+                                                : files![index]
+                                                        .name!
+                                                        .endsWith("pptx")
+                                                    ? const Icon(
+                                                        FontAwesomeIcons
+                                                            .filePowerpoint)
+                                                    : extenstions.any(
+                                                            (element) =>
+                                                                files![index]
+                                                                    .name!
+                                                                    .endsWith(
+                                                                        element))
+                                                        ? const Icon(
+                                                            FontAwesomeIcons
+                                                                .fileAudio)
+                                                        : files![index]
+                                                                .name!
+                                                                .endsWith("ppt")
+                                                            ? const Icon(
+                                                                FontAwesomeIcons
+                                                                    .filePowerpoint)
+                                                            : const Icon(
+                                                                FontAwesomeIcons.link),
                                           ),
                                         ),
                                         actions: <Widget>[
@@ -181,7 +213,8 @@ class _SharedContentScreenState extends State<SharedContentScreen> {
                                               ? IconSlideAction(
                                                   caption: 'Play',
                                                   color: Colors.blue,
-                                                  icon: Icons.play_circle,
+                                                  icon: FontAwesomeIcons
+                                                      .playCircle,
                                                   onTap: () async {
                                                     changeScreen(
                                                         context,
@@ -192,117 +225,142 @@ class _SharedContentScreenState extends State<SharedContentScreen> {
                                                   },
                                                 )
                                               : const SizedBox.shrink(),
-                                          IconSlideAction(
-                                            caption: 'Download',
-                                            color: Colors.green,
-                                            icon: Icons.download,
-                                            onTap: () async {
-                                              final status = await Permission
-                                                  .storage
-                                                  .request();
-                                              if (status.isGranted) {
-                                                String file =
-                                                    files![index].name!;
+                                          files![index].out_link == null
+                                              ? IconSlideAction(
+                                                  caption: 'Download',
+                                                  color: Colors.green,
+                                                  icon:
+                                                      FontAwesomeIcons.download,
+                                                  onTap: () async {
+                                                    final status =
+                                                        await Permission.storage
+                                                            .request();
+                                                    if (status.isGranted) {
+                                                      String file =
+                                                          files![index].name!;
 
-                                                if (Platform.isAndroid) {
-                                                  externalStorageDirPath.value =
-                                                      "/storage/emulated/0/Download/";
-                                                  exists.value = await File(
-                                                          "/storage/emulated/0/Download/$file")
-                                                      .exists();
-                                                } else {
-                                                  externalStorageDirPath.value =
-                                                      (await getApplicationDocumentsDirectory())
-                                                          .absolute
-                                                          .path;
-                                                  exists.value = await File(
-                                                          "${externalStorageDirPath.value}/$file")
-                                                      .exists();
-                                                }
+                                                      if (Platform.isAndroid) {
+                                                        externalStorageDirPath
+                                                                .value =
+                                                            "/storage/emulated/0/Download/";
+                                                        exists
+                                                            .value = await File(
+                                                                "/storage/emulated/0/Download/$file")
+                                                            .exists();
+                                                      } else {
+                                                        externalStorageDirPath
+                                                                .value =
+                                                            (await getApplicationDocumentsDirectory())
+                                                                .absolute
+                                                                .path;
+                                                        exists
+                                                            .value = await File(
+                                                                "${externalStorageDirPath.value}/$file")
+                                                            .exists();
+                                                      }
 
-                                                if (exists.value) {
-                                                  MotionToast.error(
-                                                    title: "Download Error",
-                                                    titleStyle: const TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                    description:
-                                                        "You already have this file , Therefore it won't be downloaded",
-                                                    descriptionStyle:
-                                                        const TextStyle(
-                                                            fontSize: 12),
-                                                    width: 300,
-                                                  ).show(context);
-                                                } else {
-                                                  await context
-                                                      .read(
-                                                          downloaderUseCaseProvider)
-                                                      .execute(
-                                                          DownloadFileUseCaseInput(
-                                                              filename:
-                                                                  files![index]
-                                                                      .name,
-                                                              url: files![index]
-                                                                  .url,
-                                                              directory:
-                                                                  externalStorageDirPath
-                                                                      .value))
-                                                      .then((result) =>
-                                                          result.fold((l) {
-                                                            MotionToast.error(
-                                                              title:
-                                                                  "Download Error",
-                                                              titleStyle: const TextStyle(
+                                                      if (exists.value) {
+                                                        MotionToast.error(
+                                                          title:
+                                                              "Download Error",
+                                                          titleStyle:
+                                                              const TextStyle(
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .bold),
-                                                              description:
-                                                                  "Sorry , Error While Downloading ",
-                                                              descriptionStyle:
-                                                                  const TextStyle(
-                                                                      fontSize:
-                                                                          12),
-                                                              width: 300,
-                                                            ).show(context);
-                                                          }, (r) {
-                                                            MotionToast.success(
-                                                              title:
-                                                                  "File Downloaded successfully",
-                                                              titleStyle: const TextStyle(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold),
-                                                              description:
-                                                                  "File has been downloaded , PLease check your notification",
-                                                              descriptionStyle:
-                                                                  const TextStyle(
-                                                                      fontSize:
-                                                                          12),
-                                                              width: 300,
-                                                            ).show(context);
-                                                          }));
-                                                }
-                                              } else {
-                                                 MotionToast.error(
-                                                              title:
-                                                                  "Permission Denied",
-                                                              titleStyle: const TextStyle(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold),
-                                                              description:
-                                                                  "Sorry , You have Denied Folder access permission ",
-                                                              descriptionStyle:
-                                                                  const TextStyle(
-                                                                      fontSize:
-                                                                          12),
-                                                              width: 300,
-                                                            ).show(context);
-                                              }
-                                            },
-                                          ),
+                                                          description:
+                                                              "You already have this file , Therefore it won't be downloaded",
+                                                          descriptionStyle:
+                                                              const TextStyle(
+                                                                  fontSize: 12),
+                                                          width: 300,
+                                                        ).show(context);
+                                                      } else {
+                                                        await context
+                                                            .read(
+                                                                downloaderUseCaseProvider)
+                                                            .execute(DownloadFileUseCaseInput(
+                                                                filename:
+                                                                    files![index]
+                                                                        .name,
+                                                                url: files![
+                                                                        index]
+                                                                    .url,
+                                                                directory:
+                                                                    externalStorageDirPath
+                                                                        .value))
+                                                            .then(
+                                                                (result) =>
+                                                                    result.fold(
+                                                                        (l) {
+                                                                      MotionToast
+                                                                          .error(
+                                                                        title:
+                                                                            "Download Error",
+                                                                        titleStyle:
+                                                                            const TextStyle(fontWeight: FontWeight.bold),
+                                                                        description:
+                                                                            "Sorry , Error While Downloading ",
+                                                                        descriptionStyle:
+                                                                            const TextStyle(fontSize: 12),
+                                                                        width:
+                                                                            300,
+                                                                      ).show(
+                                                                          context);
+                                                                    }, (r) {
+                                                                      MotionToast
+                                                                          .success(
+                                                                        title:
+                                                                            "File Downloaded successfully",
+                                                                        titleStyle:
+                                                                            const TextStyle(fontWeight: FontWeight.bold),
+                                                                        description:
+                                                                            "File has been downloaded , PLease check your notification",
+                                                                        descriptionStyle:
+                                                                            const TextStyle(fontSize: 12),
+                                                                        width:
+                                                                            300,
+                                                                      ).show(
+                                                                          context);
+                                                                    }));
+                                                      }
+                                                    } else {
+                                                      MotionToast.error(
+                                                        title:
+                                                            "Permission Denied",
+                                                        titleStyle:
+                                                            const TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                        description:
+                                                            "Sorry , You have Denied Folder access permission ",
+                                                        descriptionStyle:
+                                                            const TextStyle(
+                                                                fontSize: 12),
+                                                        width: 300,
+                                                      ).show(context);
+                                                    }
+                                                  },
+                                                )
+                                              : IconSlideAction(
+                                                  caption: 'Open',
+                                                  color: Colors.red,
+                                                  icon: Icons.open_in_browser,
+                                                  onTap: () async {
+                                                    await launch(files![index]
+                                                        .out_link!);
+                                                  }),
                                         ],
-                                        secondaryActions: <Widget>[],
+                                        secondaryActions: <Widget>[
+                                          IconSlideAction(
+                                              caption: 'Share',
+                                              color: Colors.red,
+                                              icon: FontAwesomeIcons.share,
+                                              onTap: () async {
+                                                Share.share(files![index].url!);
+                                              }),
+                                        ],
                                       );
                                     },
                                     itemCount: files!.length,

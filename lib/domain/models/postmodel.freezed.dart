@@ -27,7 +27,7 @@ class _$PostModelTearOff {
       String? body,
       String? adminavatar,
       String? adminname,
-      String? time,
+      @TimestampConverter() dynamic time,
       String? image}) {
     return _PostModel(
       yearid: yearid,
@@ -55,7 +55,8 @@ mixin _$PostModel {
   String? get body => throw _privateConstructorUsedError;
   String? get adminavatar => throw _privateConstructorUsedError;
   String? get adminname => throw _privateConstructorUsedError;
-  String? get time => throw _privateConstructorUsedError;
+  @TimestampConverter()
+  dynamic get time => throw _privateConstructorUsedError;
   String? get image => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -74,7 +75,7 @@ abstract class $PostModelCopyWith<$Res> {
       String? body,
       String? adminavatar,
       String? adminname,
-      String? time,
+      @TimestampConverter() dynamic time,
       String? image});
 }
 
@@ -120,7 +121,7 @@ class _$PostModelCopyWithImpl<$Res> implements $PostModelCopyWith<$Res> {
       time: time == freezed
           ? _value.time
           : time // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as dynamic,
       image: image == freezed
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
@@ -141,7 +142,7 @@ abstract class _$PostModelCopyWith<$Res> implements $PostModelCopyWith<$Res> {
       String? body,
       String? adminavatar,
       String? adminname,
-      String? time,
+      @TimestampConverter() dynamic time,
       String? image});
 }
 
@@ -185,10 +186,7 @@ class __$PostModelCopyWithImpl<$Res> extends _$PostModelCopyWithImpl<$Res>
           ? _value.adminname
           : adminname // ignore: cast_nullable_to_non_nullable
               as String?,
-      time: time == freezed
-          ? _value.time
-          : time // ignore: cast_nullable_to_non_nullable
-              as String?,
+      time: time == freezed ? _value.time : time,
       image: image == freezed
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
@@ -206,7 +204,7 @@ class _$_PostModel extends _PostModel {
       this.body,
       this.adminavatar,
       this.adminname,
-      this.time,
+      @TimestampConverter() this.time,
       this.image})
       : super._();
 
@@ -224,7 +222,8 @@ class _$_PostModel extends _PostModel {
   @override
   final String? adminname;
   @override
-  final String? time;
+  @TimestampConverter()
+  final dynamic time;
   @override
   final String? image;
 
@@ -284,7 +283,7 @@ abstract class _PostModel extends PostModel {
       String? body,
       String? adminavatar,
       String? adminname,
-      String? time,
+      @TimestampConverter() dynamic time,
       String? image}) = _$_PostModel;
   const _PostModel._() : super._();
 
@@ -302,7 +301,8 @@ abstract class _PostModel extends PostModel {
   @override
   String? get adminname => throw _privateConstructorUsedError;
   @override
-  String? get time => throw _privateConstructorUsedError;
+  @TimestampConverter()
+  dynamic get time => throw _privateConstructorUsedError;
   @override
   String? get image => throw _privateConstructorUsedError;
   @override

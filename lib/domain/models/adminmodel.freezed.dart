@@ -22,13 +22,13 @@ class _$AdminModelTearOff {
   const _$AdminModelTearOff();
 
   _AdminModel call(
-      {String id = '',
-      String name = '',
-      String email = '',
-      String avatar = '',
-      int yearid = 0,
-      bool accepted = false,
-      bool fulladmin = false}) {
+      {String? id,
+      String? name,
+      String? email,
+      String? avatar,
+      int? yearid,
+      bool? accepted,
+      bool? fulladmin}) {
     return _AdminModel(
       id: id,
       name: name,
@@ -50,13 +50,13 @@ const $AdminModel = _$AdminModelTearOff();
 
 /// @nodoc
 mixin _$AdminModel {
-  String get id => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
-  String get email => throw _privateConstructorUsedError;
-  String get avatar => throw _privateConstructorUsedError;
-  int get yearid => throw _privateConstructorUsedError;
-  bool get accepted => throw _privateConstructorUsedError;
-  bool get fulladmin => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
+  String? get email => throw _privateConstructorUsedError;
+  String? get avatar => throw _privateConstructorUsedError;
+  int? get yearid => throw _privateConstructorUsedError;
+  bool? get accepted => throw _privateConstructorUsedError;
+  bool? get fulladmin => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -70,13 +70,13 @@ abstract class $AdminModelCopyWith<$Res> {
           AdminModel value, $Res Function(AdminModel) then) =
       _$AdminModelCopyWithImpl<$Res>;
   $Res call(
-      {String id,
-      String name,
-      String email,
-      String avatar,
-      int yearid,
-      bool accepted,
-      bool fulladmin});
+      {String? id,
+      String? name,
+      String? email,
+      String? avatar,
+      int? yearid,
+      bool? accepted,
+      bool? fulladmin});
 }
 
 /// @nodoc
@@ -101,31 +101,31 @@ class _$AdminModelCopyWithImpl<$Res> implements $AdminModelCopyWith<$Res> {
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       email: email == freezed
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       avatar: avatar == freezed
           ? _value.avatar
           : avatar // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       yearid: yearid == freezed
           ? _value.yearid
           : yearid // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       accepted: accepted == freezed
           ? _value.accepted
           : accepted // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as bool?,
       fulladmin: fulladmin == freezed
           ? _value.fulladmin
           : fulladmin // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as bool?,
     ));
   }
 }
@@ -137,13 +137,13 @@ abstract class _$AdminModelCopyWith<$Res> implements $AdminModelCopyWith<$Res> {
       __$AdminModelCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String id,
-      String name,
-      String email,
-      String avatar,
-      int yearid,
-      bool accepted,
-      bool fulladmin});
+      {String? id,
+      String? name,
+      String? email,
+      String? avatar,
+      int? yearid,
+      bool? accepted,
+      bool? fulladmin});
 }
 
 /// @nodoc
@@ -170,31 +170,31 @@ class __$AdminModelCopyWithImpl<$Res> extends _$AdminModelCopyWithImpl<$Res>
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       email: email == freezed
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       avatar: avatar == freezed
           ? _value.avatar
           : avatar // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       yearid: yearid == freezed
           ? _value.yearid
           : yearid // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       accepted: accepted == freezed
           ? _value.accepted
           : accepted // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as bool?,
       fulladmin: fulladmin == freezed
           ? _value.fulladmin
           : fulladmin // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as bool?,
     ));
   }
 }
@@ -203,39 +203,32 @@ class __$AdminModelCopyWithImpl<$Res> extends _$AdminModelCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_AdminModel extends _AdminModel {
   const _$_AdminModel(
-      {this.id = '',
-      this.name = '',
-      this.email = '',
-      this.avatar = '',
-      this.yearid = 0,
-      this.accepted = false,
-      this.fulladmin = false})
+      {this.id,
+      this.name,
+      this.email,
+      this.avatar,
+      this.yearid,
+      this.accepted,
+      this.fulladmin})
       : super._();
 
   factory _$_AdminModel.fromJson(Map<String, dynamic> json) =>
       _$$_AdminModelFromJson(json);
 
-  @JsonKey(defaultValue: '')
   @override
-  final String id;
-  @JsonKey(defaultValue: '')
+  final String? id;
   @override
-  final String name;
-  @JsonKey(defaultValue: '')
+  final String? name;
   @override
-  final String email;
-  @JsonKey(defaultValue: '')
+  final String? email;
   @override
-  final String avatar;
-  @JsonKey(defaultValue: 0)
+  final String? avatar;
   @override
-  final int yearid;
-  @JsonKey(defaultValue: false)
+  final int? yearid;
   @override
-  final bool accepted;
-  @JsonKey(defaultValue: false)
+  final bool? accepted;
   @override
-  final bool fulladmin;
+  final bool? fulladmin;
 
   @override
   String toString() {
@@ -288,32 +281,32 @@ class _$_AdminModel extends _AdminModel {
 
 abstract class _AdminModel extends AdminModel {
   const factory _AdminModel(
-      {String id,
-      String name,
-      String email,
-      String avatar,
-      int yearid,
-      bool accepted,
-      bool fulladmin}) = _$_AdminModel;
+      {String? id,
+      String? name,
+      String? email,
+      String? avatar,
+      int? yearid,
+      bool? accepted,
+      bool? fulladmin}) = _$_AdminModel;
   const _AdminModel._() : super._();
 
   factory _AdminModel.fromJson(Map<String, dynamic> json) =
       _$_AdminModel.fromJson;
 
   @override
-  String get id => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
   @override
-  String get name => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
   @override
-  String get email => throw _privateConstructorUsedError;
+  String? get email => throw _privateConstructorUsedError;
   @override
-  String get avatar => throw _privateConstructorUsedError;
+  String? get avatar => throw _privateConstructorUsedError;
   @override
-  int get yearid => throw _privateConstructorUsedError;
+  int? get yearid => throw _privateConstructorUsedError;
   @override
-  bool get accepted => throw _privateConstructorUsedError;
+  bool? get accepted => throw _privateConstructorUsedError;
   @override
-  bool get fulladmin => throw _privateConstructorUsedError;
+  bool? get fulladmin => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$AdminModelCopyWith<_AdminModel> get copyWith =>

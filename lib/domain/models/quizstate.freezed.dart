@@ -22,9 +22,9 @@ class _$QuizStateTearOff {
   const _$QuizStateTearOff();
 
   _QuizState call(
-      {String selectedAnswer = '',
-      List<QuestionModel> correct = const [],
-      List<QuestionModel> incorrect = const [],
+      {String? selectedAnswer,
+      List<QuestionModel>? correct,
+      List<QuestionModel>? incorrect,
       QuizStatus? status}) {
     return _QuizState(
       selectedAnswer: selectedAnswer,
@@ -44,9 +44,9 @@ const $QuizState = _$QuizStateTearOff();
 
 /// @nodoc
 mixin _$QuizState {
-  String get selectedAnswer => throw _privateConstructorUsedError;
-  List<QuestionModel> get correct => throw _privateConstructorUsedError;
-  List<QuestionModel> get incorrect => throw _privateConstructorUsedError;
+  String? get selectedAnswer => throw _privateConstructorUsedError;
+  List<QuestionModel>? get correct => throw _privateConstructorUsedError;
+  List<QuestionModel>? get incorrect => throw _privateConstructorUsedError;
   QuizStatus? get status => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -60,9 +60,9 @@ abstract class $QuizStateCopyWith<$Res> {
   factory $QuizStateCopyWith(QuizState value, $Res Function(QuizState) then) =
       _$QuizStateCopyWithImpl<$Res>;
   $Res call(
-      {String selectedAnswer,
-      List<QuestionModel> correct,
-      List<QuestionModel> incorrect,
+      {String? selectedAnswer,
+      List<QuestionModel>? correct,
+      List<QuestionModel>? incorrect,
       QuizStatus? status});
 }
 
@@ -85,15 +85,15 @@ class _$QuizStateCopyWithImpl<$Res> implements $QuizStateCopyWith<$Res> {
       selectedAnswer: selectedAnswer == freezed
           ? _value.selectedAnswer
           : selectedAnswer // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       correct: correct == freezed
           ? _value.correct
           : correct // ignore: cast_nullable_to_non_nullable
-              as List<QuestionModel>,
+              as List<QuestionModel>?,
       incorrect: incorrect == freezed
           ? _value.incorrect
           : incorrect // ignore: cast_nullable_to_non_nullable
-              as List<QuestionModel>,
+              as List<QuestionModel>?,
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -109,9 +109,9 @@ abstract class _$QuizStateCopyWith<$Res> implements $QuizStateCopyWith<$Res> {
       __$QuizStateCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String selectedAnswer,
-      List<QuestionModel> correct,
-      List<QuestionModel> incorrect,
+      {String? selectedAnswer,
+      List<QuestionModel>? correct,
+      List<QuestionModel>? incorrect,
       QuizStatus? status});
 }
 
@@ -135,15 +135,15 @@ class __$QuizStateCopyWithImpl<$Res> extends _$QuizStateCopyWithImpl<$Res>
       selectedAnswer: selectedAnswer == freezed
           ? _value.selectedAnswer
           : selectedAnswer // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       correct: correct == freezed
           ? _value.correct
           : correct // ignore: cast_nullable_to_non_nullable
-              as List<QuestionModel>,
+              as List<QuestionModel>?,
       incorrect: incorrect == freezed
           ? _value.incorrect
           : incorrect // ignore: cast_nullable_to_non_nullable
-              as List<QuestionModel>,
+              as List<QuestionModel>?,
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -156,24 +156,18 @@ class __$QuizStateCopyWithImpl<$Res> extends _$QuizStateCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_QuizState extends _QuizState {
   const _$_QuizState(
-      {this.selectedAnswer = '',
-      this.correct = const [],
-      this.incorrect = const [],
-      this.status})
+      {this.selectedAnswer, this.correct, this.incorrect, this.status})
       : super._();
 
   factory _$_QuizState.fromJson(Map<String, dynamic> json) =>
       _$$_QuizStateFromJson(json);
 
-  @JsonKey(defaultValue: '')
   @override
-  final String selectedAnswer;
-  @JsonKey(defaultValue: const [])
+  final String? selectedAnswer;
   @override
-  final List<QuestionModel> correct;
-  @JsonKey(defaultValue: const [])
+  final List<QuestionModel>? correct;
   @override
-  final List<QuestionModel> incorrect;
+  final List<QuestionModel>? incorrect;
   @override
   final QuizStatus? status;
 
@@ -220,9 +214,9 @@ class _$_QuizState extends _QuizState {
 
 abstract class _QuizState extends QuizState {
   const factory _QuizState(
-      {String selectedAnswer,
-      List<QuestionModel> correct,
-      List<QuestionModel> incorrect,
+      {String? selectedAnswer,
+      List<QuestionModel>? correct,
+      List<QuestionModel>? incorrect,
       QuizStatus? status}) = _$_QuizState;
   const _QuizState._() : super._();
 
@@ -230,11 +224,11 @@ abstract class _QuizState extends QuizState {
       _$_QuizState.fromJson;
 
   @override
-  String get selectedAnswer => throw _privateConstructorUsedError;
+  String? get selectedAnswer => throw _privateConstructorUsedError;
   @override
-  List<QuestionModel> get correct => throw _privateConstructorUsedError;
+  List<QuestionModel>? get correct => throw _privateConstructorUsedError;
   @override
-  List<QuestionModel> get incorrect => throw _privateConstructorUsedError;
+  List<QuestionModel>? get incorrect => throw _privateConstructorUsedError;
   @override
   QuizStatus? get status => throw _privateConstructorUsedError;
   @override

@@ -1,6 +1,8 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+
 import 'filemodel.dart';
 import 'foldermodel.dart';
+
 part 'contentmodel.freezed.dart';
 part 'contentmodel.g.dart';
 

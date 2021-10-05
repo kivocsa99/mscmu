@@ -12,7 +12,7 @@ _$_PostModel _$$_PostModelFromJson(Map<String, dynamic> json) => _$_PostModel(
       body: json['body'] as String?,
       adminavatar: json['adminavatar'] as String?,
       adminname: json['adminname'] as String?,
-      time: json['time'] as String?,
+      time: json['time'],
       image: json['image'] as String?,
     );
 

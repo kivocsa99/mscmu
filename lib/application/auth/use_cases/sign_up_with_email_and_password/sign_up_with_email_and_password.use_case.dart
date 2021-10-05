@@ -25,7 +25,7 @@ class SignUpWithEmailAndPasswordUseCase
   @override
   Future<Either<IFailure, Unit>> execute(input) async {
     final result = await _authFacade!.signUpWithEmailAndPassword(
-        email: input.user!.email, password: input.password!);
+        email: input.user!.email!, password: input.password!);
     return result.fold(
       (failure) => left(failure),
       (uid) =>

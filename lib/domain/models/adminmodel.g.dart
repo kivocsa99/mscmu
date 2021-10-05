@@ -8,13 +8,13 @@ part of 'adminmodel.dart';
 
 _$_AdminModel _$$_AdminModelFromJson(Map<String, dynamic> json) =>
     _$_AdminModel(
-      id: json['id'] as String? ?? '',
-      name: json['name'] as String? ?? '',
-      email: json['email'] as String? ?? '',
-      avatar: json['avatar'] as String? ?? '',
-      yearid: json['yearid'] as int? ?? 0,
-      accepted: json['accepted'] as bool? ?? false,
-      fulladmin: json['fulladmin'] as bool? ?? false,
+      id: json['id'] as String?,
+      name: json['name'] as String?,
+      email: json['email'] as String?,
+      avatar: json['avatar'] as String?,
+      yearid: json['yearid'] as int?,
+      accepted: json['accepted'] as bool?,
+      fulladmin: json['fulladmin'] as bool?,
     );
 
 Map<String, dynamic> _$$_AdminModelToJson(_$_AdminModel instance) =>

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:mscmu/presentation/screens/on_boarding_screen.dart';
+import 'presentation/screens/on_boarding_screen.dart';
 import 'application/provider/sharedpref/pref_provider.dart';
 import 'presentation/screens/home_screen.dart';
 

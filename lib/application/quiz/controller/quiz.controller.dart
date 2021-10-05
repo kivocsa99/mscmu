@@ -1,10 +1,8 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
 import '../../../domain/models/questionmodel.dart';
 import '../../../domain/models/quizstate.dart';
 
-final quizControllerProvider =
-    StateNotifierProvider.autoDispose<QuizController, QuizState>(
+final quizControllerProvider = StateNotifierProvider<QuizController, QuizState>(
   (ref) => QuizController(),
 );
 
@@ -16,13 +14,13 @@ class QuizController extends StateNotifier<QuizState> {
     if (currentQuestion.correct == answer) {
       state = state.copyWith(
         selectedAnswer: answer,
-        correct: state.correct..add(currentQuestion),
+        correct: [...state.correct!, currentQuestion],
         status: QuizStatus.correct,
       );
     } else {
       state = state.copyWith(
         selectedAnswer: answer,
-        incorrect: state.incorrect..add(currentQuestion),
+        incorrect: [...state.incorrect!, currentQuestion],
         status: QuizStatus.incorrect,
       );
     }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ContactusScreen extends HookWidget {
@@ -11,7 +12,6 @@ class ContactusScreen extends HookWidget {
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        // mainAxisAlignment: MainAxisAlignment.,
         children: [
           const SizedBox(
             height: 10,
@@ -34,24 +34,40 @@ class ContactusScreen extends HookWidget {
             padding: const EdgeInsets.all(15.0),
             child: GestureDetector(
               onTap: () async {
+                //todo iphone
                 try {
                   bool launched = await launch('fb://page/1446249115607763',
-                      forceSafariVC: false);
+                      forceSafariVC: false,forceWebView: false);
 
                   if (!launched) {
                     await launch(
                         'https://www.facebook.com/medicine.surgery.mutah',
-                        forceSafariVC: false);
+                        forceSafariVC: false,forceWebView: false);
                   }
                 } catch (e) {
                   await launch(
                       'https://www.facebook.com/medicine.surgery.mutah',
-                      forceSafariVC: false);
+                      forceSafariVC: false,forceWebView: false);
                 }
               },
               child: const ListTile(
-                leading: Icon(Icons.facebook),
+                leading: Icon(FontAwesomeIcons.facebookSquare),
                 title: Text("medicine.surgery.mutah"),
+              ),
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.all(15.0),
+            child: GestureDetector(
+              onTap: () async {
+                await launch(
+                    'https://www.youtube.com/channel/UC7HSntyIHRgjY7S-Si1nhVg',
+                    forceSafariVC: false,
+                    forceWebView: false);
+              },
+              child: const ListTile(
+                leading: Icon(FontAwesomeIcons.youtube),
+                title: Text("Msc-Mu Youtube"),
               ),
             ),
           ),
