@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:motion_toast/motion_toast.dart';
 import '../../application/provider/sharedpref/pref_provider.dart';
 import '../../application/provider/years.repository.provider.dart';
 import '../../domain/models/classmodel.dart';
-import '../../domain/models/yearmodel.dart';
 import 'shimmer_affect.dart';
 
 class YearsRow extends HookWidget {
@@ -33,7 +33,19 @@ class YearsRow extends HookWidget {
                       itemCount: years.classes!.length,
                       itemBuilder: (context, index) {
                         ClassModel classes = years.classes![index];
-                        return ClassWidget(classes, index);
+                        return GestureDetector(
+                            onTap: () {
+                              MotionToast.success(
+                                title:
+                                    "Courses have been changed to ${years.classes![index].name}",
+                                titleStyle: const TextStyle(
+                                    fontWeight: FontWeight.bold),
+                                description: "check courses",
+                                descriptionStyle: const TextStyle(fontSize: 12),
+                                width: 300,
+                              ).show(context);
+                            },
+                            child: ClassWidget(classes, index));
                       }),
                 ),
             loading: () => SizedBox(
@@ -71,7 +83,9 @@ class ClassWidget extends HookWidget {
       child: InkWell(
         onTap: () {
           if (_classModel.isclinical == false) {
-            context.read(prefChangeNotifierProvider).setYearId2(_classModel.id!);
+            context
+                .read(prefChangeNotifierProvider)
+                .setYearId2(_classModel.id!);
           } else {
             showDialog(
               context: context,
@@ -154,7 +168,7 @@ class ClassWidget extends HookWidget {
                         onPressed: () async {
                           Navigator.pop(context);
                         },
-                        child:const Text('CANCEL'),
+                        child: const Text('CANCEL'),
                       ),
                       TextButton(
                         onPressed: () async {
@@ -163,7 +177,7 @@ class ClassWidget extends HookWidget {
                               .setYearId2(yearId2.value);
                           Navigator.pop(context);
                         },
-                        child:const Text('ACCEPT'),
+                        child: const Text('ACCEPT'),
                       ),
                     ],
                   );

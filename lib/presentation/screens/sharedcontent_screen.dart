@@ -311,11 +311,11 @@ class _SharedContentScreenState extends State<SharedContentScreen> {
                                                                       MotionToast
                                                                           .success(
                                                                         title:
-                                                                            "File Downloaded successfully",
+                                                                            "Downloading File",
                                                                         titleStyle:
                                                                             const TextStyle(fontWeight: FontWeight.bold),
                                                                         description:
-                                                                            "File has been downloaded , PLease check your notification",
+                                                                            "File is downloading , Please check your notification",
                                                                         descriptionStyle:
                                                                             const TextStyle(fontSize: 12),
                                                                         width:

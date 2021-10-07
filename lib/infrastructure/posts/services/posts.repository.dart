@@ -12,7 +12,6 @@ class PostsRepository implements IPostsRepository {
     return _firestore
         .collection(collection)
         .where("yearid", isEqualTo: yearid)
-        // .orderBy("time")
         .snapshots()
         .map(
           (event) => event.docs
@@ -41,6 +40,10 @@ class PostsRepository implements IPostsRepository {
         "adminavatar": adminavatar,
         "adminname": adminname,
         "image": image,
+        "yearid": yearid,
+      });
+      _firestore.collection("notifications").doc().set({
+        "title": "$adminname has added a post",
         "yearid": yearid,
       });
 

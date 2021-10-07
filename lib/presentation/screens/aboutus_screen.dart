@@ -7,7 +7,6 @@ class AboutusScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _msg = FirebaseMessaging.instance;
     return Column(
       children: [
         GestureDetector(

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -69,7 +70,6 @@ class Posts extends HookWidget {
                                     "You don't have any permission for adding posts yet !")
                             .show(context);
                       }
-                      //TODO else statment and ui for add post
                     },
                   ),
                 ),
@@ -154,7 +154,11 @@ class PostWidget extends StatelessWidget {
                     child: GestureDetector(
                       child: Hero(
                         tag: '${postModel!.image}',
-                        child: Image.network(postModel!.image!),
+                        child: CachedNetworkImage(
+                          imageUrl: postModel!.image!,
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
+                        ),
                       ),
                       onTap: () {
                         Navigator.push(context, MaterialPageRoute(builder: (_) {

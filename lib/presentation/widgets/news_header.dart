@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -28,25 +29,25 @@ class NewsHeader extends HookWidget {
                   CarouselSlider(
                     carouselController: slideController.value,
                     items: data.picture!
-                        .map((item) => SizedBox(
+                        .map((image) => SizedBox(
                               child: Container(
-                                margin:const EdgeInsets.all(5.0),
+                                margin: const EdgeInsets.all(5.0),
                                 child: ClipRRect(
-                                    borderRadius:
-                                       const BorderRadius.all(Radius.circular(5.0)),
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(5.0)),
                                     child: Stack(
                                       children: <Widget>[
-                                        Image.network(
-                                          item,
-                                          width: 1000,
-                                          fit: BoxFit.cover,
+                                        CachedNetworkImage(
+                                          imageUrl: image,
+                                          errorWidget: (context, url, error) =>
+                                              const Icon(Icons.error),
                                         ),
                                         Positioned(
                                           bottom: 0.0,
                                           left: 0.0,
                                           right: 0.0,
                                           child: Container(
-                                            decoration:const BoxDecoration(
+                                            decoration: const BoxDecoration(
                                               gradient: LinearGradient(
                                                 colors: [
                                                   Color.fromARGB(200, 0, 0, 0),
@@ -56,12 +57,12 @@ class NewsHeader extends HookWidget {
                                                 end: Alignment.topCenter,
                                               ),
                                             ),
-                                            padding:const EdgeInsets.symmetric(
+                                            padding: const EdgeInsets.symmetric(
                                                 vertical: 10.0,
                                                 horizontal: 20.0),
                                             child: Text(
                                               data.title![_index.value],
-                                              style:const TextStyle(
+                                              style: const TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 20.0,
                                                 fontWeight: FontWeight.bold,
@@ -92,7 +93,7 @@ class NewsHeader extends HookWidget {
                         child: Container(
                           width: 12.0,
                           height: 12.0,
-                          margin:const EdgeInsets.symmetric(
+                          margin: const EdgeInsets.symmetric(
                               vertical: 8.0, horizontal: 4.0),
                           decoration: BoxDecoration(
                               shape: BoxShape.circle,
@@ -110,15 +111,15 @@ class NewsHeader extends HookWidget {
             loading: () => CarouselSlider(
                   carouselController: slideController.value,
                   items: shimmer
-                      .map((item) => SizedBox(
+                      .map((image) => SizedBox(
                             child: Container(
-                              margin:const EdgeInsets.all(5.0),
+                              margin: const EdgeInsets.all(5.0),
                               child: ClipRRect(
-                                  borderRadius:
-                                     const BorderRadius.all(Radius.circular(5.0)),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(5.0)),
                                   child: Stack(
                                     children: <Widget>[
-                                      item,
+                                      image,
                                     ],
                                   )),
                             ),

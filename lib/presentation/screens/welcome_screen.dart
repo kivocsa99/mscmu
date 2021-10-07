@@ -120,7 +120,9 @@ class WelcomeScreen extends HookWidget {
                 tooltip: "select a class",
                 onPressed: () async {
                   if (isclinical.value == false) {
-                    context.read(msgprovider).subsribe("hello");
+                    context
+                        .read(msgprovider)
+                        .subsribe(yearName.value.toLowerCase());
 
                     context
                         .read(prefChangeNotifierProvider)
@@ -229,7 +231,9 @@ class WelcomeScreen extends HookWidget {
                               ),
                               TextButton(
                                 onPressed: () async {
-                                  context.read(msgprovider).subsribe("hello");
+                                  context.read(msgprovider).subsribe(
+                                      yearName.value.toLowerCase());
+
                                   context
                                       .read(prefChangeNotifierProvider)
                                       .setIsWelcome(true);

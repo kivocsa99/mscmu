@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:motion_toast/motion_toast.dart';
+import 'package:motion_toast/resources/arrays.dart';
 
 import 'aboutus_screen.dart';
 import 'contactus_screen.dart';
@@ -25,33 +26,24 @@ class HomeScreen extends HookWidget {
         provisional: false,
       );
 
-
-
       FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
         alert: true,
         badge: true,
         sound: true,
       );
       FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-        print('heliiiiii');
-
         if (message.notification != null) {
-            MotionToast.info(
-                title: "New Post",
-                titleStyle:
-                const TextStyle(
-                    fontWeight:
-                    FontWeight
-                        .bold),
-                description:
-                    message.data.toString())
-
-                .show(context);
+          MotionToast.info(
+                  position: MOTION_TOAST_POSITION.TOP,
+                  animationType: ANIMATION.FROM_TOP,
+                  title: "New Post",
+                  titleStyle: const TextStyle(fontWeight: FontWeight.bold),
+                  description: message.notification!.body!)
+              .show(context);
           print(
               'Message also contained a notification: ${message.notification}');
         }
       });
-
     }, const []);
 
     final _showPage = useState(0);

@@ -11,6 +11,7 @@ class OnBoardingScreen extends HookWidget {
     final _introKey = useState(GlobalKey<IntroductionScreenState>());
 
     void _onIntroEnd(context) {
+      
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (_) => const WelcomeScreen()),
       );
@@ -47,7 +48,7 @@ class OnBoardingScreen extends HookWidget {
         height: 60,
         child: ElevatedButton(
           child: const Text(
-            'Lets me start NOW!',
+            'Let me start NOW!',
             style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
           ),
           onPressed: () => _onIntroEnd(context),
