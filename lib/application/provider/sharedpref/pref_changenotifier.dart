@@ -64,4 +64,8 @@ class PrefChangeNotifier with ChangeNotifier {
     _isclinical = isclinical;
     notifyListeners();
   }
+    void clearAllValues() async {
+    await _sharedPreferences.clear();
+    notifyListeners();
+  }
 }

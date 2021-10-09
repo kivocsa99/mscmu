@@ -19,17 +19,17 @@ export const sendToTopic = functions.firestore
 		};
 		switch (notification.yearid) {
 			case 9:
-				return fcm.sendToTopic("ihsan", payload);
+				return fcm.sendToTopic("Ihsan", payload);
 			case 10:
-				return fcm.sendToTopic("watan", payload);
+				return fcm.sendToTopic("Watan", payload);
 			case 12:
-				return fcm.sendToTopic("serotonin", payload);
+				return fcm.sendToTopic("Serotonin", payload);
 			case 13:
-				return fcm.sendToTopic("vien", payload);
+				return fcm.sendToTopic("Vien", payload);
 			case 14:
-				return fcm.sendToTopic("nabd", payload);
+				return fcm.sendToTopic("Nabd", payload);
 			case 15:
-				return fcm.sendToTopic("wateen", payload);
+				return fcm.sendToTopic("Wateen", payload);
 			default:
 				break;
 		}

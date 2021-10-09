@@ -8,10 +8,10 @@ abstract class AdminModel implements _$AdminModel {
     String? id,
     String? name,
     String? email,
-    String? avatar,
+    @Default("") String avatar,
     int? yearid,
-    bool? accepted,
-    bool? fulladmin,
+    @Default(false) bool? accepted,
+    @Default(true) bool? fulladmin,
   }) = _AdminModel;
   const AdminModel._();
   factory AdminModel.fromJson(Map<String, dynamic> json) =>

@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:motion_toast/motion_toast.dart';
+import 'package:mscmu/infrastructure/messaging/services/messaging.repository.dart';
 import '../../application/provider/sharedpref/pref_provider.dart';
 import '../../application/provider/years.repository.provider.dart';
+import '../../constants.dart';
 import '../widgets/shimmer_affect.dart';
 import '../../domain/models/adminmodel.dart';
 import '../../navigate.dart';
@@ -19,11 +20,12 @@ class SignUpSCreen extends HookWidget {
   const SignUpSCreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  // ignore: avoid_renaming_method_parameters
+  Widget build(BuildContext ctx) {
     final years = useProvider(allYearsProvider);
     final yearName = useState("Wateen");
     final yearId = useState(15);
-    final role = useState("");
+    final role = useState("Majors");
     final disableButton = useState(false);
     final yearId2 = useState(9);
     final isclinical = useState(false);
@@ -130,23 +132,18 @@ class SignUpSCreen extends HookWidget {
                   ),
                   color: Colors.blue,
                   onPressed: () async {
-                    FocusScope.of(context).unfocus();
+                    FocusScope.of(ctx).unfocus();
                     if (_formKey.value.currentState!.validate()) {
                       if (isclinical.value == false) {
-                        context
+                        ctx
                             .read(prefChangeNotifierProvider)
                             .setYearId(yearId.value);
-                        context
-                            .read(prefChangeNotifierProvider)
-                            .setIsWelcome(true);
-                        context
+                        ctx.read(prefChangeNotifierProvider).setIsWelcome(true);
+                        ctx
                             .read(prefChangeNotifierProvider)
                             .setYearName(yearName.value);
 
-                        Future.delayed(const Duration(milliseconds: 500), () {
-                          changeScreenReplacement(context, const HomeScreen());
-                        });
-                        context
+                        await ctx
                             .read(signUpWithEmailAndPasswordUseCaseProvider)
                             .execute(
                               SignUpWithEmailAndPasswordUseCaseInput(
@@ -156,43 +153,41 @@ class SignUpSCreen extends HookWidget {
                             )
                             .then(
                               (result) => result.fold(
-                                (failure) {
-                                  MotionToast.warning(
-                                          title: "SignUp Failed",
-                                          titleStyle: const TextStyle(
-                                              fontWeight: FontWeight.bold),
-                                          description: failure
-                                              .toString()
-                                              .replaceAll("AuthFailure.", "")
-                                              .replaceAll("()", ""))
-                                      .show(context);
+                                (failure) async {
+                                  displayWarningMotionToast(
+                                      ctx,
+                                      failure
+                                          .toString()
+                                          .replaceAll("AuthFailure.", "")
+                                          .replaceAll("()", ""),
+                                      "Signup Failed");
                                 },
-                                (unit) {
-                                  MotionToast.success(
-                                    title: "SignedUp successfully",
-                                    titleStyle: const TextStyle(
-                                        fontWeight: FontWeight.bold),
-                                    description: "Welcome to MSC-MU Family",
-                                    descriptionStyle:
-                                        const TextStyle(fontSize: 12),
-                                    width: 300,
-                                  ).show(context);
-                                  changeScreenReplacement(
-                                      context, const HomeScreen());
+                                (unit) async {
+                                  ctx
+                                      .read(msgprovider)
+                                      .subsribe(yearName.value);
+
+                                  displaySuccessMotionToast(
+                                      ctx,
+                                      "Welcome to MSC-MU Family",
+                                      "SignedUp successfully");
+
+                                  Future.delayed(
+                                    const Duration(seconds: 1),
+                                    (() => changeScreenReplacement(
+                                          ctx,
+                                          const HomeScreen(),
+                                        )),
+                                  );
                                 },
                               ),
                             );
                       } else {
-                        context
-                            .read(prefChangeNotifierProvider)
-                            .setYearId(yearId.value);
-
                         showDialog(
-                          context: context,
+                          context: ctx,
                           builder: (context) {
                             return StatefulBuilder(builder:
                                 (BuildContext context, StateSetter setState) {
-
                               return AlertDialog(
                                 title: const Center(
                                     child: Text('Select your class')),
@@ -282,6 +277,10 @@ class SignUpSCreen extends HookWidget {
                                   ),
                                   TextButton(
                                     onPressed: () async {
+                                      Navigator.of(context).pop();
+                                      context
+                                          .read(prefChangeNotifierProvider)
+                                          .setYearId(yearId.value);
                                       context
                                           .read(prefChangeNotifierProvider)
                                           .setIsWelcome(true);
@@ -294,7 +293,7 @@ class SignUpSCreen extends HookWidget {
                                       context
                                           .read(prefChangeNotifierProvider)
                                           .setYearName(yearName.value);
-                                      context
+                                      await context
                                           .read(
                                               signUpWithEmailAndPasswordUseCaseProvider)
                                           .execute(
@@ -305,48 +304,37 @@ class SignUpSCreen extends HookWidget {
                                           )
                                           .then(
                                             (result) => result.fold(
-                                              (failure) {
-                                                MotionToast.warning(
-                                                        title: "SignUp Failed",
-                                                        titleStyle:
-                                                            const TextStyle(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                        description: failure
-                                                            .toString()
-                                                            .replaceAll(
-                                                                "AuthFailure.",
-                                                                "")
-                                                            .replaceAll(
-                                                                "()", ""))
-                                                    .show(context);
+                                              (failure) async {
+                                                displayWarningMotionToast(
+                                                    ctx,
+                                                    failure
+                                                        .toString()
+                                                        .replaceAll(
+                                                            "AuthFailure.", "")
+                                                        .replaceAll("()", ""),
+                                                    "Signup Failed");
                                               },
-                                              (unit) {
-                                                MotionToast.success(
-                                                  title:
-                                                      "SignedUp successfully",
-                                                  titleStyle: const TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                  description:
-                                                      "Welcome to MSC-MU Family",
-                                                  descriptionStyle:
-                                                      const TextStyle(
-                                                          fontSize: 12),
-                                                  width: 300,
-                                                ).show(context);
-                                                changeScreenReplacement(context,
-                                                    const HomeScreen());
+                                              (unit) async {
+                                                ctx
+                                                    .read(msgprovider)
+                                                    .subsribe(yearName.value);
+
+                                                displaySuccessMotionToast(
+                                                    ctx,
+                                                    "Welcome to MSC-MU Family",
+                                                    "SignedUp successfully");
+
+                                                Future.delayed(
+                                                  const Duration(seconds: 1),
+                                                  (() =>
+                                                      changeScreenReplacement(
+                                                        ctx,
+                                                        const HomeScreen(),
+                                                      )),
+                                                );
                                               },
                                             ),
                                           );
-                                      Future.delayed(
-                                          const Duration(milliseconds: 500),
-                                          () {
-                                        changeScreenReplacement(
-                                            context, const HomeScreen());
-                                      });
                                     },
                                     child: const Text('ACCEPT'),
                                   ),

@@ -19,7 +19,7 @@ class DownloaderRepository implements IDownloaderFacdae {
         openFileFromNotification: true,
       );
       return right(unit);
-    } on PlatformException catch (e) {
+    } on PlatformException {
       return left(const DownloadFailures.platform());
     }
   }

@@ -3,7 +3,7 @@ import '../../../domain/models/yearmodel.dart';
 import '../../../domain/years/contracts/i.years.repository.dart';
 
 class YearsRepository implements IYearsRepository {
-  FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final _firestore = FirebaseFirestore.instance;
   static const String yearscollection = "years";
 
   @override

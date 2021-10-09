@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -41,7 +42,7 @@ class Posts extends HookWidget {
             data: (user) {
               adminyear.value = user.yearid!;
               adminame.value = user.name!;
-              adminavatar.value = user.avatar!;
+              adminavatar.value = user.avatar;
 
               return SizedBox(
                 width: 40,
@@ -144,7 +145,13 @@ class PostWidget extends StatelessWidget {
                   const SizedBox(height: 10.0),
                   Text(postModel!.title!),
                   const SizedBox(height: 20.0),
-                  Text(postModel!.body!),
+                  ExpandableText(
+                    postModel!.body!,
+                    expandText: 'show more',
+                    collapseText: 'show less',
+                    maxLines: 1,
+                    linkColor: Colors.blue,
+                  ),
                 ],
               ),
             ),
@@ -262,7 +269,7 @@ class DetailScreen extends StatelessWidget {
       body: GestureDetector(
         child: Center(
           child: PhotoView(
-            imageProvider: NetworkImage(imageurl!),
+            imageProvider: CachedNetworkImageProvider(imageurl!),
           ),
         ),
         onTap: () {

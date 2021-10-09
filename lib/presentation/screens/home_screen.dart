@@ -2,8 +2,15 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:motion_toast/motion_toast.dart';
 import 'package:motion_toast/resources/arrays.dart';
+import 'package:mscmu/application/provider/auth.facade.provider.dart';
+import 'package:mscmu/application/provider/current_user.provider.dart';
+import 'package:mscmu/application/provider/sharedpref/pref_provider.dart';
+import 'package:mscmu/infrastructure/messaging/services/messaging.repository.dart';
+import 'package:mscmu/navigate.dart';
+import 'package:mscmu/presentation/screens/on_boarding_screen.dart';
 
 import 'aboutus_screen.dart';
 import 'contactus_screen.dart';
@@ -18,6 +25,9 @@ class HomeScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final pref = useProvider(sharedPreferences);
+    final admin = useProvider(currentUserProvider);
+
     useEffect(() {
       FirebaseMessaging.instance.requestPermission(
         sound: true,
@@ -40,8 +50,6 @@ class HomeScreen extends HookWidget {
                   titleStyle: const TextStyle(fontWeight: FontWeight.bold),
                   description: message.notification!.body!)
               .show(context);
-          print(
-              'Message also contained a notification: ${message.notification}');
         }
       });
     }, const []);
@@ -95,6 +103,41 @@ class HomeScreen extends HookWidget {
                 _showPage.value = 6;
               },
             ),
+            pref.maybeWhen(
+                orElse: () => const SizedBox.shrink(),
+                data: (prefs) {
+                  final yearName = prefs.getString("yearName");
+                  return admin.maybeWhen(
+                    data: (user) => ListTile(
+                      leading: const Icon(FontAwesomeIcons.signOutAlt),
+                      title: const Text("Log Out"),
+                      onTap: () async {
+                        await context.read(msgprovider).unsubsribe(yearName!);
+
+                        await context.read(authFacadeProvider).signOut().then(
+                            (value) => context
+                                .read(prefChangeNotifierProvider)
+                                .clearAllValues());
+                        changeScreenReplacement(
+                            context, const OnBoardingScreen());
+                      },
+                    ),
+                    orElse: () => ListTile(
+                      leading: const Icon(FontAwesomeIcons.signOutAlt),
+                      title: const Text("Log Out"),
+                      onTap: () async {
+                        await context.read(msgprovider).unsubsribe(yearName!);
+
+                        context
+                            .read(prefChangeNotifierProvider)
+                            .clearAllValues();
+
+                        changeScreenReplacement(
+                            context, const OnBoardingScreen());
+                      },
+                    ),
+                  );
+                }),
           ],
         ),
       ),
@@ -115,14 +158,14 @@ class HomeScreen extends HookWidget {
       ),
       body: IndexedStack(
         index: _showPage.value,
-        children: [
-          const MainScreen(),
+        children: const [
+          MainScreen(),
           LibraryScreen(),
-          const QuizListScreen(),
-          const ImportantLinksScreen(),
+          QuizListScreen(),
+          ImportantLinksScreen(),
           GalleryScreen(),
-          const AboutusScreen(),
-          const ContactusScreen(),
+          AboutUsScreen(),
+          ContactusScreen(),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

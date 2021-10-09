@@ -130,7 +130,6 @@ class _AddPostScreenState extends State<AddPostScreen> {
                     final snapshot = await task!.whenComplete(() {});
                     final urlDownload = await snapshot.ref.getDownloadURL();
 
-                    print('Download-Link: $urlDownload');
                     setState(() {
                       _post.value = _post.value.copyWith(image: urlDownload);
                     });

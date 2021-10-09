@@ -4,6 +4,8 @@ import '../widgets/archives.dart';
 import '../widgets/courses.dart';
 
 class LibraryScreen extends HookWidget {
+  const LibraryScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(

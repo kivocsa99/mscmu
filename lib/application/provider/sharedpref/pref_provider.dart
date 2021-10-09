@@ -7,12 +7,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 final sharedPreferences = FutureProvider<SharedPreferences>(
     (ref) async => await SharedPreferences.getInstance());
 final downloader =
-    FutureProvider<FlutterDownloader>((ref) async =>  FlutterDownloader());
-    
+    FutureProvider<FlutterDownloader>((ref) async => FlutterDownloader());
+
 final prefChangeNotifierProvider =
     ChangeNotifierProvider<PrefChangeNotifier>((ref) {
   final sharePreferencesData = ref.watch(sharedPreferences).data;
-  late final prefs;
+  late final SharedPreferences prefs;
 
   if (sharePreferencesData != null) {
     prefs = sharePreferencesData.value;

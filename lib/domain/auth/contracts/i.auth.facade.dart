@@ -12,11 +12,10 @@ abstract class IAuthFacade{
     required String  password,
   });
 
-  Future<Either<AuthFailure, Unit>> signOut();
+  Future<void> signOut();
   Future<Either<AuthFailure, Unit>> forgotPassword({
     required String  email,
   });
 
   Stream<String> get currentUserUidStream;
-  Stream<bool> get loggedin;
 }

@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:motion_toast/motion_toast.dart';
+import 'package:mscmu/constants.dart';
+import 'package:mscmu/infrastructure/messaging/services/messaging.repository.dart';
 import '../../application/provider/sharedpref/pref_provider.dart';
 import '../../application/provider/years.repository.provider.dart';
 import 'home_screen.dart';
@@ -19,7 +20,8 @@ class Login extends HookWidget {
   const Login({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  // ignore: avoid_renaming_method_parameters
+  Widget build(BuildContext ctx) {
     final _formKey = useState(GlobalKey<FormState>());
     final _password = useTextEditingController(text: '');
     final _user = useState(const AdminModel());
@@ -125,25 +127,23 @@ class Login extends HookWidget {
                       ),
                       color: Colors.blue,
                       onPressed: () async {
-                        FocusScope.of(context).unfocus();
+                        FocusScope.of(ctx).unfocus();
                         if (_formKey.value.currentState!.validate()) {
                           if (isclinical.value == false) {
-                            context
+                            ctx
+                                .read(prefChangeNotifierProvider)
+                                .setYearName(yearName.value);
+                            ctx
                                 .read(prefChangeNotifierProvider)
                                 .setYearId(yearId.value);
-                            context
+                            ctx
                                 .read(prefChangeNotifierProvider)
                                 .setIsWelcome(true);
-                            context
+                            ctx
                                 .read(prefChangeNotifierProvider)
                                 .setYearName(yearName.value);
 
-                            Future.delayed(const Duration(milliseconds: 500),
-                                () {
-                              changeScreenReplacement(
-                                  context, const HomeScreen());
-                            });
-                            context
+                            await ctx
                                 .read(signInWithEmailAndPasswordUseCaseProvider)
                                 .execute(
                                   SignInWithEmailAndPasswordUseCaseInput(
@@ -153,40 +153,37 @@ class Login extends HookWidget {
                                 )
                                 .then(
                                   (result) => result.fold(
-                                    (failure) {
-                                      MotionToast.warning(
-                                              title: "SignUp Failed",
-                                              titleStyle: const TextStyle(
-                                                  fontWeight: FontWeight.bold),
-                                              description: failure
-                                                  .toString()
-                                                  .replaceAll(
-                                                      "AuthFailure.", "")
-                                                  .replaceAll("()", ""))
-                                          .show(context);
+                                    (failure) async {
+                                      displayWarningMotionToast(
+                                          ctx,
+                                          failure
+                                              .toString()
+                                              .replaceAll("AuthFailure.", "")
+                                              .replaceAll("()", ""),
+                                          "Login Failed");
                                     },
-                                    (unit) {
-                                      MotionToast.success(
-                                        title: "SignedUp successfully",
-                                        titleStyle: const TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                        description: "Welcome to MSC-MU Family",
-                                        descriptionStyle:
-                                            const TextStyle(fontSize: 12),
-                                        width: 300,
-                                      ).show(context);
-                                      changeScreenReplacement(
-                                          context, const HomeScreen());
+                                    (unit) async {
+                                      await ctx
+                                          .read(msgprovider)
+                                          .subsribe(yearName.value);
+                                      displaySuccessMotionToast(
+                                          ctx,
+                                          "Welcome back to MSC-MU Family",
+                                          "Loggedin successfully");
+
+                                      Future.delayed(
+                                        const Duration(seconds: 1),
+                                        (() => changeScreenReplacement(
+                                              ctx,
+                                              const HomeScreen(),
+                                            )),
+                                      );
                                     },
                                   ),
                                 );
                           } else {
-                            context
-                                .read(prefChangeNotifierProvider)
-                                .setYearId(yearId.value);
-
                             showDialog(
-                              context: context,
+                              context: ctx,
                               builder: (context) {
                                 return StatefulBuilder(builder:
                                     (BuildContext context,
@@ -283,17 +280,24 @@ class Login extends HookWidget {
                                       ),
                                       TextButton(
                                         onPressed: () async {
-                                          context
+                                          Navigator.of(context).pop();
+                                          ctx
+                                              .read(prefChangeNotifierProvider)
+                                              .setYearName(yearName.value);
+                                          ctx
+                                              .read(prefChangeNotifierProvider)
+                                              .setYearId(yearId.value);
+                                          ctx
                                               .read(prefChangeNotifierProvider)
                                               .setIsWelcome(true);
-                                          context
+                                          ctx
                                               .read(prefChangeNotifierProvider)
                                               .setisclinical(true);
-                                          context
+                                          ctx
                                               .read(prefChangeNotifierProvider)
                                               .setYearId2(yearId2.value);
 
-                                          context
+                                          await context
                                               .read(
                                                   signInWithEmailAndPasswordUseCaseProvider)
                                               .execute(
@@ -304,52 +308,40 @@ class Login extends HookWidget {
                                               )
                                               .then(
                                                 (result) => result.fold(
-                                                  (failure) {
-                                                    MotionToast.warning(
-                                                            title:
-                                                                "SignUp Failed",
-                                                            titleStyle:
-                                                                const TextStyle(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold),
-                                                            description: failure
-                                                                .toString()
-                                                                .replaceAll(
-                                                                    "AuthFailure.",
-                                                                    "")
-                                                                .replaceAll(
-                                                                    "()", ""))
-                                                        .show(context);
+                                                  (failure) async {
+                                                    displayWarningMotionToast(
+                                                        ctx,
+                                                        failure
+                                                            .toString()
+                                                            .replaceAll(
+                                                                "AuthFailure.",
+                                                                "")
+                                                            .replaceAll(
+                                                                "()", ""),
+                                                        "Login Failed");
                                                   },
-                                                  (unit) {
-                                                    MotionToast.success(
-                                                      title:
-                                                          "SignedUp successfully",
-                                                      titleStyle:
-                                                          const TextStyle(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
-                                                      description:
-                                                          "Welcome to MSC-MU Family",
-                                                      descriptionStyle:
-                                                          const TextStyle(
-                                                              fontSize: 12),
-                                                      width: 300,
-                                                    ).show(context);
-                                                    changeScreenReplacement(
-                                                        context,
-                                                        const HomeScreen());
+                                                  (unit) async {
+                                                    await ctx
+                                                        .read(msgprovider)
+                                                        .subsribe(
+                                                            yearName.value);
+
+                                                    displaySuccessMotionToast(
+                                                        ctx,
+                                                        "Welcome back to MSC-MU Family",
+                                                        "Loggedin successfully");
+                                                    Future.delayed(
+                                                      const Duration(
+                                                          seconds: 1),
+                                                      (() =>
+                                                          changeScreenReplacement(
+                                                            ctx,
+                                                            const HomeScreen(),
+                                                          )),
+                                                    );
                                                   },
                                                 ),
                                               );
-                                          Future.delayed(
-                                              const Duration(milliseconds: 500),
-                                              () {
-                                            changeScreenReplacement(
-                                                context, const HomeScreen());
-                                          });
                                         },
                                         child: const Text('ACCEPT'),
                                       ),
@@ -375,8 +367,7 @@ class Login extends HookWidget {
                       ),
                       color: Colors.blue,
                       onPressed: () async {
-                        changeScreen(
-                            context, const Scaffold(body: SignUpSCreen()));
+                        changeScreen(ctx, const Scaffold(body: SignUpSCreen()));
                       },
                       child: Text(
                         "SignUp",
@@ -399,4 +390,3 @@ class Login extends HookWidget {
     );
   }
 }
- 

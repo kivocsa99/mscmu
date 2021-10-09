@@ -36,9 +36,6 @@ class FirebaseAuthFacade implements IAuthFacade {
   }
 
   @override
-  Stream<bool> get loggedin => throw UnimplementedError();
-
-  @override
   Future<Either<AuthFailure, Unit>> signInWithEmailAndPassword(
       {required String? email, required String? password}) async {
     try {
@@ -46,22 +43,21 @@ class FirebaseAuthFacade implements IAuthFacade {
           email: email!, password: password!);
       return right(unit);
     } on FirebaseAuthException catch (error) {
-      print(error.code);
       switch (error.code) {
         case inValidPassword:
-          return left(AuthFailure.invalidPassword());
+          return left(const AuthFailure.invalidPassword());
         case inValidEmail:
-          return left(AuthFailure.invalidEmail());
+          return left(const AuthFailure.invalidEmail());
         default:
-          return left(AuthFailure.invalidEmail());
+          return left(const AuthFailure.invalidEmail());
       }
     }
   }
 
   @override
-  Future<Either<AuthFailure, Unit>> signOut() async {
-    await _auth.signOut();
-    return right(unit);
+  Future<void> signOut() async {
+    return _auth.signOut();
+    
   }
 
   @override
@@ -74,11 +70,11 @@ class FirebaseAuthFacade implements IAuthFacade {
     } on FirebaseAuthException catch (error) {
       switch (error.code) {
         case inUse:
-          return left(AuthFailure.emailAlreadyInUse());
+          return left(const AuthFailure.emailAlreadyInUse());
         case servererror:
-          return left(AuthFailure.serverError());
+          return left(const AuthFailure.serverError());
         default:
-          return left(AuthFailure.emailAlreadyInUse());
+          return left(const AuthFailure.emailAlreadyInUse());
       }
     }
   }

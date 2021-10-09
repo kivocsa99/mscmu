@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:motion_toast/motion_toast.dart';
+import 'package:motion_toast/resources/arrays.dart';
 import '../../application/provider/sharedpref/pref_provider.dart';
 import '../../application/provider/years.repository.provider.dart';
 import '../../domain/models/classmodel.dart';
@@ -33,19 +34,7 @@ class YearsRow extends HookWidget {
                       itemCount: years.classes!.length,
                       itemBuilder: (context, index) {
                         ClassModel classes = years.classes![index];
-                        return GestureDetector(
-                            onTap: () {
-                              MotionToast.success(
-                                title:
-                                    "Courses have been changed to ${years.classes![index].name}",
-                                titleStyle: const TextStyle(
-                                    fontWeight: FontWeight.bold),
-                                description: "check courses",
-                                descriptionStyle: const TextStyle(fontSize: 12),
-                                width: 300,
-                              ).show(context);
-                            },
-                            child: ClassWidget(classes, index));
+                        return ClassWidget(classes, index);
                       }),
                 ),
             loading: () => SizedBox(
@@ -83,6 +72,15 @@ class ClassWidget extends HookWidget {
       child: InkWell(
         onTap: () {
           if (_classModel.isclinical == false) {
+            MotionToast.success(
+              animationType: ANIMATION.FROM_TOP,
+              position: MOTION_TOAST_POSITION.TOP,
+              title: "Courses changed to ${_classModel.name}",
+              titleStyle: const TextStyle(fontWeight: FontWeight.bold),
+              description: "check courses",
+              descriptionStyle: const TextStyle(fontSize: 12),
+              width: 300,
+            ).show(context);
             context
                 .read(prefChangeNotifierProvider)
                 .setYearId2(_classModel.id!);
@@ -176,6 +174,16 @@ class ClassWidget extends HookWidget {
                               .read(prefChangeNotifierProvider)
                               .setYearId2(yearId2.value);
                           Navigator.pop(context);
+                          MotionToast.success(
+                            animationType: ANIMATION.FROM_TOP,
+                            position: MOTION_TOAST_POSITION.TOP,
+                            title: "Courses changed to ${role.value}",
+                            titleStyle:
+                                const TextStyle(fontWeight: FontWeight.bold),
+                            description: "check courses",
+                            descriptionStyle: const TextStyle(fontSize: 12),
+                            width: 300,
+                          ).show(context);
                         },
                         child: const Text('ACCEPT'),
                       ),

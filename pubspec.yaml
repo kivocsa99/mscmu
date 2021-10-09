@@ -67,6 +67,9 @@ dependencies:
   url_launcher: ^6.0.12
   font_awesome_flutter: ^9.1.0
   cached_network_image: ^3.1.0
+  android_path_provider: ^0.3.0
+  expandable: ^5.0.1
+  expandable_text: ^2.2.0
 
 
 dev_dependencies:

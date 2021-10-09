@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../domain/models/questionmodel.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../domain/models/quizstate.dart';
-import '../../application/quiz/controller/quiz.controller.dart';
 import 'custom_button.dart';
 
 class QuizResults extends StatelessWidget {

@@ -25,10 +25,10 @@ class _$AdminModelTearOff {
       {String? id,
       String? name,
       String? email,
-      String? avatar,
+      String avatar = "",
       int? yearid,
-      bool? accepted,
-      bool? fulladmin}) {
+      bool? accepted = false,
+      bool? fulladmin = true}) {
     return _AdminModel(
       id: id,
       name: name,
@@ -53,7 +53,7 @@ mixin _$AdminModel {
   String? get id => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
-  String? get avatar => throw _privateConstructorUsedError;
+  String get avatar => throw _privateConstructorUsedError;
   int? get yearid => throw _privateConstructorUsedError;
   bool? get accepted => throw _privateConstructorUsedError;
   bool? get fulladmin => throw _privateConstructorUsedError;
@@ -73,7 +73,7 @@ abstract class $AdminModelCopyWith<$Res> {
       {String? id,
       String? name,
       String? email,
-      String? avatar,
+      String avatar,
       int? yearid,
       bool? accepted,
       bool? fulladmin});
@@ -113,7 +113,7 @@ class _$AdminModelCopyWithImpl<$Res> implements $AdminModelCopyWith<$Res> {
       avatar: avatar == freezed
           ? _value.avatar
           : avatar // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       yearid: yearid == freezed
           ? _value.yearid
           : yearid // ignore: cast_nullable_to_non_nullable
@@ -140,7 +140,7 @@ abstract class _$AdminModelCopyWith<$Res> implements $AdminModelCopyWith<$Res> {
       {String? id,
       String? name,
       String? email,
-      String? avatar,
+      String avatar,
       int? yearid,
       bool? accepted,
       bool? fulladmin});
@@ -182,7 +182,7 @@ class __$AdminModelCopyWithImpl<$Res> extends _$AdminModelCopyWithImpl<$Res>
       avatar: avatar == freezed
           ? _value.avatar
           : avatar // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       yearid: yearid == freezed
           ? _value.yearid
           : yearid // ignore: cast_nullable_to_non_nullable
@@ -206,10 +206,10 @@ class _$_AdminModel extends _AdminModel {
       {this.id,
       this.name,
       this.email,
-      this.avatar,
+      this.avatar = "",
       this.yearid,
-      this.accepted,
-      this.fulladmin})
+      this.accepted = false,
+      this.fulladmin = true})
       : super._();
 
   factory _$_AdminModel.fromJson(Map<String, dynamic> json) =>
@@ -221,12 +221,15 @@ class _$_AdminModel extends _AdminModel {
   final String? name;
   @override
   final String? email;
+  @JsonKey(defaultValue: "")
   @override
-  final String? avatar;
+  final String avatar;
   @override
   final int? yearid;
+  @JsonKey(defaultValue: false)
   @override
   final bool? accepted;
+  @JsonKey(defaultValue: true)
   @override
   final bool? fulladmin;
 
@@ -284,7 +287,7 @@ abstract class _AdminModel extends AdminModel {
       {String? id,
       String? name,
       String? email,
-      String? avatar,
+      String avatar,
       int? yearid,
       bool? accepted,
       bool? fulladmin}) = _$_AdminModel;
@@ -300,7 +303,7 @@ abstract class _AdminModel extends AdminModel {
   @override
   String? get email => throw _privateConstructorUsedError;
   @override
-  String? get avatar => throw _privateConstructorUsedError;
+  String get avatar => throw _privateConstructorUsedError;
   @override
   int? get yearid => throw _privateConstructorUsedError;
   @override

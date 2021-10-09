@@ -11,7 +11,6 @@ import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 ///description: Toast with icon
 ///
 class IconToastWidget extends StatelessWidget {
-  final Key? key;
   final Color? backgroundColor;
   final String? message;
   final Widget? textWidget;
@@ -21,7 +20,7 @@ class IconToastWidget extends StatelessWidget {
   final EdgeInsetsGeometry? padding;
 
   const IconToastWidget({
-    this.key,
+    Key? key,
     this.backgroundColor,
     this.textWidget,
     this.message,
@@ -83,7 +82,7 @@ class IconToastWidget extends StatelessWidget {
 ///description: Banner type toast widget, example of custom toast content widget when you use [showToastWidget]
 ///
 class BannerToastWidget extends StatelessWidget {
-  final Key? key;
+  
   final Color? backgroundColor;
   final String? message;
   final Widget? textWidget;
@@ -92,7 +91,7 @@ class BannerToastWidget extends StatelessWidget {
   final double? width;
 
   const BannerToastWidget(
-      {this.key,
+      {Key? key,
       this.backgroundColor,
       this.textWidget,
       this.message,
