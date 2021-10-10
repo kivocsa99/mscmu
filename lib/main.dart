@@ -57,8 +57,9 @@ class MyApp extends HookWidget {
 }
 
 
-//check 
-// 1- login / signup => checked and done ! 
-// 2 - posts , create post and update post
-// 3 - constant screens 
-// 4 - quizes ! 
+//TODO
+//1- share newfeed url
+//2- send notifications to any level by mscmu main account
+//3- send posts to any level my mscmu main account
+//4- add news feed by mscmu main account
+

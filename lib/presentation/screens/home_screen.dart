@@ -10,12 +10,10 @@ import 'package:mscmu/application/provider/current_user.provider.dart';
 import 'package:mscmu/application/provider/sharedpref/pref_provider.dart';
 import 'package:mscmu/infrastructure/messaging/services/messaging.repository.dart';
 import 'package:mscmu/navigate.dart';
+import 'package:mscmu/presentation/screens/add_post_screen.dart';
 import 'package:mscmu/presentation/screens/on_boarding_screen.dart';
-
 import 'aboutus_screen.dart';
 import 'contactus_screen.dart';
-import 'gallery_screen.dart';
-import 'importantlinks_screen.dart';
 import 'libraryscreen.dart';
 import 'main_screen.dart';
 import 'quiz_list_screen.dart';
@@ -25,6 +23,9 @@ class HomeScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final adminavatar = useState("");
+    final adminame = useState("");
+    final adminyear = useState(0);
     final pref = useProvider(sharedPreferences);
     final admin = useProvider(currentUserProvider);
 
@@ -71,28 +72,65 @@ class HomeScreen extends HookWidget {
             const Divider(
               thickness: 1,
             ),
-            ListTile(
-              leading: const Icon(Icons.notification_important),
-              title: const Text("Importnat Links"),
-              onTap: () {
-                Navigator.pop(context);
-                _showPage.value = 3;
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.collections),
-              title: const Text("Gallery"),
-              onTap: () {
-                Navigator.pop(context);
-                _showPage.value = 4;
-              },
-            ),
+            admin.maybeWhen(
+                data: (user) {
+                  return ListTile(
+                    leading: const Icon(FontAwesomeIcons.plus),
+                    title: const Text("Add post"),
+                    onTap: () async {
+                      if (user.accepted == true) {
+                        Navigator.pop(context);
+                        _showPage.value = 5;
+                      } else {
+                        Navigator.of(context).pop();
+                        MotionToast.error(
+                                position: MOTION_TOAST_POSITION.TOP,
+                                animationType: ANIMATION.FROM_TOP,
+                                title: "Permission Denied",
+                                titleStyle: const TextStyle(
+                                    fontWeight: FontWeight.bold),
+                                description:
+                                    "You don't have any permission for adding posts yet !")
+                            .show(context);
+                      }
+                    },
+                  );
+                },
+                orElse: () => const SizedBox.shrink()),
+            admin.maybeWhen(
+                data: (user) {
+                  adminyear.value = user.yearid!;
+                  adminame.value = user.name!;
+                  adminavatar.value = user.avatar;
+                  return ListTile(
+                    leading: const Icon(FontAwesomeIcons.bell),
+                    title: const Text("Add notification"),
+                    onTap: () async {
+                      if (user.fulladmin == true) {
+                        Navigator.pop(context);
+                        _showPage.value = 5;
+                      } else {
+                        Navigator.of(context).pop();
+                        MotionToast.error(
+                                position: MOTION_TOAST_POSITION.TOP,
+                                animationType: ANIMATION.FROM_TOP,
+                                title: "Permission Denied",
+                                titleStyle: const TextStyle(
+                                    fontWeight: FontWeight.bold),
+                                description:
+                                    "You don't have any permission for sending notifications !")
+                            .show(context);
+                      }
+                    },
+                  );
+                },
+                orElse: () => const SizedBox.shrink()),
             ListTile(
               leading: const Icon(Icons.help),
               title: const Text("About us"),
               onTap: () {
                 Navigator.pop(context);
-                _showPage.value = 5;
+                _showPage.value = 3;
               },
             ),
             ListTile(
@@ -100,7 +138,7 @@ class HomeScreen extends HookWidget {
               title: const Text("contact us"),
               onTap: () {
                 Navigator.pop(context);
-                _showPage.value = 6;
+                _showPage.value = 4;
               },
             ),
             pref.maybeWhen(
@@ -162,10 +200,9 @@ class HomeScreen extends HookWidget {
           MainScreen(),
           LibraryScreen(),
           QuizListScreen(),
-          ImportantLinksScreen(),
-          GalleryScreen(),
           AboutUsScreen(),
           ContactusScreen(),
+          AddPostScreen(),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

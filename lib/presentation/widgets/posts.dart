@@ -5,11 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:motion_toast/motion_toast.dart';
-import 'package:motion_toast/resources/arrays.dart';
-import '../../application/provider/current_user.provider.dart';
-import '../../navigate.dart';
-import '../screens/add_post_screen.dart';
 import 'package:photo_view/photo_view.dart';
 import '../../application/provider/posts.repository.provider.dart';
 import '../../application/provider/sharedpref/pref_provider.dart';
@@ -21,13 +16,8 @@ class Posts extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final current = useProvider(currentUserProvider);
     final prefs = useProvider(sharedPreferences);
     final scrollcontoller = useScrollController();
-    final adminavatar = useState("");
-    final adminame = useState("");
-    final adminyear = useState(0);
-
     return Column(
       children: [
         const Text(
@@ -38,50 +28,10 @@ class Posts extends HookWidget {
         const SizedBox(
           height: 10,
         ),
-        current.maybeWhen(
-            data: (user) {
-              adminyear.value = user.yearid!;
-              adminame.value = user.name!;
-              adminavatar.value = user.avatar;
-
-              return SizedBox(
-                width: 40,
-                height: 40,
-                child: FittedBox(
-                  child: FloatingActionButton(
-                    heroTag: "post",
-                    child: const Icon(Icons.add),
-                    onPressed: () async {
-                      if (user.accepted == true) {
-                        changeScreen(
-                            context,
-                            AddPostScreen(
-                              avatar: adminavatar.value,
-                              name: adminame.value,
-                              yearid: adminyear.value,
-                            ));
-                      } else {
-                        MotionToast.error(
-                                position: MOTION_TOAST_POSITION.TOP,
-                                animationType: ANIMATION.FROM_TOP,
-                                title: "Permission Denied",
-                                titleStyle: const TextStyle(
-                                    fontWeight: FontWeight.bold),
-                                description:
-                                    "You don't have any permission for adding posts yet !")
-                            .show(context);
-                      }
-                    },
-                  ),
-                ),
-              );
-            },
-            orElse: () => const SizedBox.shrink()),
         prefs.when(
             data: (data) {
               final yearid = useProvider(prefChangeNotifierProvider).yearId;
               final posts = useProvider(allPostsProvider(yearid));
-
               return posts.when(
                   data: (post) {
                     return ListView.custom(
@@ -163,6 +113,11 @@ class PostWidget extends StatelessWidget {
                         tag: '${postModel!.image}',
                         child: CachedNetworkImage(
                           imageUrl: postModel!.image!,
+                          imageBuilder: (context, imageProvider) => PhotoView(
+                            imageProvider: imageProvider,
+                          ),
+                          placeholder: (context, url) =>
+                              const CircularProgressIndicator(),
                           errorWidget: (context, url, error) =>
                               const Icon(Icons.error),
                         ),
@@ -176,7 +131,7 @@ class PostWidget extends StatelessWidget {
                       },
                     ),
                   )
-                : const SizedBox.shrink(),
+                : const CircularProgressIndicator(),
           ],
         ),
       ),
@@ -267,10 +222,13 @@ class DetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: GestureDetector(
-        child: Center(
-          child: PhotoView(
-            imageProvider: CachedNetworkImageProvider(imageurl!),
+        child: CachedNetworkImage(
+          imageUrl: imageurl!,
+          imageBuilder: (context, imageProvider) => PhotoView(
+            imageProvider: imageProvider,
           ),
+          placeholder: (context, url) => const CircularProgressIndicator(),
+          errorWidget: (context, url, error) => const Icon(Icons.error),
         ),
         onTap: () {
           Navigator.pop(context);

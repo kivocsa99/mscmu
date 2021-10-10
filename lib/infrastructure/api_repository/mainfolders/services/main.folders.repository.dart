@@ -10,23 +10,23 @@ import '../../../../domain/models/mainfoldermodel.dart';
 
 class MainFolderRepository implements IMainFolderRepository {
   @override
-  Future<Either<ApiFailures, List<MainFolderModel>>> getmainfolders(int id)async {
-try {
+  Future<Either<ApiFailures, List<MainFolderModel>?>> getmainfolders(
+      int id) async {
+    try {
       final response = await http.post(
           Uri.parse("http://msc-mu.com/api_verfication.php"),
           body: {"flag": "selectmainfolders", "course": "$id"});
       if (response.statusCode == 200) {
-        var l = json.decode(response.body) as List<dynamic>;
-        var folders = l.map((e) => MainFolderModel.fromJson(e)).toList();
-        return right(folders);
+        var l = json.decode(response.body) as List<dynamic>?;
+        var folders = l?.map((e) => MainFolderModel.fromJson(e)).toList();
+        return folders != null ? right(folders) : right(null);
       } else {
         return left(const ApiFailures.notFound());
       }
     } on SocketException {
       return left(const ApiFailures.noConnection());
     } on HttpException {
-      return left( const ApiFailures.notFound());
+      return left(const ApiFailures.notFound());
     }
   }
-  
 }

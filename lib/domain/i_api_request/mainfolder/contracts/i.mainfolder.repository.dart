@@ -4,5 +4,5 @@ import '../../../models/mainfoldermodel.dart';
 import '../../failures/api.failures.dart';
 
 abstract class IMainFolderRepository {
-  Future<Either<ApiFailures, List<MainFolderModel>>> getmainfolders(int id);
+  Future<Either<ApiFailures, List<MainFolderModel>?>> getmainfolders(int id);
 }

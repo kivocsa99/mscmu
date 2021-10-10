@@ -25,10 +25,11 @@ class _$AdminModelTearOff {
       {String? id,
       String? name,
       String? email,
-      String avatar = "",
+      String avatar =
+          "https://drive.google.com/file/d/1_IEGfDil4sTy-lpwnLSsSgNtE28E05dn/view?usp=sharing",
       int? yearid,
       bool? accepted = false,
-      bool? fulladmin = true}) {
+      bool? fulladmin = false}) {
     return _AdminModel(
       id: id,
       name: name,
@@ -206,10 +207,11 @@ class _$_AdminModel extends _AdminModel {
       {this.id,
       this.name,
       this.email,
-      this.avatar = "",
+      this.avatar =
+          "https://drive.google.com/file/d/1_IEGfDil4sTy-lpwnLSsSgNtE28E05dn/view?usp=sharing",
       this.yearid,
       this.accepted = false,
-      this.fulladmin = true})
+      this.fulladmin = false})
       : super._();
 
   factory _$_AdminModel.fromJson(Map<String, dynamic> json) =>
@@ -221,7 +223,9 @@ class _$_AdminModel extends _AdminModel {
   final String? name;
   @override
   final String? email;
-  @JsonKey(defaultValue: "")
+  @JsonKey(
+      defaultValue:
+          "https://drive.google.com/file/d/1_IEGfDil4sTy-lpwnLSsSgNtE28E05dn/view?usp=sharing")
   @override
   final String avatar;
   @override
@@ -229,7 +233,7 @@ class _$_AdminModel extends _AdminModel {
   @JsonKey(defaultValue: false)
   @override
   final bool? accepted;
-  @JsonKey(defaultValue: true)
+  @JsonKey(defaultValue: false)
   @override
   final bool? fulladmin;
 

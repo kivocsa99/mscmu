@@ -37,27 +37,29 @@ class MainFoldersScreen extends HookWidget {
             height: 30,
           ),
           mainfolders.when(
-              data: (data) => data.fold(
-                    (l) => Text(l.toString()),
-                    (r) => ListView.separated(
-                      separatorBuilder: (context, index) =>const Divider(),
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        return ListTile(
-                          onTap: () {
-                            changeScreen(
-                                context, SharedContentScreen(id: r[index].id));
-                          },
-                          leading: const Icon(FontAwesomeIcons.folder),
-                          title: Text("${r[index].name}"),
-                        );
-                      },
-                      itemCount: r.length,
-                      controller: scrollController,
-                      scrollDirection: Axis.vertical,
-                    ),
-                  ),
+              data: (data) => data.fold((l) => Text(l.toString()), (r) {
+                    return r != null
+                        ? ListView.separated(
+                            separatorBuilder: (context, index) =>
+                                const Divider(),
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              return ListTile(
+                                onTap: () {
+                                  changeScreen(context,
+                                      SharedContentScreen(id: r[index].id));
+                                },
+                                leading: const Icon(FontAwesomeIcons.folder),
+                                title: Text("${r[index].name}"),
+                              );
+                            },
+                            itemCount: r.length,
+                            controller: scrollController,
+                            scrollDirection: Axis.vertical,
+                          )
+                        : const SizedBox.shrink();
+                  }),
               loading: () => ListView.separated(
                     separatorBuilder: (context, index) => const Divider(),
                     shrinkWrap: true,

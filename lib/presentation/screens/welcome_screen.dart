@@ -17,14 +17,12 @@ class WelcomeScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final role = useState("");
+    final role = useState("Major");
     final disableButton = useState(false);
     final yearId2 = useState(9);
-
     final years = useProvider(allYearsProvider);
     final yearName = useState("Wateen");
     final yearId = useState(15);
-
     final isclinical = useState(false);
     final logoAppeared = useState(false);
     const Duration animationDuration = Duration(milliseconds: 3000);

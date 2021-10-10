@@ -8,7 +8,8 @@ import '../../domain/i_api_request/failures/api.failures.dart';
 final foldersRepositoryProvider =
     Provider<IMainFolderRepository>((ref) => MainFolderRepository());
 final mainFoldersProvider = FutureProvider.autoDispose
-    .family<Either<ApiFailures, List<MainFolderModel>>, int>((ref, courseId) async {
+    .family<Either<ApiFailures, List<MainFolderModel>?>, int>(
+        (ref, courseId) async {
   final _mainfoldersRepository = ref.watch(foldersRepositoryProvider);
   return _mainfoldersRepository.getmainfolders(courseId);
 });
