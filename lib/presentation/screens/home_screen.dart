@@ -3,13 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:motion_toast/motion_toast.dart';
 import 'package:motion_toast/resources/arrays.dart';
 import 'package:mscmu/application/provider/auth.facade.provider.dart';
 import 'package:mscmu/application/provider/current_user.provider.dart';
 import 'package:mscmu/application/provider/sharedpref/pref_provider.dart';
+import 'package:mscmu/constants.dart';
 import 'package:mscmu/infrastructure/messaging/services/messaging.repository.dart';
 import 'package:mscmu/navigate.dart';
+import 'package:mscmu/presentation/screens/add_notifications_screen.dart';
 import 'package:mscmu/presentation/screens/add_post_screen.dart';
 import 'package:mscmu/presentation/screens/on_boarding_screen.dart';
 import 'aboutus_screen.dart';
@@ -28,8 +31,13 @@ class HomeScreen extends HookWidget {
     final adminyear = useState(0);
     final pref = useProvider(sharedPreferences);
     final admin = useProvider(currentUserProvider);
-
+    final hello =
+        useFuture(InternetConnectionChecker().hasConnection, initialData: false);
     useEffect(() {
+      if (hello.data == true) {
+        context.refresh(sharedPreferences);
+      } else {}
+
       FirebaseMessaging.instance.requestPermission(
         sound: true,
         badge: true,
@@ -53,7 +61,7 @@ class HomeScreen extends HookWidget {
               .show(context);
         }
       });
-    }, const []);
+    }, [hello.data]);
 
     final _showPage = useState(0);
     final _key = useState(GlobalKey<ScaffoldState>());
@@ -108,7 +116,7 @@ class HomeScreen extends HookWidget {
                     onTap: () async {
                       if (user.fulladmin == true) {
                         Navigator.pop(context);
-                        _showPage.value = 5;
+                        _showPage.value = 6;
                       } else {
                         Navigator.of(context).pop();
                         MotionToast.error(
@@ -180,31 +188,21 @@ class HomeScreen extends HookWidget {
         ),
       ),
       extendBody: true,
-      appBar: AppBar(
-        backgroundColor: Colors.blue,
-        title: Image.asset(
-          "images/logo.png",
-          scale: 10,
-        ),
-        centerTitle: true,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(20.0),
-            bottomRight: Radius.circular(20.0),
-          ),
-        ),
-      ),
-      body: IndexedStack(
-        index: _showPage.value,
-        children: const [
-          MainScreen(),
-          LibraryScreen(),
-          QuizListScreen(),
-          AboutUsScreen(),
-          ContactusScreen(),
-          AddPostScreen(),
-        ],
-      ),
+      appBar: appbar(),
+      body: hello.data == true
+          ? IndexedStack(
+              index: _showPage.value,
+              children: const [
+                MainScreen(),
+                LibraryScreen(),
+                QuizListScreen(),
+                AboutUsScreen(),
+                ContactusScreen(),
+                AddPostScreen(),
+                AddNotificationsScreen()
+              ],
+            )
+          : const Text("refresh"),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         heroTag: "home",

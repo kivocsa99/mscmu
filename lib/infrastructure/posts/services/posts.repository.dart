@@ -12,6 +12,7 @@ class PostsRepository implements IPostsRepository {
     return _firestore
         .collection(collection)
         .where("yearid", isEqualTo: yearid)
+        .orderBy("time", descending: true)
         .snapshots()
         .map(
           (event) => event.docs
@@ -44,6 +45,21 @@ class PostsRepository implements IPostsRepository {
       });
       _firestore.collection("notifications").doc().set({
         "title": "$adminname has added a post",
+        "yearid": yearid,
+      });
+
+      return right(unit);
+    } catch (e) {
+      return left(const UserFailures.serverError());
+    }
+  }
+
+  @override
+  Future<Either<UserFailures, Unit>> addNotification(
+      {String? title, int? yearid}) async {
+    try {
+      _firestore.collection("notifications").doc().set({
+        "title": title,
         "yearid": yearid,
       });
 

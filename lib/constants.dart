@@ -4,13 +4,30 @@ import 'package:motion_toast/motion_toast.dart';
 displaySuccessMotionToast(
     BuildContext context, String description, String title) {
   MotionToast.success(
-    toastDuration:const Duration(seconds: 3),
+    toastDuration: const Duration(seconds: 3),
     title: title,
     titleStyle: const TextStyle(fontWeight: FontWeight.bold),
     description: description,
     descriptionStyle: const TextStyle(fontSize: 12),
     width: 300,
   ).show(context);
+}
+
+AppBar appbar() {
+  return AppBar(
+    backgroundColor: Colors.blue,
+    title: Image.asset(
+      "images/logo.png",
+      scale: 10,
+    ),
+    centerTitle: true,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(
+        bottomLeft: Radius.circular(20.0),
+        bottomRight: Radius.circular(20.0),
+      ),
+    ),
+  );
 }
 
 displayWarningMotionToast(

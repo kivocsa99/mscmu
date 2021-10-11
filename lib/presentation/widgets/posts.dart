@@ -113,9 +113,7 @@ class PostWidget extends StatelessWidget {
                         tag: '${postModel!.image}',
                         child: CachedNetworkImage(
                           imageUrl: postModel!.image!,
-                          imageBuilder: (context, imageProvider) => PhotoView(
-                            imageProvider: imageProvider,
-                          ),
+                          
                           placeholder: (context, url) =>
                               const CircularProgressIndicator(),
                           errorWidget: (context, url, error) =>

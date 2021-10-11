@@ -12,4 +12,8 @@ abstract class IPostsRepository {
     String? body,
     int? yearid,
   });
+  Future<Either<UserFailures, Unit>> addNotification({
+    String? title,
+    int? yearid,
+  });
 }
