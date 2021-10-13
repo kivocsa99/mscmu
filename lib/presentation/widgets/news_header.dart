@@ -26,50 +26,58 @@ class NewsHeader extends HookWidget {
             data: (data) => Column(children: [
                   CarouselSlider(
                     carouselController: slideController.value,
-                    items: data.picture!
-                        .map((image) => SizedBox(
-                              child: Container(
-                                margin: const EdgeInsets.all(5.0),
-                                child: ClipRRect(
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(5.0)),
-                                    child: Stack(
-                                      children: <Widget>[
-                                        CachedNetworkImage(
-                                          imageUrl: image,
-                                          errorWidget: (context, url, error) =>
-                                              const Icon(Icons.error),
-                                        ),
-                                        Positioned(
-                                          bottom: 0.0,
-                                          left: 0.0,
-                                          right: 0.0,
-                                          child: Container(
-                                            decoration: const BoxDecoration(
-                                              gradient: LinearGradient(
-                                                colors: [
-                                                  Color.fromARGB(200, 0, 0, 0),
-                                                  Color.fromARGB(0, 0, 0, 0)
-                                                ],
-                                                begin: Alignment.bottomCenter,
-                                                end: Alignment.topCenter,
+                    items: data!
+                        .map((news) => SizedBox(
+                              child: GestureDetector(
+                                onTap: () async {
+                                  print("hrllo");
+                                },
+                                child: Container(
+                                  margin: const EdgeInsets.all(5.0),
+                                  child: ClipRRect(
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(5.0)),
+                                      child: Stack(
+                                        children: <Widget>[
+                                          CachedNetworkImage(
+                                            imageUrl: news.picture!,
+                                            errorWidget:
+                                                (context, url, error) =>
+                                                    const Icon(Icons.error),
+                                          ),
+                                          Positioned(
+                                            bottom: 0.0,
+                                            left: 0.0,
+                                            right: 0.0,
+                                            child: Container(
+                                              decoration: const BoxDecoration(
+                                                gradient: LinearGradient(
+                                                  colors: [
+                                                    Color.fromARGB(
+                                                        200, 0, 0, 0),
+                                                    Color.fromARGB(0, 0, 0, 0)
+                                                  ],
+                                                  begin: Alignment.bottomCenter,
+                                                  end: Alignment.topCenter,
+                                                ),
                                               ),
-                                            ),
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 10.0,
-                                                horizontal: 20.0),
-                                            child: Text(
-                                              data.title![_index.value],
-                                              style: const TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 20.0,
-                                                fontWeight: FontWeight.bold,
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 10.0,
+                                                      horizontal: 20.0),
+                                              child: Text(
+                                                news.title!,
+                                                style: const TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 20.0,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
                                               ),
                                             ),
                                           ),
-                                        ),
-                                      ],
-                                    )),
+                                        ],
+                                      )),
+                                ),
                               ),
                             ))
                         .toList(),
@@ -84,10 +92,11 @@ class NewsHeader extends HookWidget {
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: data.picture!.asMap().entries.map((entry) {
+                    children: data.asMap().entries.map((entry) {
                       return GestureDetector(
-                        onTap: () =>
-                            slideController.value.animateToPage(entry.key),
+                        onTap: () {
+                          slideController.value.animateToPage(entry.key);
+                        },
                         child: Container(
                           width: 12.0,
                           height: 12.0,

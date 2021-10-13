@@ -7,14 +7,14 @@ part of 'newsmodel.dart';
 // **************************************************************************
 
 _$_NewsModel _$$_NewsModelFromJson(Map<String, dynamic> json) => _$_NewsModel(
-      title:
-          (json['title'] as List<dynamic>?)?.map((e) => e as String).toList(),
-      picture:
-          (json['picture'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      title: json['title'] as String?,
+      url: json['url'] as String?,
+      picture: json['picture'] as String?,
     );
 
 Map<String, dynamic> _$$_NewsModelToJson(_$_NewsModel instance) =>
     <String, dynamic>{
       'title': instance.title,
+      'url': instance.url,
       'picture': instance.picture,
     };

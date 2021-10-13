@@ -9,10 +9,8 @@ part of 'notificationmodel.dart';
 _$_NotificationsModel _$$_NotificationsModelFromJson(
         Map<String, dynamic> json) =>
     _$_NotificationsModel(
-      title:
-          (json['title'] as List<dynamic>?)?.map((e) => e as String).toList(),
-      yearid:
-          (json['yearid'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      title: json['title'] as String?,
+      yearid: json['yearid'] as int?,
     );
 
 Map<String, dynamic> _$$_NotificationsModelToJson(

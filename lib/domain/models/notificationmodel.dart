@@ -5,8 +5,8 @@ part 'notificationmodel.g.dart';
 @freezed
 abstract class NotificationsModel implements _$NotificationsModel {
   const factory NotificationsModel({
-    List<String>? title,
-    List<String>? yearid,
+    String? title,
+    int? yearid,
   }) = _NotificationsModel;
   const NotificationsModel._();
   factory NotificationsModel.fromJson(Map<String, dynamic> json) =>

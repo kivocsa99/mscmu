@@ -21,9 +21,10 @@ NewsModel _$NewsModelFromJson(Map<String, dynamic> json) {
 class _$NewsModelTearOff {
   const _$NewsModelTearOff();
 
-  _NewsModel call({List<String>? title, List<String>? picture}) {
+  _NewsModel call({String? title, String? url, String? picture}) {
     return _NewsModel(
       title: title,
+      url: url,
       picture: picture,
     );
   }
@@ -38,8 +39,9 @@ const $NewsModel = _$NewsModelTearOff();
 
 /// @nodoc
 mixin _$NewsModel {
-  List<String>? get title => throw _privateConstructorUsedError;
-  List<String>? get picture => throw _privateConstructorUsedError;
+  String? get title => throw _privateConstructorUsedError;
+  String? get url => throw _privateConstructorUsedError;
+  String? get picture => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -51,7 +53,7 @@ mixin _$NewsModel {
 abstract class $NewsModelCopyWith<$Res> {
   factory $NewsModelCopyWith(NewsModel value, $Res Function(NewsModel) then) =
       _$NewsModelCopyWithImpl<$Res>;
-  $Res call({List<String>? title, List<String>? picture});
+  $Res call({String? title, String? url, String? picture});
 }
 
 /// @nodoc
@@ -65,17 +67,22 @@ class _$NewsModelCopyWithImpl<$Res> implements $NewsModelCopyWith<$Res> {
   @override
   $Res call({
     Object? title = freezed,
+    Object? url = freezed,
     Object? picture = freezed,
   }) {
     return _then(_value.copyWith(
       title: title == freezed
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
+              as String?,
+      url: url == freezed
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
+              as String?,
       picture: picture == freezed
           ? _value.picture
           : picture // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
+              as String?,
     ));
   }
 }
@@ -86,7 +93,7 @@ abstract class _$NewsModelCopyWith<$Res> implements $NewsModelCopyWith<$Res> {
           _NewsModel value, $Res Function(_NewsModel) then) =
       __$NewsModelCopyWithImpl<$Res>;
   @override
-  $Res call({List<String>? title, List<String>? picture});
+  $Res call({String? title, String? url, String? picture});
 }
 
 /// @nodoc
@@ -101,17 +108,22 @@ class __$NewsModelCopyWithImpl<$Res> extends _$NewsModelCopyWithImpl<$Res>
   @override
   $Res call({
     Object? title = freezed,
+    Object? url = freezed,
     Object? picture = freezed,
   }) {
     return _then(_NewsModel(
       title: title == freezed
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
+              as String?,
+      url: url == freezed
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
+              as String?,
       picture: picture == freezed
           ? _value.picture
           : picture // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
+              as String?,
     ));
   }
 }
@@ -119,19 +131,21 @@ class __$NewsModelCopyWithImpl<$Res> extends _$NewsModelCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_NewsModel extends _NewsModel {
-  const _$_NewsModel({this.title, this.picture}) : super._();
+  const _$_NewsModel({this.title, this.url, this.picture}) : super._();
 
   factory _$_NewsModel.fromJson(Map<String, dynamic> json) =>
       _$$_NewsModelFromJson(json);
 
   @override
-  final List<String>? title;
+  final String? title;
   @override
-  final List<String>? picture;
+  final String? url;
+  @override
+  final String? picture;
 
   @override
   String toString() {
-    return 'NewsModel(title: $title, picture: $picture)';
+    return 'NewsModel(title: $title, url: $url, picture: $picture)';
   }
 
   @override
@@ -140,6 +154,8 @@ class _$_NewsModel extends _NewsModel {
         (other is _NewsModel &&
             (identical(other.title, title) ||
                 const DeepCollectionEquality().equals(other.title, title)) &&
+            (identical(other.url, url) ||
+                const DeepCollectionEquality().equals(other.url, url)) &&
             (identical(other.picture, picture) ||
                 const DeepCollectionEquality().equals(other.picture, picture)));
   }
@@ -148,6 +164,7 @@ class _$_NewsModel extends _NewsModel {
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(title) ^
+      const DeepCollectionEquality().hash(url) ^
       const DeepCollectionEquality().hash(picture);
 
   @JsonKey(ignore: true)
@@ -162,7 +179,7 @@ class _$_NewsModel extends _NewsModel {
 }
 
 abstract class _NewsModel extends NewsModel {
-  const factory _NewsModel({List<String>? title, List<String>? picture}) =
+  const factory _NewsModel({String? title, String? url, String? picture}) =
       _$_NewsModel;
   const _NewsModel._() : super._();
 
@@ -170,9 +187,11 @@ abstract class _NewsModel extends NewsModel {
       _$_NewsModel.fromJson;
 
   @override
-  List<String>? get title => throw _privateConstructorUsedError;
+  String? get title => throw _privateConstructorUsedError;
   @override
-  List<String>? get picture => throw _privateConstructorUsedError;
+  String? get url => throw _privateConstructorUsedError;
+  @override
+  String? get picture => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$NewsModelCopyWith<_NewsModel> get copyWith =>

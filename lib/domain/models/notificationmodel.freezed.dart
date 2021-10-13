@@ -21,7 +21,7 @@ NotificationsModel _$NotificationsModelFromJson(Map<String, dynamic> json) {
 class _$NotificationsModelTearOff {
   const _$NotificationsModelTearOff();
 
-  _NotificationsModel call({List<String>? title, List<String>? yearid}) {
+  _NotificationsModel call({String? title, int? yearid}) {
     return _NotificationsModel(
       title: title,
       yearid: yearid,
@@ -38,8 +38,8 @@ const $NotificationsModel = _$NotificationsModelTearOff();
 
 /// @nodoc
 mixin _$NotificationsModel {
-  List<String>? get title => throw _privateConstructorUsedError;
-  List<String>? get yearid => throw _privateConstructorUsedError;
+  String? get title => throw _privateConstructorUsedError;
+  int? get yearid => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -52,7 +52,7 @@ abstract class $NotificationsModelCopyWith<$Res> {
   factory $NotificationsModelCopyWith(
           NotificationsModel value, $Res Function(NotificationsModel) then) =
       _$NotificationsModelCopyWithImpl<$Res>;
-  $Res call({List<String>? title, List<String>? yearid});
+  $Res call({String? title, int? yearid});
 }
 
 /// @nodoc
@@ -73,11 +73,11 @@ class _$NotificationsModelCopyWithImpl<$Res>
       title: title == freezed
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
+              as String?,
       yearid: yearid == freezed
           ? _value.yearid
           : yearid // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
+              as int?,
     ));
   }
 }
@@ -89,7 +89,7 @@ abstract class _$NotificationsModelCopyWith<$Res>
           _NotificationsModel value, $Res Function(_NotificationsModel) then) =
       __$NotificationsModelCopyWithImpl<$Res>;
   @override
-  $Res call({List<String>? title, List<String>? yearid});
+  $Res call({String? title, int? yearid});
 }
 
 /// @nodoc
@@ -112,11 +112,11 @@ class __$NotificationsModelCopyWithImpl<$Res>
       title: title == freezed
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
+              as String?,
       yearid: yearid == freezed
           ? _value.yearid
           : yearid // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
+              as int?,
     ));
   }
 }
@@ -130,9 +130,9 @@ class _$_NotificationsModel extends _NotificationsModel {
       _$$_NotificationsModelFromJson(json);
 
   @override
-  final List<String>? title;
+  final String? title;
   @override
-  final List<String>? yearid;
+  final int? yearid;
 
   @override
   String toString() {
@@ -167,17 +167,17 @@ class _$_NotificationsModel extends _NotificationsModel {
 }
 
 abstract class _NotificationsModel extends NotificationsModel {
-  const factory _NotificationsModel(
-      {List<String>? title, List<String>? yearid}) = _$_NotificationsModel;
+  const factory _NotificationsModel({String? title, int? yearid}) =
+      _$_NotificationsModel;
   const _NotificationsModel._() : super._();
 
   factory _NotificationsModel.fromJson(Map<String, dynamic> json) =
       _$_NotificationsModel.fromJson;
 
   @override
-  List<String>? get title => throw _privateConstructorUsedError;
+  String? get title => throw _privateConstructorUsedError;
   @override
-  List<String>? get yearid => throw _privateConstructorUsedError;
+  int? get yearid => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$NotificationsModelCopyWith<_NotificationsModel> get copyWith =>

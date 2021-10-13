@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:mscmu/application/provider/current_user.provider.dart';
 import '../../application/posts/use_cases/create_post/create_post_input.dart';
 import '../../application/posts/use_cases/create_post/create_post_use_case.dart';
 import 'package:path/path.dart';
@@ -33,25 +34,14 @@ class _AddPostScreenState extends State<AddPostScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final fileName = file != null ? basename(file!.path) : 'No File Selected';
+    var fileName = file != null ? basename(file!.path) : 'No File Selected';
     final _post = useState(const PostModel());
+    final _key = useState(GlobalKey<FormState>());
+    final admin = useProvider(currentUserProvider);
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.blue,
-        title: Image.asset(
-          "images/logo.png",
-          scale: 10,
-        ),
-        centerTitle: true,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(20.0),
-            bottomRight: Radius.circular(20.0),
-          ),
-        ),
-      ),
       body: SingleChildScrollView(
         child: Form(
+          key: _key.value,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -81,9 +71,8 @@ class _AddPostScreenState extends State<AddPostScreen> {
                   label: 'Body',
                   max: null,
                   keyboard: TextInputType.multiline,
-                  onChanged: (value) => setState(() {
-                    _post.value = _post.value.copyWith(body: value);
-                  }),
+                  onChanged: (value) =>
+                      _post.value = _post.value.copyWith(body: value),
                   validator:
                       RequiredValidator(errorText: "This Field is required"),
                 ),
@@ -103,11 +92,13 @@ class _AddPostScreenState extends State<AddPostScreen> {
                 ),
               ),
               const SizedBox(height: 8),
-              Center(
-                child: Text(
-                  fileName,
-                  style: const TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.w500),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Field(
+                  label: fileName,
+                  max: null,
+                  keyboard: TextInputType.multiline,
+                  read: true,
                 ),
               ),
               const SizedBox(height: 10),
@@ -141,20 +132,26 @@ class _AddPostScreenState extends State<AddPostScreen> {
               const SizedBox(
                 height: 10,
               ),
-              ButtonWidget(
+              admin.maybeWhen(
+                orElse: () => const SizedBox.shrink(),
+                data: (user) => ButtonWidget(
                   icon: FontAwesomeIcons.upload,
                   text: "Publish Post",
                   onClicked: () async {
-                    await context.read(createpostUseCaseProvider).execute(
-                        CreatepostInput(
-                            yearid: widget.yearid,
-                            adminavatar: widget.avatar,
-                            adminname: widget.name,
-                            title: _post.value.title,
-                            body: _post.value.body,
-                            image: _post.value.image));
-                    Navigator.of(context).pop();
-                  })
+                    if (_key.value.currentState!.validate()) {
+                      _key.value.currentState!.reset();
+                      await context.read(createpostUseCaseProvider).execute(
+                          CreatepostInput(
+                              yearid: user.yearid,
+                              adminavatar:user.avatar,
+                              adminname: user.name,
+                              title: _post.value.title,
+                              body: _post.value.body,
+                              image: _post.value.image));
+                    }
+                  },
+                ),
+              )
             ],
           ),
         ),
@@ -179,7 +176,6 @@ class _AddPostScreenState extends State<AddPostScreen> {
             final snap = snapshot.data!;
             final progress = snap.bytesTransferred / snap.totalBytes;
             final percentage = (progress * 100).toStringAsFixed(2);
-
             return Text(
               '$percentage %',
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),

@@ -12,6 +12,7 @@ import 'package:mscmu/application/provider/sharedpref/pref_provider.dart';
 import 'package:mscmu/constants.dart';
 import 'package:mscmu/infrastructure/messaging/services/messaging.repository.dart';
 import 'package:mscmu/navigate.dart';
+import 'package:mscmu/presentation/screens/add_news_screen.dart';
 import 'package:mscmu/presentation/screens/add_notifications_screen.dart';
 import 'package:mscmu/presentation/screens/add_post_screen.dart';
 import 'package:mscmu/presentation/screens/on_boarding_screen.dart';
@@ -26,18 +27,11 @@ class HomeScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final adminavatar = useState("");
-    final adminame = useState("");
-    final adminyear = useState(0);
     final pref = useProvider(sharedPreferences);
     final admin = useProvider(currentUserProvider);
     final hello =
-        useFuture(InternetConnectionChecker().hasConnection, initialData: false);
+        useFuture(InternetConnectionChecker().hasConnection, initialData: true);
     useEffect(() {
-      if (hello.data == true) {
-        context.refresh(sharedPreferences);
-      } else {}
-
       FirebaseMessaging.instance.requestPermission(
         sound: true,
         badge: true,
@@ -107,30 +101,29 @@ class HomeScreen extends HookWidget {
                 orElse: () => const SizedBox.shrink()),
             admin.maybeWhen(
                 data: (user) {
-                  adminyear.value = user.yearid!;
-                  adminame.value = user.name!;
-                  adminavatar.value = user.avatar;
-                  return ListTile(
-                    leading: const Icon(FontAwesomeIcons.bell),
-                    title: const Text("Add notification"),
-                    onTap: () async {
-                      if (user.fulladmin == true) {
-                        Navigator.pop(context);
-                        _showPage.value = 6;
-                      } else {
-                        Navigator.of(context).pop();
-                        MotionToast.error(
-                                position: MOTION_TOAST_POSITION.TOP,
-                                animationType: ANIMATION.FROM_TOP,
-                                title: "Permission Denied",
-                                titleStyle: const TextStyle(
-                                    fontWeight: FontWeight.bold),
-                                description:
-                                    "You don't have any permission for sending notifications !")
-                            .show(context);
-                      }
-                    },
-                  );
+                  return user.fulladmin == true
+                      ? ListTile(
+                          leading: const Icon(FontAwesomeIcons.bell),
+                          title: const Text("Add notification"),
+                          onTap: () async {
+                            Navigator.pop(context);
+                            _showPage.value = 6;
+                          })
+                      : const SizedBox.shrink();
+                },
+                orElse: () => const SizedBox.shrink()),
+            admin.maybeWhen(
+                data: (user) {
+                  return user.fulladmin == true
+                      ? ListTile(
+                          leading: const Icon(FontAwesomeIcons.newspaper),
+                          title: const Text("Add news"),
+                          onTap: () async {
+                            Navigator.pop(context);
+                            _showPage.value = 7;
+                          },
+                        )
+                      : const SizedBox.shrink();
                 },
                 orElse: () => const SizedBox.shrink()),
             ListTile(
@@ -199,10 +192,22 @@ class HomeScreen extends HookWidget {
                 AboutUsScreen(),
                 ContactusScreen(),
                 AddPostScreen(),
-                AddNotificationsScreen()
+                AddNotificationsScreen(),
+                AddNewsScreen(),
               ],
             )
-          : const Text("refresh"),
+          : Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+              const Center(
+                child: Text(
+                  """You Don't have a stable internet connection ! 
+Please connect to internet and try again""",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+              Center(
+                child: Image.asset("images/internet.gif"),
+              )
+            ]),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         heroTag: "home",

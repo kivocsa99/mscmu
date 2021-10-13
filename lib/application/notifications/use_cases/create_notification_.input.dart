@@ -3,5 +3,6 @@ class CreateNotificationInput {
   final int? yearid;
 
 
+
   CreateNotificationInput({ this.title, this.yearid});
 }
