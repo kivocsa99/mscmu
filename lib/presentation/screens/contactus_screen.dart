@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -9,6 +11,7 @@ class ContactusScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _fbProtocolUrl = useState("");
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -33,19 +36,21 @@ class ContactusScreen extends HookWidget {
           padding: const EdgeInsets.all(15.0),
           child: GestureDetector(
             onTap: () async {
-              //todo iphone
+              if (Platform.isIOS) {
+                _fbProtocolUrl.value = "fb://profile/1446249115607763";
+              } else {
+                _fbProtocolUrl.value = 'fb://page/1446249115607763';
+              }
               try {
                 bool launched = await launch('fb://page/1446249115607763',
                     forceSafariVC: false, forceWebView: false);
 
                 if (!launched) {
-                  await launch(
-                      'https://www.facebook.com/medicine.surgery.mutah',
-                      forceSafariVC: false,
-                      forceWebView: false);
+                  await launch(_fbProtocolUrl.value,
+                      forceSafariVC: false, forceWebView: false);
                 }
               } catch (e) {
-                await launch('https://www.facebook.com/medicine.surgery.mutah',
+                await launch(_fbProtocolUrl.value,
                     forceSafariVC: false, forceWebView: false);
               }
             },

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +16,7 @@ class NewsHeader extends HookWidget {
   Widget build(BuildContext context) {
     final newsprovider = useProvider(allNewsProvider);
     final _index = useState(0);
+    final _fbProtocolUrl = useState("");
     final slideController = useState(CarouselController());
     List<Widget> shimmer = [
       const ShimmerAffect(),
@@ -31,9 +34,16 @@ class NewsHeader extends HookWidget {
                         .map((news) => SizedBox(
                               child: GestureDetector(
                                 onTap: () async {
+                                  if (Platform.isIOS) {
+                                    _fbProtocolUrl.value =
+                                        "fb://profile/1446249115607763";
+                                  } else {
+                                    _fbProtocolUrl.value =
+                                        'fb://page/1446249115607763';
+                                  }
                                   try {
                                     bool launched = await launch(
-                                        'fb://page/1446249115607763',
+                                        _fbProtocolUrl.value,
                                         forceSafariVC: false,
                                         forceWebView: false);
 
