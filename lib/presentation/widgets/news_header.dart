@@ -3,6 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../application/provider/news.repository.provider.dart';
 import 'shimmer_affect.dart';
 
@@ -30,7 +31,22 @@ class NewsHeader extends HookWidget {
                         .map((news) => SizedBox(
                               child: GestureDetector(
                                 onTap: () async {
-                                  print("hrllo");
+                                  try {
+                                    bool launched = await launch(
+                                        'fb://page/1446249115607763',
+                                        forceSafariVC: false,
+                                        forceWebView: false);
+
+                                    if (!launched) {
+                                      await launch(news.url!,
+                                          forceSafariVC: false,
+                                          forceWebView: false);
+                                    }
+                                  } catch (e) {
+                                    await launch(news.url!,
+                                        forceSafariVC: false,
+                                        forceWebView: false);
+                                  }
                                 },
                                 child: Container(
                                   margin: const EdgeInsets.all(5.0),

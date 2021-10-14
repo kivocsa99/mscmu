@@ -59,7 +59,4 @@ class MyApp extends HookWidget {
 
 //TODO
 //1- share newfeed url
-//2- send notifications to any level by mscmu main account
-//3- send posts to any level my mscmu main account
-//4- add news feed by mscmu main account
 

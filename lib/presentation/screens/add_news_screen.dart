@@ -36,8 +36,8 @@ class _AddNewsScreenState extends State<AddNewsScreen> {
     final _news = useState(const NewsModel());
     final _key = useState(GlobalKey<FormState>());
     final admin = useProvider(currentUserProvider);
-    return Scaffold(
-      body: SingleChildScrollView(
+    return 
+       SingleChildScrollView(
         child: Form(
           key: _key.value,
           child: Column(
@@ -148,8 +148,7 @@ class _AddNewsScreenState extends State<AddNewsScreen> {
             ],
           ),
         ),
-      ),
-    );
+      );
   }
 
   Future selectFile() async {

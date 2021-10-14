@@ -9,16 +9,13 @@ class MainScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-   
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: const [
-            NewsHeader(),
-            YearsRow(),
-            Posts(),
-          ],
-        ),
+    return SingleChildScrollView(
+      child: Column(
+        children: const [
+          NewsHeader(),
+          YearsRow(),
+          Posts(),
+        ],
       ),
     );
   }

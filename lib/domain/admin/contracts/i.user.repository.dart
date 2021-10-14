@@ -7,7 +7,10 @@ abstract class IUserRepository {
     required AdminModel user,
   });
 
-
   Stream<AdminModel> get currentUserStream;
+  Stream<List<AdminModel>> get allUsers;
   Stream<AdminModel> userStream(String uid);
+  Future<void> acceptedAdmin(String uid);
+  Future<void> unacceptAdmin(String uid);
+
 }

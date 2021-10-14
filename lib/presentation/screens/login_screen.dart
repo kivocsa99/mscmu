@@ -30,7 +30,7 @@ class Login extends HookWidget {
     final yearName = useState("Wateen");
     final yearId = useState(15);
     final isclinical = useState(false);
-    final role = useState("");
+    final role = useState("Major");
     final disableButton = useState(false);
     final yearId2 = useState(9);
     return Scaffold(
@@ -163,21 +163,16 @@ class Login extends HookWidget {
                                           "Login Failed");
                                     },
                                     (unit) async {
-                                      await ctx
-                                          .read(msgprovider)
-                                          .subsribe(yearName.value);
                                       displaySuccessMotionToast(
                                           ctx,
                                           "Welcome back to MSC-MU Family",
                                           "Loggedin successfully");
-
-                                      Future.delayed(
-                                        const Duration(seconds: 1),
-                                        (() => changeScreenReplacement(
-                                              ctx,
-                                              const HomeScreen(),
-                                            )),
-                                      );
+                                      await ctx
+                                          .read(msgprovider)
+                                          .subsribe(yearName.value)
+                                          .then((value) =>
+                                              changeScreenReplacement(
+                                                  ctx, const HomeScreen()));
                                     },
                                   ),
                                 );
@@ -280,24 +275,10 @@ class Login extends HookWidget {
                                       ),
                                       TextButton(
                                         onPressed: () async {
-                                          Navigator.of(context).pop();
-                                          ctx
-                                              .read(prefChangeNotifierProvider)
-                                              .setYearName(yearName.value);
-                                          ctx
-                                              .read(prefChangeNotifierProvider)
-                                              .setYearId(yearId.value);
-                                          ctx
-                                              .read(prefChangeNotifierProvider)
-                                              .setIsWelcome(true);
-                                          ctx
-                                              .read(prefChangeNotifierProvider)
-                                              .setisclinical(true);
-                                          ctx
-                                              .read(prefChangeNotifierProvider)
-                                              .setYearId2(yearId2.value);
-
-                                          await context
+                                          Navigator.of(context,
+                                                  rootNavigator: true)
+                                              .pop();
+                                          await ctx
                                               .read(
                                                   signInWithEmailAndPasswordUseCaseProvider)
                                               .execute(
@@ -321,24 +302,42 @@ class Login extends HookWidget {
                                                         "Login Failed");
                                                   },
                                                   (unit) async {
-                                                    await ctx
-                                                        .read(msgprovider)
-                                                        .subsribe(
+                                                    ctx
+                                                        .read(
+                                                            prefChangeNotifierProvider)
+                                                        .setYearName(
                                                             yearName.value);
-
+                                                    ctx
+                                                        .read(
+                                                            prefChangeNotifierProvider)
+                                                        .setYearId(
+                                                            yearId.value);
+                                                    ctx
+                                                        .read(
+                                                            prefChangeNotifierProvider)
+                                                        .setIsWelcome(true);
+                                                    ctx
+                                                        .read(
+                                                            prefChangeNotifierProvider)
+                                                        .setisclinical(true);
+                                                    ctx
+                                                        .read(
+                                                            prefChangeNotifierProvider)
+                                                        .setYearId2(
+                                                            yearId2.value);
                                                     displaySuccessMotionToast(
                                                         ctx,
                                                         "Welcome back to MSC-MU Family",
                                                         "Loggedin successfully");
-                                                    Future.delayed(
-                                                      const Duration(
-                                                          seconds: 1),
-                                                      (() =>
-                                                          changeScreenReplacement(
-                                                            ctx,
-                                                            const HomeScreen(),
-                                                          )),
-                                                    );
+                                                    await ctx
+                                                        .read(msgprovider)
+                                                        .subsribe(
+                                                            yearName.value)
+                                                        .then((value) =>
+                                                            changeScreenReplacement(
+                                                              ctx,
+                                                              const HomeScreen(),
+                                                            ));
                                                   },
                                                 ),
                                               );

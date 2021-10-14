@@ -4,7 +4,7 @@ import 'package:motion_toast/motion_toast.dart';
 displaySuccessMotionToast(
     BuildContext context, String description, String title) {
   MotionToast.success(
-    toastDuration: const Duration(seconds: 3),
+    toastDuration: const Duration(seconds: 1),
     title: title,
     titleStyle: const TextStyle(fontWeight: FontWeight.bold),
     description: description,

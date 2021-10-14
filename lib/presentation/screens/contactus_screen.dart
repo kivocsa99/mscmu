@@ -9,70 +9,68 @@ class ContactusScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(
-            height: 10,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(
+          height: 10,
+        ),
+        Image.asset("images/logo.png"),
+        Divider(
+          thickness: 5,
+          color: Colors.blue[100],
+        ),
+        const Center(
+          child: Text(
+            "You Can Always Reach Us On :",
+            style: TextStyle(fontWeight: FontWeight.bold),
           ),
-          Image.asset("images/logo.png"),
-          Divider(
-            thickness: 5,
-            color: Colors.blue[100],
-          ),
-          const Center(
-            child: Text(
-              "You Can Always Reach Us On :",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Container(
-            padding: const EdgeInsets.all(15.0),
-            child: GestureDetector(
-              onTap: () async {
-                //todo iphone
-                try {
-                  bool launched = await launch('fb://page/1446249115607763',
-                      forceSafariVC: false,forceWebView: false);
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        Container(
+          padding: const EdgeInsets.all(15.0),
+          child: GestureDetector(
+            onTap: () async {
+              //todo iphone
+              try {
+                bool launched = await launch('fb://page/1446249115607763',
+                    forceSafariVC: false, forceWebView: false);
 
-                  if (!launched) {
-                    await launch(
-                        'https://www.facebook.com/medicine.surgery.mutah',
-                        forceSafariVC: false,forceWebView: false);
-                  }
-                } catch (e) {
+                if (!launched) {
                   await launch(
                       'https://www.facebook.com/medicine.surgery.mutah',
-                      forceSafariVC: false,forceWebView: false);
+                      forceSafariVC: false,
+                      forceWebView: false);
                 }
-              },
-              child: const ListTile(
-                leading: Icon(FontAwesomeIcons.facebookSquare),
-                title: Text("medicine.surgery.mutah"),
-              ),
+              } catch (e) {
+                await launch('https://www.facebook.com/medicine.surgery.mutah',
+                    forceSafariVC: false, forceWebView: false);
+              }
+            },
+            child: const ListTile(
+              leading: Icon(FontAwesomeIcons.facebookSquare),
+              title: Text("medicine.surgery.mutah"),
             ),
           ),
-          Container(
-            padding: const EdgeInsets.all(15.0),
-            child: GestureDetector(
-              onTap: () async {
-                await launch(
-                    'https://www.youtube.com/channel/UC7HSntyIHRgjY7S-Si1nhVg',
-                    forceSafariVC: false,
-                    forceWebView: false);
-              },
-              child: const ListTile(
-                leading: Icon(FontAwesomeIcons.youtube),
-                title: Text("Msc-Mu Youtube"),
-              ),
+        ),
+        Container(
+          padding: const EdgeInsets.all(15.0),
+          child: GestureDetector(
+            onTap: () async {
+              await launch(
+                  'https://www.youtube.com/channel/UC7HSntyIHRgjY7S-Si1nhVg',
+                  forceSafariVC: false,
+                  forceWebView: false);
+            },
+            child: const ListTile(
+              leading: Icon(FontAwesomeIcons.youtube),
+              title: Text("Msc-Mu Youtube"),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

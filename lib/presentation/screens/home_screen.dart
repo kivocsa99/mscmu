@@ -20,6 +20,7 @@ import 'aboutus_screen.dart';
 import 'contactus_screen.dart';
 import 'libraryscreen.dart';
 import 'main_screen.dart';
+import 'management_screen.dart';
 import 'quiz_list_screen.dart';
 
 class HomeScreen extends HookWidget {
@@ -126,6 +127,20 @@ class HomeScreen extends HookWidget {
                       : const SizedBox.shrink();
                 },
                 orElse: () => const SizedBox.shrink()),
+            admin.maybeWhen(
+                data: (user) {
+                  return user.fulladmin == true
+                      ? ListTile(
+                          leading: const Icon(FontAwesomeIcons.userShield),
+                          title: const Text("Manadeeb Management"),
+                          onTap: () async {
+                            Navigator.pop(context);
+                            _showPage.value = 8;
+                          },
+                        )
+                      : const SizedBox.shrink();
+                },
+                orElse: () => const SizedBox.shrink()),
             ListTile(
               leading: const Icon(Icons.help),
               title: const Text("About us"),
@@ -194,6 +209,7 @@ class HomeScreen extends HookWidget {
                 AddPostScreen(),
                 AddNotificationsScreen(),
                 AddNewsScreen(),
+                Management(),
               ],
             )
           : Column(mainAxisAlignment: MainAxisAlignment.center, children: [

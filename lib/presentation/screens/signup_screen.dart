@@ -163,22 +163,17 @@ class SignUpSCreen extends HookWidget {
                                       "Signup Failed");
                                 },
                                 (unit) async {
-                                  ctx
-                                      .read(msgprovider)
-                                      .subsribe(yearName.value);
-
                                   displaySuccessMotionToast(
                                       ctx,
                                       "Welcome to MSC-MU Family",
                                       "SignedUp successfully");
-
-                                  Future.delayed(
-                                    const Duration(seconds: 1),
-                                    (() => changeScreenReplacement(
-                                          ctx,
-                                          const HomeScreen(),
-                                        )),
-                                  );
+                                  await ctx
+                                      .read(msgprovider)
+                                      .subsribe(yearName.value)
+                                      .then((value) => changeScreenReplacement(
+                                            ctx,
+                                            const HomeScreen(),
+                                          ));
                                 },
                               ),
                             );
@@ -277,23 +272,24 @@ class SignUpSCreen extends HookWidget {
                                   ),
                                   TextButton(
                                     onPressed: () async {
-                                      Navigator.of(context).pop();
-                                      context
+                                      Navigator.of(context, rootNavigator: true)
+                                          .pop();
+                                      ctx
                                           .read(prefChangeNotifierProvider)
                                           .setYearId(yearId.value);
-                                      context
+                                      ctx
                                           .read(prefChangeNotifierProvider)
                                           .setIsWelcome(true);
-                                      context
+                                      ctx
                                           .read(prefChangeNotifierProvider)
                                           .setisclinical(true);
-                                      context
+                                      ctx
                                           .read(prefChangeNotifierProvider)
                                           .setYearId2(yearId2.value);
-                                      context
+                                      ctx
                                           .read(prefChangeNotifierProvider)
                                           .setYearName(yearName.value);
-                                      await context
+                                      await ctx
                                           .read(
                                               signUpWithEmailAndPasswordUseCaseProvider)
                                           .execute(
@@ -315,23 +311,18 @@ class SignUpSCreen extends HookWidget {
                                                     "Signup Failed");
                                               },
                                               (unit) async {
-                                                ctx
-                                                    .read(msgprovider)
-                                                    .subsribe(yearName.value);
-
                                                 displaySuccessMotionToast(
                                                     ctx,
                                                     "Welcome to MSC-MU Family",
                                                     "SignedUp successfully");
-
-                                                Future.delayed(
-                                                  const Duration(seconds: 1),
-                                                  (() =>
-                                                      changeScreenReplacement(
-                                                        ctx,
-                                                        const HomeScreen(),
-                                                      )),
-                                                );
+                                                await ctx
+                                                    .read(msgprovider)
+                                                    .subsribe(yearName.value)
+                                                    .then((value) =>
+                                                        changeScreenReplacement(
+                                                          ctx,
+                                                          const HomeScreen(),
+                                                        ));
                                               },
                                             ),
                                           );

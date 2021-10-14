@@ -21,76 +21,74 @@ class AddNotificationsScreen extends HookWidget {
     final _key = useState(GlobalKey<FormState>());
     final years = useProvider(allYearsProvider);
     final yearId = useState(15);
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Form(
-          key: _key.value,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const SizedBox(
-                height: 10,
-              ),
-              const Text(
-                "NewNotification",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Field(
-                    max: 1,
-                    label: 'Title',
-                    validator:
-                        RequiredValidator(errorText: "This Field is required"),
-                    onChanged: (value) => _notification.value =
-                        _notification.value.copyWith(title: value)),
-              ),
-              years.when(
-                data: (years) => Column(children: [
-                  SizedBox(
-                    height: 250,
-                    child: CupertinoPicker(
-                      looping: true,
-                      children: years.classes!
-                          .map((e) => Center(
-                                child: Text(e.name!),
-                              ))
-                          .toList(),
-                      itemExtent: 46,
-                      onSelectedItemChanged: (index) async {
-                        yearId.value = years.classes![index].id!;
-                      },
-                    ),
+    return SingleChildScrollView(
+      child: Form(
+        key: _key.value,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const SizedBox(
+              height: 10,
+            ),
+            const Text(
+              "NewNotification",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Field(
+                  max: 1,
+                  label: 'Title',
+                  validator:
+                      RequiredValidator(errorText: "This Field is required"),
+                  onChanged: (value) => _notification.value =
+                      _notification.value.copyWith(title: value)),
+            ),
+            years.when(
+              data: (years) => Column(children: [
+                SizedBox(
+                  height: 250,
+                  child: CupertinoPicker(
+                    looping: true,
+                    children: years.classes!
+                        .map((e) => Center(
+                              child: Text(e.name!),
+                            ))
+                        .toList(),
+                    itemExtent: 46,
+                    onSelectedItemChanged: (index) async {
+                      yearId.value = years.classes![index].id!;
+                    },
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                ]),
-                loading: () => const ShimmerAffect(height: 100, width: 100),
-                error: (error, stack) => Center(
-                  child: Text("$error"),
                 ),
+                const SizedBox(
+                  height: 10,
+                ),
+              ]),
+              loading: () => const ShimmerAffect(height: 100, width: 100),
+              error: (error, stack) => Center(
+                child: Text("$error"),
               ),
-              ButtonWidget(
-                  icon: FontAwesomeIcons.upload,
-                  text: "Publish Post",
-                  onClicked: () async {
-                    if (_key.value.currentState!.validate()) {
-                      _key.value.currentState!.reset();
+            ),
+            ButtonWidget(
+                icon: FontAwesomeIcons.upload,
+                text: "Publish Post",
+                onClicked: () async {
+                  if (_key.value.currentState!.validate()) {
+                    _key.value.currentState!.reset();
 
-                      await context
-                          .read(createNotificationUseCaseProvider)
-                          .execute(CreateNotificationInput(
-                            yearid: yearId.value,
-                            title: _notification.value.title,
-                          ));
-                    }
-                  })
-            ],
-          ),
+                    await context
+                        .read(createNotificationUseCaseProvider)
+                        .execute(CreateNotificationInput(
+                          yearid: yearId.value,
+                          title: _notification.value.title,
+                        ));
+                  }
+                })
+          ],
         ),
       ),
     );
