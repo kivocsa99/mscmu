@@ -85,6 +85,6 @@
 
         <meta-data
             android:name="vn.hunghd.flutterdownloader.NOTIFICATION_ICON"
-            android:resource="@drawable/launch_background"/>            
+            android:resource="@mipmap/launcher_icon"/>            
     </application>
 </manifest>

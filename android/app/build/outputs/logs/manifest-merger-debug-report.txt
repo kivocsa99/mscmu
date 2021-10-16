@@ -35,6 +35,7 @@ MERGED from [:share] /home/kivocsa99/mscmu/build/share/intermediates/library_man
 MERGED from [:audio_session] /home/kivocsa99/mscmu/build/audio_session/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:permission_handler] /home/kivocsa99/mscmu/build/permission_handler/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:android_path_provider] /home/kivocsa99/mscmu/build/android_path_provider/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.multidex:multidex:2.0.0] /home/kivocsa99/.gradle/caches/transforms-2/files-2.1/d4dec2103331f7a1a6a544fb17e4c453/multidex-2.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [com.google.firebase:firebase-firestore:23.0.3] /home/kivocsa99/.gradle/caches/transforms-2/files-2.1/2562ea70dfdfec13b3abf39f278c87f6/jetified-firebase-firestore-23.0.3/AndroidManifest.xml:2:1-26:12
 MERGED from [com.google.firebase:firebase-analytics-ktx:19.0.1] /home/kivocsa99/.gradle/caches/transforms-2/files-2.1/2d9e9d9454d007cccfe5ca79181866bb/jetified-firebase-analytics-ktx-19.0.1/AndroidManifest.xml:2:1-17:12
 MERGED from [com.google.firebase:firebase-common-ktx:20.0.0] /home/kivocsa99/.gradle/caches/transforms-2/files-2.1/e8a6d5678c300ebe32d40f2640508ebc/jetified-firebase-common-ktx-20.0.0/AndroidManifest.xml:2:1-21:12
@@ -338,9 +339,9 @@ ADDED from /home/kivocsa99/mscmu/android/app/src/main/AndroidManifest.xml:57:9-5
 	android:name
 		ADDED from /home/kivocsa99/mscmu/android/app/src/main/AndroidManifest.xml:58:13-44
 meta-data#vn.hunghd.flutterdownloader.NOTIFICATION_ICON
-ADDED from /home/kivocsa99/mscmu/android/app/src/main/AndroidManifest.xml:86:9-88:61
+ADDED from /home/kivocsa99/mscmu/android/app/src/main/AndroidManifest.xml:86:9-88:55
 	android:resource
-		ADDED from /home/kivocsa99/mscmu/android/app/src/main/AndroidManifest.xml:88:13-59
+		ADDED from /home/kivocsa99/mscmu/android/app/src/main/AndroidManifest.xml:88:13-53
 	android:name
 		ADDED from /home/kivocsa99/mscmu/android/app/src/main/AndroidManifest.xml:87:13-73
 uses-sdk
@@ -381,6 +382,8 @@ MERGED from [:permission_handler] /home/kivocsa99/mscmu/build/permission_handler
 MERGED from [:permission_handler] /home/kivocsa99/mscmu/build/permission_handler/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:android_path_provider] /home/kivocsa99/mscmu/build/android_path_provider/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:android_path_provider] /home/kivocsa99/mscmu/build/android_path_provider/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [androidx.multidex:multidex:2.0.0] /home/kivocsa99/.gradle/caches/transforms-2/files-2.1/d4dec2103331f7a1a6a544fb17e4c453/multidex-2.0.0/AndroidManifest.xml:20:5-43
+MERGED from [androidx.multidex:multidex:2.0.0] /home/kivocsa99/.gradle/caches/transforms-2/files-2.1/d4dec2103331f7a1a6a544fb17e4c453/multidex-2.0.0/AndroidManifest.xml:20:5-43
 MERGED from [com.google.firebase:firebase-firestore:23.0.3] /home/kivocsa99/.gradle/caches/transforms-2/files-2.1/2562ea70dfdfec13b3abf39f278c87f6/jetified-firebase-firestore-23.0.3/AndroidManifest.xml:7:5-9:41
 MERGED from [com.google.firebase:firebase-firestore:23.0.3] /home/kivocsa99/.gradle/caches/transforms-2/files-2.1/2562ea70dfdfec13b3abf39f278c87f6/jetified-firebase-firestore-23.0.3/AndroidManifest.xml:7:5-9:41
 MERGED from [com.google.firebase:firebase-analytics-ktx:19.0.1] /home/kivocsa99/.gradle/caches/transforms-2/files-2.1/2d9e9d9454d007cccfe5ca79181866bb/jetified-firebase-analytics-ktx-19.0.1/AndroidManifest.xml:5:5-44

@@ -55,8 +55,3 @@ class MyApp extends HookWidget {
             ));
   }
 }
-
-
-//TODO
-//1- share newfeed url
-

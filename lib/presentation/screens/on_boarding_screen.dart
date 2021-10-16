@@ -11,7 +11,6 @@ class OnBoardingScreen extends HookWidget {
     final _introKey = useState(GlobalKey<IntroductionScreenState>());
 
     void _onIntroEnd(context) {
-      
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (_) => const WelcomeScreen()),
       );
@@ -73,7 +72,7 @@ class OnBoardingScreen extends HookWidget {
           title: "Download , play and Share",
           body:
               "Download your lectures and Play all of your records , you can even SHARE!",
-          image: _buildImage('img3.jpg'),
+          image: _buildImage('download.gif'),
           decoration: pageDecoration,
         ),
       ],
