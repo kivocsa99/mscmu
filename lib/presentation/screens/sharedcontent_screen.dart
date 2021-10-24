@@ -32,6 +32,7 @@ class SharedContentScreen extends StatefulHookWidget {
 
 class _SharedContentScreenState extends State<SharedContentScreen> {
   final _port = ReceivePort();
+  int? progress ;
 
   @override
   void initState() {
@@ -39,7 +40,14 @@ class _SharedContentScreenState extends State<SharedContentScreen> {
     _port.listen((message) {
       String id = message[0];
       DownloadTaskStatus status = message[1];
-      int progress = message[2];
+       progress = message[2];
+      showDialog(context: context, builder: (BuildContext context){
+        return  Dialog(
+          child: LinearProgressIndicator(
+            value:progress!.toDouble()
+          ),
+        );
+      });
     });
     FlutterDownloader.registerCallback(downloadCallBack);
 
@@ -251,7 +259,6 @@ class _SharedContentScreenState extends State<SharedContentScreen> {
                                                         externalStorageDirPath
                                                                 .value =
                                                             (await getApplicationDocumentsDirectory())
-                                                                .absolute
                                                                 .path;
                                                         exists
                                                             .value = await File(
@@ -276,6 +283,7 @@ class _SharedContentScreenState extends State<SharedContentScreen> {
                                                           width: 300,
                                                         ).show(context);
                                                       } else {
+                                                        print(externalStorageDirPath);
                                                         await context
                                                             .read(
                                                                 downloaderUseCaseProvider)
