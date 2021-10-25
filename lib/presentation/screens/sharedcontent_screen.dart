@@ -32,22 +32,17 @@ class SharedContentScreen extends StatefulHookWidget {
 
 class _SharedContentScreenState extends State<SharedContentScreen> {
   final _port = ReceivePort();
-  int? progress ;
+  int progress = 0;
 
   @override
   void initState() {
     IsolateNameServer.registerPortWithName(_port.sendPort, "downloading");
     _port.listen((message) {
+      print("heyyyyyy$message");
       String id = message[0];
       DownloadTaskStatus status = message[1];
-       progress = message[2];
-      showDialog(context: context, builder: (BuildContext context){
-        return  Dialog(
-          child: LinearProgressIndicator(
-            value:progress!.toDouble()
-          ),
-        );
-      });
+      progress = message[2];
+      print(progress);
     });
     FlutterDownloader.registerCallback(downloadCallBack);
 
@@ -283,8 +278,7 @@ class _SharedContentScreenState extends State<SharedContentScreen> {
                                                           width: 300,
                                                         ).show(context);
                                                       } else {
-                                                        print(externalStorageDirPath);
-                                                        await context
+                                                        context
                                                             .read(
                                                                 downloaderUseCaseProvider)
                                                             .execute(DownloadFileUseCaseInput(
@@ -316,6 +310,8 @@ class _SharedContentScreenState extends State<SharedContentScreen> {
                                                                       ).show(
                                                                           context);
                                                                     }, (r) {
+                                                                      print(
+                                                                          progress);
                                                                       MotionToast
                                                                           .success(
                                                                         title:
@@ -331,6 +327,21 @@ class _SharedContentScreenState extends State<SharedContentScreen> {
                                                                       ).show(
                                                                           context);
                                                                     }));
+                                                        if (Platform.isIOS) {
+                                                          if (progress != 100) {
+                                                            showDialog(
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    (BuildContext
+                                                                        context) {
+                                                                  return const AlertDialog(
+                                                                    content:
+                                                                        CircularProgressIndicator(),
+                                                                  );
+                                                                });
+                                                          }
+                                                        }
                                                       }
                                                     } else {
                                                       MotionToast.error(
