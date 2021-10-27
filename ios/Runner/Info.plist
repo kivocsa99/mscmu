@@ -22,6 +22,14 @@
     <true/>
     <key>UIFileSharingEnabled</key>
     <true/>
+    <key>BGTaskSchedulerPermittedIdentifiers</key>
+    <array>
+        <string>com.kivocsa99.mscmu</string>
+    </array>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+      <string>fb://profile/1446249115607763</string>
+    </array>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>FDAllFilesDownloadedMessage</key>

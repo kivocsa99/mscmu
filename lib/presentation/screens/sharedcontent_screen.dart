@@ -38,11 +38,10 @@ class _SharedContentScreenState extends State<SharedContentScreen> {
   void initState() {
     IsolateNameServer.registerPortWithName(_port.sendPort, "downloading");
     _port.listen((message) {
-      print("heyyyyyy$message");
       String id = message[0];
       DownloadTaskStatus status = message[1];
       progress = message[2];
-      print(progress);
+
     });
     FlutterDownloader.registerCallback(downloadCallBack);
 
@@ -310,15 +309,13 @@ class _SharedContentScreenState extends State<SharedContentScreen> {
                                                                       ).show(
                                                                           context);
                                                                     }, (r) {
-                                                                      print(
-                                                                          progress);
-                                                                      MotionToast
+                                                                          MotionToast
                                                                           .success(
-                                                                        title:
+                                                                        title:Platform.isIOS?"Downloaded":
                                                                             "Downloading File",
                                                                         titleStyle:
                                                                             const TextStyle(fontWeight: FontWeight.bold),
-                                                                        description:
+                                                                        description:Platform.isIOS?"File hase been Downloaded":
                                                                             "File is downloading , Please check your notification",
                                                                         descriptionStyle:
                                                                             const TextStyle(fontSize: 12),
@@ -330,14 +327,19 @@ class _SharedContentScreenState extends State<SharedContentScreen> {
                                                         if (Platform.isIOS) {
                                                           if (progress != 100) {
                                                             showDialog(
+                                                              barrierDismissible:false ,
                                                                 context:
                                                                     context,
                                                                 builder:
                                                                     (BuildContext
                                                                         context) {
-                                                                  return const AlertDialog(
+                                                                  return  AlertDialog(
                                                                     content:
+                                                                      Row(children:const [
                                                                         CircularProgressIndicator(),
+                                                                        SizedBox(width: 10,),
+                                                                        Text("Downloading ...")
+                                                                      ],)
                                                                   );
                                                                 });
                                                           }

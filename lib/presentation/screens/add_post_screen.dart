@@ -1,6 +1,8 @@
 import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mscmu/application/provider/current_user.provider.dart';
+import 'package:mscmu/application/provider/years.repository.provider.dart';
 import '../../application/posts/use_cases/create_post/create_post_input.dart';
 import '../../application/posts/use_cases/create_post/create_post_use_case.dart';
 import 'package:path/path.dart';
@@ -38,6 +40,8 @@ class _AddPostScreenState extends State<AddPostScreen> {
     final _post = useState(const PostModel());
     final _key = useState(GlobalKey<FormState>());
     final admin = useProvider(currentUserProvider);
+    final year = useProvider(allYearsProvider);
+    final yearId = useState(0);
     return SingleChildScrollView(
       child: Form(
         key: _key.value,
@@ -131,6 +135,25 @@ class _AddPostScreenState extends State<AddPostScreen> {
             const SizedBox(
               height: 10,
             ),
+            admin.maybeWhen(orElse: ()=>const SizedBox.shrink(),data: (user)=>
+             year.maybeWhen(orElse: ()=>const SizedBox.shrink(),data: (years)=>  SizedBox(
+               height: 250,
+               child: CupertinoPicker(
+                 looping: true,
+                 children: years.classes!
+                     .map((e) => Center(
+                   child: Text(e.name!),
+                 ))
+                     .toList(),
+                 itemExtent: 46,
+                 onSelectedItemChanged: (index) async {
+
+                   yearId.value = years.classes![index].id!;
+                 },
+               ),),),
+
+            ),
+            const SizedBox(height: 10,),
             admin.maybeWhen(
               orElse: () => const SizedBox.shrink(),
               data: (user) => ButtonWidget(
@@ -141,7 +164,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                     _key.value.currentState!.reset();
                     await context.read(createpostUseCaseProvider).execute(
                         CreatepostInput(
-                            yearid: user.yearid,
+                            yearid:user.fulladmin==false? user.yearid:yearId.value,
                             adminavatar: user.avatar,
                             adminname: user.name,
                             title: _post.value.title,
