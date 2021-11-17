@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:uuid/uuid.dart';
 import '../../../domain/admin/failures/user.failures.dart';
 import 'package:dartz/dartz.dart';
 import '../../../domain/models/postmodel.dart';
@@ -34,7 +35,9 @@ class PostsRepository implements IPostsRepository {
       String? body,
       int? yearid}) async {
     try {
-      _firestore.collection(collection).doc().set({
+      var uid = Uuid().v4();
+      _firestore.collection(collection).doc(uid).set({
+        "id":uid,
         "title": title,
         "body": body,
         "time": Timestamp.fromDate(DateTime.now()),
@@ -67,5 +70,24 @@ class PostsRepository implements IPostsRepository {
     } catch (e) {
       return left(const UserFailures.serverError());
     }
+  }
+
+  @override
+  Future<Either<UserFailures, Unit>> editPost({String? id,String? title, String? body})async {
+   try{
+     _firestore.collection(collection).doc(id).update({
+       "title":title,
+       "body":body
+     });
+         return right(unit);
+   }catch(e){return left(const UserFailures.serverError());}
+  }
+
+  @override
+  Future<Either<UserFailures, Unit>> delete({String? id})async {
+    try{
+      _firestore.collection(collection).doc(id).delete();
+      return right(unit);
+    }catch(e){return left(const UserFailures.serverError());}
   }
 }

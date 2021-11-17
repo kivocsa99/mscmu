@@ -10,11 +10,9 @@ import 'quiz_screen.dart';
 
 class QuizListScreen extends HookWidget {
   const QuizListScreen({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     final prefs = useProvider(sharedPreferences);
-
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(8.0),

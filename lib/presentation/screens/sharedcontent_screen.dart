@@ -41,7 +41,6 @@ class _SharedContentScreenState extends State<SharedContentScreen> {
       String id = message[0];
       DownloadTaskStatus status = message[1];
       progress = message[2];
-
     });
     FlutterDownloader.registerCallback(downloadCallBack);
 
@@ -260,7 +259,8 @@ class _SharedContentScreenState extends State<SharedContentScreen> {
                                                             .exists();
                                                       }
 
-                                                      if (exists.value) {
+                                                      if (exists.value &&
+                                                          Platform.isAndroid) {
                                                         MotionToast.error(
                                                           title:
                                                               "Download Error",
@@ -276,6 +276,86 @@ class _SharedContentScreenState extends State<SharedContentScreen> {
                                                                   fontSize: 12),
                                                           width: 300,
                                                         ).show(context);
+                                                      } else if (exists.value &&
+                                                          Platform.isIOS) {
+                                                        var id = await File(
+                                                            "${externalStorageDirPath.value}/$file");
+                                                        id.delete();
+                                                        context
+                                                            .read(
+                                                                downloaderUseCaseProvider)
+                                                            .execute(DownloadFileUseCaseInput(
+                                                                filename:
+                                                                    files![index]
+                                                                        .name,
+                                                                url: files![
+                                                                        index]
+                                                                    .url,
+                                                                directory:
+                                                                    externalStorageDirPath
+                                                                        .value))
+                                                            .then(
+                                                                (result) =>
+                                                                    result.fold(
+                                                                        (l) {
+                                                                      MotionToast
+                                                                          .error(
+                                                                        title:
+                                                                            "Download Error",
+                                                                        titleStyle:
+                                                                            const TextStyle(fontWeight: FontWeight.bold),
+                                                                        description:
+                                                                            "Sorry , Error While Downloading ",
+                                                                        descriptionStyle:
+                                                                            const TextStyle(fontSize: 12),
+                                                                        width:
+                                                                            300,
+                                                                      ).show(
+                                                                          context);
+                                                                    }, (r) {
+                                                                      MotionToast
+                                                                          .success(
+                                                                        title: Platform.isIOS
+                                                                            ? "Downloaded"
+                                                                            : "Downloading File",
+                                                                        titleStyle:
+                                                                            const TextStyle(fontWeight: FontWeight.bold),
+                                                                        description: Platform.isIOS
+                                                                            ? "File hase been Downloaded"
+                                                                            : "File is downloading , Please check your notification",
+                                                                        descriptionStyle:
+                                                                            const TextStyle(fontSize: 12),
+                                                                        width:
+                                                                            300,
+                                                                      ).show(
+                                                                          context);
+                                                                    }));
+                                                        if (Platform.isIOS) {
+                                                          if (progress != 100) {
+                                                            showDialog(
+                                                                barrierDismissible:
+                                                                    false,
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    (BuildContext
+                                                                        context) {
+                                                                  return AlertDialog(
+                                                                      content:
+                                                                          Row(
+                                                                    children: const [
+                                                                      CircularProgressIndicator(),
+                                                                      SizedBox(
+                                                                        width:
+                                                                            10,
+                                                                      ),
+                                                                      Text(
+                                                                          "Downloading ...")
+                                                                    ],
+                                                                  ));
+                                                                });
+                                                          }
+                                                        }
                                                       } else {
                                                         context
                                                             .read(
@@ -309,14 +389,16 @@ class _SharedContentScreenState extends State<SharedContentScreen> {
                                                                       ).show(
                                                                           context);
                                                                     }, (r) {
-                                                                          MotionToast
+                                                                      MotionToast
                                                                           .success(
-                                                                        title:Platform.isIOS?"Downloaded":
-                                                                            "Downloading File",
+                                                                        title: Platform.isIOS
+                                                                            ? "Downloaded"
+                                                                            : "Downloading File",
                                                                         titleStyle:
                                                                             const TextStyle(fontWeight: FontWeight.bold),
-                                                                        description:Platform.isIOS?"File hase been Downloaded":
-                                                                            "File is downloading , Please check your notification",
+                                                                        description: Platform.isIOS
+                                                                            ? "File hase been Downloaded"
+                                                                            : "File is downloading , Please check your notification",
                                                                         descriptionStyle:
                                                                             const TextStyle(fontSize: 12),
                                                                         width:
@@ -327,20 +409,26 @@ class _SharedContentScreenState extends State<SharedContentScreen> {
                                                         if (Platform.isIOS) {
                                                           if (progress != 100) {
                                                             showDialog(
-                                                              barrierDismissible:false ,
+                                                                barrierDismissible:
+                                                                    false,
                                                                 context:
                                                                     context,
                                                                 builder:
                                                                     (BuildContext
                                                                         context) {
-                                                                  return  AlertDialog(
-                                                                    content:
-                                                                      Row(children:const [
-                                                                        CircularProgressIndicator(),
-                                                                        SizedBox(width: 10,),
-                                                                        Text("Downloading ...")
-                                                                      ],)
-                                                                  );
+                                                                  return AlertDialog(
+                                                                      content:
+                                                                          Row(
+                                                                    children: const [
+                                                                      CircularProgressIndicator(),
+                                                                      SizedBox(
+                                                                        width:
+                                                                            10,
+                                                                      ),
+                                                                      Text(
+                                                                          "Downloading ...")
+                                                                    ],
+                                                                  ));
                                                                 });
                                                           }
                                                         }

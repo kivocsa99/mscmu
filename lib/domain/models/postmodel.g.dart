@@ -7,6 +7,7 @@ part of 'postmodel.dart';
 // **************************************************************************
 
 _$_PostModel _$$_PostModelFromJson(Map<String, dynamic> json) => _$_PostModel(
+      id: json['id'] as String?,
       yearid: json['yearid'] as int?,
       title: json['title'] as String?,
       body: json['body'] as String?,
@@ -18,6 +19,7 @@ _$_PostModel _$$_PostModelFromJson(Map<String, dynamic> json) => _$_PostModel(
 
 Map<String, dynamic> _$$_PostModelToJson(_$_PostModel instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'yearid': instance.yearid,
       'title': instance.title,
       'body': instance.body,

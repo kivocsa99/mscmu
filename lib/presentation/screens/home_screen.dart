@@ -48,9 +48,10 @@ class HomeScreen extends HookWidget {
       FirebaseMessaging.onMessage.listen((RemoteMessage message) {
         if (message.notification != null) {
           MotionToast.info(
+            toastDuration:Duration(seconds: 1) ,
                   position: MOTION_TOAST_POSITION.TOP,
                   animationType: ANIMATION.FROM_TOP,
-                  title: "New Post",
+                  title: "New Notification",
                   titleStyle: const TextStyle(fontWeight: FontWeight.bold),
                   description: message.notification!.body!)
               .show(context);
@@ -61,6 +62,7 @@ class HomeScreen extends HookWidget {
     final _showPage = useState(0);
     final _key = useState(GlobalKey<ScaffoldState>());
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       key: _key.value,
       drawer: Drawer(
         child: ListView(
@@ -132,7 +134,7 @@ class HomeScreen extends HookWidget {
                   return user.fulladmin == true
                       ? ListTile(
                           leading: const Icon(FontAwesomeIcons.userShield),
-                          title: const Text("Manadeeb Management"),
+                          title: const Text("Admin Management"),
                           onTap: () async {
                             Navigator.pop(context);
                             _showPage.value = 8;

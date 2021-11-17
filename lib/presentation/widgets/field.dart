@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 class Field extends HookWidget {
   final TextEditingController? controller;
   final String? label;
+  final String? initial;
   final IconData? iconData;
   final bool? obscureText;
   final String? Function(String?)? validator;
@@ -14,6 +15,7 @@ class Field extends HookWidget {
   final bool? read;
 
   const Field({
+    this.initial,
     this.read = false,
     this.max,
     this.keyboard,
@@ -37,6 +39,7 @@ class Field extends HookWidget {
       child: Padding(
         padding: const EdgeInsets.only(left: 12.0),
         child: TextFormField(
+          initialValue:initial ,
           readOnly: read!,
           keyboardType: keyboard,
           maxLines: max,

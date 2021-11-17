@@ -11,7 +11,7 @@ export const sendToTopic = functions.firestore
 
 		const payload: admin.messaging.MessagingPayload = {
 			notification: {
-				title: "New Post!",
+				title: "New Notification!",
 				body: notification.title,
 				icon: "https://drive.google.com/file/d/1a7pTp20Owel2Q1KGhlFuX-YlkLxhLulP/view?usp=sharing",
 				click_action: "FLUTTER_NOTIFICATION_CLICK" // required only for onResume or onLaunch callbacks

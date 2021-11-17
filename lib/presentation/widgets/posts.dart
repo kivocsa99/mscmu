@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:mscmu/application/provider/current_user.provider.dart';
+import 'package:mscmu/navigate.dart';
+import 'package:mscmu/presentation/screens/edit_post_screen.dart';
 import 'package:photo_view/photo_view.dart';
 import '../../application/provider/posts.repository.provider.dart';
 import '../../application/provider/sharedpref/pref_provider.dart';
@@ -137,7 +140,7 @@ class PostWidget extends StatelessWidget {
   }
 }
 
-class _PostHeader extends StatelessWidget {
+class _PostHeader extends HookWidget {
   final PostModel? post;
 
   const _PostHeader({
@@ -147,6 +150,7 @@ class _PostHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final admin = useProvider(currentUserProvider);
     final time = post!.time as Timestamp;
     return Row(
       children: [
@@ -181,6 +185,25 @@ class _PostHeader extends StatelessWidget {
             ],
           ),
         ),
+       admin.maybeWhen(orElse: ()=>const SizedBox.shrink(),data:(user)=>
+           user.fulladmin==true?PopupMenuButton<String>(itemBuilder: (BuildContext context){
+         List<String>actions = [
+           "Edit","Delete"
+         ];
+         return actions.map((String action) {
+           return PopupMenuItem(value: action,child: Text(action),);
+         }).toList();
+       },icon:Icon( Icons.more_horiz),
+         onSelected:(String action){
+           if(action=="Delete"){
+             print("delete");
+             context.read(postsRepositoryProvider).delete(id: post!.id);
+           }else {
+             changeScreen(context, EditPostScreen(post: post,));
+           }
+         } ,
+       ):const SizedBox.shrink()),
+
       ],
     );
   }
@@ -235,3 +258,4 @@ class DetailScreen extends StatelessWidget {
     );
   }
 }
+

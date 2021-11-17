@@ -6,6 +6,7 @@ part 'postmodel.g.dart';
 @freezed
 abstract class PostModel implements _$PostModel {
   const factory PostModel({
+    String? id ,
     int? yearid,
     String? title,
     String? body,

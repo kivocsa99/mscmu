@@ -22,7 +22,8 @@ class _$PostModelTearOff {
   const _$PostModelTearOff();
 
   _PostModel call(
-      {int? yearid,
+      {String? id,
+      int? yearid,
       String? title,
       String? body,
       String? adminavatar,
@@ -30,6 +31,7 @@ class _$PostModelTearOff {
       @TimestampConverter() dynamic time,
       String? image}) {
     return _PostModel(
+      id: id,
       yearid: yearid,
       title: title,
       body: body,
@@ -50,6 +52,7 @@ const $PostModel = _$PostModelTearOff();
 
 /// @nodoc
 mixin _$PostModel {
+  String? get id => throw _privateConstructorUsedError;
   int? get yearid => throw _privateConstructorUsedError;
   String? get title => throw _privateConstructorUsedError;
   String? get body => throw _privateConstructorUsedError;
@@ -70,7 +73,8 @@ abstract class $PostModelCopyWith<$Res> {
   factory $PostModelCopyWith(PostModel value, $Res Function(PostModel) then) =
       _$PostModelCopyWithImpl<$Res>;
   $Res call(
-      {int? yearid,
+      {String? id,
+      int? yearid,
       String? title,
       String? body,
       String? adminavatar,
@@ -89,6 +93,7 @@ class _$PostModelCopyWithImpl<$Res> implements $PostModelCopyWith<$Res> {
 
   @override
   $Res call({
+    Object? id = freezed,
     Object? yearid = freezed,
     Object? title = freezed,
     Object? body = freezed,
@@ -98,6 +103,10 @@ class _$PostModelCopyWithImpl<$Res> implements $PostModelCopyWith<$Res> {
     Object? image = freezed,
   }) {
     return _then(_value.copyWith(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
       yearid: yearid == freezed
           ? _value.yearid
           : yearid // ignore: cast_nullable_to_non_nullable
@@ -137,7 +146,8 @@ abstract class _$PostModelCopyWith<$Res> implements $PostModelCopyWith<$Res> {
       __$PostModelCopyWithImpl<$Res>;
   @override
   $Res call(
-      {int? yearid,
+      {String? id,
+      int? yearid,
       String? title,
       String? body,
       String? adminavatar,
@@ -157,6 +167,7 @@ class __$PostModelCopyWithImpl<$Res> extends _$PostModelCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? id = freezed,
     Object? yearid = freezed,
     Object? title = freezed,
     Object? body = freezed,
@@ -166,6 +177,10 @@ class __$PostModelCopyWithImpl<$Res> extends _$PostModelCopyWithImpl<$Res>
     Object? image = freezed,
   }) {
     return _then(_PostModel(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
       yearid: yearid == freezed
           ? _value.yearid
           : yearid // ignore: cast_nullable_to_non_nullable
@@ -199,7 +214,8 @@ class __$PostModelCopyWithImpl<$Res> extends _$PostModelCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_PostModel extends _PostModel {
   const _$_PostModel(
-      {this.yearid,
+      {this.id,
+      this.yearid,
       this.title,
       this.body,
       this.adminavatar,
@@ -211,6 +227,8 @@ class _$_PostModel extends _PostModel {
   factory _$_PostModel.fromJson(Map<String, dynamic> json) =>
       _$$_PostModelFromJson(json);
 
+  @override
+  final String? id;
   @override
   final int? yearid;
   @override
@@ -229,13 +247,15 @@ class _$_PostModel extends _PostModel {
 
   @override
   String toString() {
-    return 'PostModel(yearid: $yearid, title: $title, body: $body, adminavatar: $adminavatar, adminname: $adminname, time: $time, image: $image)';
+    return 'PostModel(id: $id, yearid: $yearid, title: $title, body: $body, adminavatar: $adminavatar, adminname: $adminname, time: $time, image: $image)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _PostModel &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.yearid, yearid) ||
                 const DeepCollectionEquality().equals(other.yearid, yearid)) &&
             (identical(other.title, title) ||
@@ -257,6 +277,7 @@ class _$_PostModel extends _PostModel {
   @override
   int get hashCode =>
       runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(yearid) ^
       const DeepCollectionEquality().hash(title) ^
       const DeepCollectionEquality().hash(body) ^
@@ -278,7 +299,8 @@ class _$_PostModel extends _PostModel {
 
 abstract class _PostModel extends PostModel {
   const factory _PostModel(
-      {int? yearid,
+      {String? id,
+      int? yearid,
       String? title,
       String? body,
       String? adminavatar,
@@ -290,6 +312,8 @@ abstract class _PostModel extends PostModel {
   factory _PostModel.fromJson(Map<String, dynamic> json) =
       _$_PostModel.fromJson;
 
+  @override
+  String? get id => throw _privateConstructorUsedError;
   @override
   int? get yearid => throw _privateConstructorUsedError;
   @override

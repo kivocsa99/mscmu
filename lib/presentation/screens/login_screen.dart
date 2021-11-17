@@ -167,12 +167,12 @@ class Login extends HookWidget {
                                           ctx,
                                           "Welcome back to MSC-MU Family",
                                           "Loggedin successfully");
-                                      await ctx
+                                       ctx
                                           .read(msgprovider)
-                                          .subsribe(yearName.value)
-                                          .then((value) =>
+                                          .subsribe(yearName.value);
+
                                               changeScreenReplacement(
-                                                  ctx, const HomeScreen()));
+                                                  ctx, const HomeScreen());
                                     },
                                   ),
                                 );
@@ -275,9 +275,8 @@ class Login extends HookWidget {
                                       ),
                                       TextButton(
                                         onPressed: () async {
-                                          Navigator.of(context,
-                                                  rootNavigator: true)
-                                              .pop();
+                                          Navigator
+                                              .pop(context);
                                           await ctx
                                               .read(
                                                   signInWithEmailAndPasswordUseCaseProvider)
@@ -329,15 +328,14 @@ class Login extends HookWidget {
                                                         ctx,
                                                         "Welcome back to MSC-MU Family",
                                                         "Loggedin successfully");
-                                                    await ctx
+                                                     ctx
                                                         .read(msgprovider)
                                                         .subsribe(
-                                                            yearName.value)
-                                                        .then((value) =>
-                                                            changeScreenReplacement(
-                                                              ctx,
-                                                              const HomeScreen(),
-                                                            ));
+                                                            yearName.value);
+                                                    changeScreenReplacement(
+                                                        ctx,
+                                                        const HomeScreen());
+
                                                   },
                                                 ),
                                               );

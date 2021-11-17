@@ -16,4 +16,7 @@ abstract class IPostsRepository {
     String? title,
     int? yearid,
   });
+  Future<Either<UserFailures, Unit>> editPost({String? id,String? title, String? body});
+  Future<Either<UserFailures, Unit>> delete ({String? id});
+
 }

@@ -173,7 +173,8 @@ class _AddPostScreenState extends State<AddPostScreen> {
                   }
                 },
               ),
-            )
+            ),
+            const SizedBox(height: 100,),
           ],
         ),
       ),

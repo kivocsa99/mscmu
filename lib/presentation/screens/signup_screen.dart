@@ -315,14 +315,14 @@ class SignUpSCreen extends HookWidget {
                                                     ctx,
                                                     "Welcome to MSC-MU Family",
                                                     "SignedUp successfully");
-                                                await ctx
+                                                 ctx
                                                     .read(msgprovider)
-                                                    .subsribe(yearName.value)
-                                                    .then((value) =>
+                                                    .subsribe(yearName.value);
+
                                                         changeScreenReplacement(
                                                           ctx,
                                                           const HomeScreen(),
-                                                        ));
+                                                        );
                                               },
                                             ),
                                           );

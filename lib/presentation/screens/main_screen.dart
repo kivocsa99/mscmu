@@ -15,6 +15,7 @@ class MainScreen extends HookWidget {
           NewsHeader(),
           YearsRow(),
           Posts(),
+          SizedBox(height: 100,)
         ],
       ),
     );

@@ -8,7 +8,7 @@ import 'presentation/screens/on_boarding_screen.dart';
 import 'application/provider/sharedpref/pref_provider.dart';
 import 'presentation/screens/home_screen.dart';
 
-Future<void> main() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await FlutterDownloader.initialize(debug: true);
