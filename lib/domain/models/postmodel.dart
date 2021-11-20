@@ -13,7 +13,6 @@ abstract class PostModel implements _$PostModel {
     String? adminavatar,
     String? adminname,
     @TimestampConverter() time,
-
     String? image,
   }) = _PostModel;
   const PostModel._();

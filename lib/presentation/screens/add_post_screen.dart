@@ -135,25 +135,30 @@ class _AddPostScreenState extends State<AddPostScreen> {
             const SizedBox(
               height: 10,
             ),
-            admin.maybeWhen(orElse: ()=>const SizedBox.shrink(),data: (user)=>
-             year.maybeWhen(orElse: ()=>const SizedBox.shrink(),data: (years)=>  SizedBox(
-               height: 250,
-               child: CupertinoPicker(
-                 looping: true,
-                 children: years.classes!
-                     .map((e) => Center(
-                   child: Text(e.name!),
-                 ))
-                     .toList(),
-                 itemExtent: 46,
-                 onSelectedItemChanged: (index) async {
-
-                   yearId.value = years.classes![index].id!;
-                 },
-               ),),),
-
+            admin.maybeWhen(
+              orElse: () => const SizedBox.shrink(),
+              data: (user) => year.maybeWhen(
+                orElse: () => const SizedBox.shrink(),
+                data: (years) => SizedBox(
+                  height: 250,
+                  child: CupertinoPicker(
+                    looping: true,
+                    children: years.classes!
+                        .map((e) => Center(
+                              child: Text(e.name!),
+                            ))
+                        .toList(),
+                    itemExtent: 46,
+                    onSelectedItemChanged: (index) async {
+                      yearId.value = years.classes![index].id!;
+                    },
+                  ),
+                ),
+              ),
             ),
-            const SizedBox(height: 10,),
+            const SizedBox(
+              height: 10,
+            ),
             admin.maybeWhen(
               orElse: () => const SizedBox.shrink(),
               data: (user) => ButtonWidget(
@@ -162,9 +167,12 @@ class _AddPostScreenState extends State<AddPostScreen> {
                 onClicked: () async {
                   if (_key.value.currentState!.validate()) {
                     _key.value.currentState!.reset();
+                    FocusScope.of(context).unfocus();
                     await context.read(createpostUseCaseProvider).execute(
                         CreatepostInput(
-                            yearid:user.fulladmin==false? user.yearid:yearId.value,
+                            yearid: user.fulladmin == false
+                                ? user.yearid
+                                : yearId.value,
                             adminavatar: user.avatar,
                             adminname: user.name,
                             title: _post.value.title,
@@ -174,7 +182,9 @@ class _AddPostScreenState extends State<AddPostScreen> {
                 },
               ),
             ),
-            const SizedBox(height: 100,),
+            const SizedBox(
+              height: 100,
+            ),
           ],
         ),
       ),

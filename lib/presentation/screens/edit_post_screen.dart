@@ -16,11 +16,7 @@ import '../widgets/field.dart';
 class EditPostScreen extends HookWidget {
   final PostModel? post;
 
-
-  const EditPostScreen({this.post, Key? key})
-      : super(key: key);
-
-
+  const EditPostScreen({this.post, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +24,6 @@ class EditPostScreen extends HookWidget {
     final _post = useState(const PostModel());
     return Scaffold(
       appBar: appbar(),
-
       body: SingleChildScrollView(
         child: Form(
           key: _key.value,
@@ -48,51 +43,57 @@ class EditPostScreen extends HookWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Field(
-                  initial: post!.title,
+                    initial: post!.title,
                     max: 1,
                     label: 'Title',
                     validator:
-                    RequiredValidator(errorText: "This Field is required"),
+                        RequiredValidator(errorText: "This Field is required"),
                     onChanged: (value) =>
-                    _post.value = _post.value.copyWith(title: value)),
+                        _post.value = _post.value.copyWith(title: value)),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Field(
                   initial: post!.body,
-                   label: 'Body',
+                  label: 'Body',
                   max: null,
                   keyboard: TextInputType.multiline,
                   onChanged: (value) =>
-                  _post.value = _post.value.copyWith(body: value),
+                      _post.value = _post.value.copyWith(body: value),
                   validator:
-                  RequiredValidator(errorText: "This Field is required"),
+                      RequiredValidator(errorText: "This Field is required"),
                 ),
               ),
-
-              const SizedBox(height: 10,),
+              const SizedBox(
+                height: 10,
+              ),
               ButtonWidget(
-                  icon: FontAwesomeIcons.upload,
-                  text: "Edit Post",
-                  onClicked: () async {
-                    if (_key.value.currentState!.validate()) {
-                      _key.value.currentState!.reset();
-                      await context.read(editPostProvider).execute(
-                          EditPostInput(
-                            id: post!.id,
-                              title: _post.value.title!=null?_post.value.title:post!.title,
-                              body: _post.value.body!=null?_post.value.body:post!.body,
-                            ));
-                      Navigator.pop(context);
-                    }
-                  },
-                ),
-              const SizedBox(height: 100,),
+                icon: FontAwesomeIcons.upload,
+                text: "Edit Post",
+                onClicked: () async {
+                  if (_key.value.currentState!.validate()) {
+                    _key.value.currentState!.reset();
+                    FocusScope.of(context).unfocus();
+                    await context.read(editPostProvider).execute(EditPostInput(
+                          id: post!.id,
+                          title: _post.value.title != null
+                              ? _post.value.title
+                              : post!.title,
+                          body: _post.value.body != null
+                              ? _post.value.body
+                              : post!.body,
+                        ));
+                    Navigator.pop(context);
+                  }
+                },
+              ),
+              const SizedBox(
+                height: 100,
+              ),
             ],
           ),
         ),
       ),
     );
   }
-
 }

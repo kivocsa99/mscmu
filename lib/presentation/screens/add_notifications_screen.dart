@@ -75,11 +75,11 @@ class AddNotificationsScreen extends HookWidget {
             ),
             ButtonWidget(
                 icon: FontAwesomeIcons.upload,
-                text: "Publish Post",
+                text: "Publish Notification",
                 onClicked: () async {
                   if (_key.value.currentState!.validate()) {
                     _key.value.currentState!.reset();
-
+                    FocusScope.of(context).unfocus();
                     await context
                         .read(createNotificationUseCaseProvider)
                         .execute(CreateNotificationInput(
