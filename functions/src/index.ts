@@ -25,11 +25,13 @@ export const sendToTopic = functions.firestore
 			case 12:
 				return fcm.sendToTopic("Serotonin", payload);
 			case 13:
-				return fcm.sendToTopic("Vien", payload);
+				return fcm.sendToTopic("Wareed", payload);
 			case 14:
 				return fcm.sendToTopic("Nabd", payload);
 			case 15:
 				return fcm.sendToTopic("Wateen", payload);
+			case 16:
+				return fcm.sendToTopic("2021", payload);
 			default:
 				break;
 		}

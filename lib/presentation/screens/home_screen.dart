@@ -1,4 +1,3 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -33,32 +32,7 @@ class HomeScreen extends HookWidget {
     final hello =
         useFuture(InternetConnectionChecker().hasConnection, initialData: true);
     useEffect(() {
-      FirebaseMessaging.instance.requestPermission(
-        sound: true,
-        badge: true,
-        alert: true,
-        provisional: false,
-      );
-
-      FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
-        alert: true,
-        badge: true,
-        sound: true,
-      );
-      FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-        if (message.notification != null) {
-          MotionToast.info(
-            toastDuration:Duration(seconds: 1) ,
-                  position: MOTION_TOAST_POSITION.TOP,
-                  animationType: ANIMATION.FROM_TOP,
-                  title: "New Notification",
-                  titleStyle: const TextStyle(fontWeight: FontWeight.bold),
-                  description: message.notification!.body!)
-              .show(context);
-        }
-      });
     }, [hello.data]);
-
     final _showPage = useState(0);
     final _key = useState(GlobalKey<ScaffoldState>());
     return Scaffold(

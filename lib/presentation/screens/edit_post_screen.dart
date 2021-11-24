@@ -76,10 +76,10 @@ class EditPostScreen extends HookWidget {
                     FocusScope.of(context).unfocus();
                     await context.read(editPostProvider).execute(EditPostInput(
                           id: post!.id,
-                          title: _post.value.title != null
+                          title: _post.value.title != post!.title
                               ? _post.value.title
                               : post!.title,
-                          body: _post.value.body != null
+                          body: _post.value.body != post!.body
                               ? _post.value.body
                               : post!.body,
                         ));

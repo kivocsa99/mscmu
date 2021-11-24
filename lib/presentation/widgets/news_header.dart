@@ -47,7 +47,9 @@ class NewsHeader extends HookWidget {
                                         forceSafariVC: false,
                                         forceWebView: false);
 
+                                    print('hellopppp');
                                     if (!launched) {
+                                      print('hello');
                                       await launch(news.url!,
                                           forceSafariVC: false,
                                           forceWebView: false);
